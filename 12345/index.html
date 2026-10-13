@@ -3,10 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Mission 1·23·45</title>
-<meta name="description" content="The secret mission of the Eclipse Missions: zoom into a techno-shamanic dance party on a tumbling rock, from the engraved plate down to unbearable detail.">
-<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
-<meta name="robots" content="noindex">
+<title>1·23·45</title>
+<meta name="description" content="The secret mission of the Eclipse Missions: a dance floor clamped to a tumbling rock, out past Earth and the Moon. Zoom in. It does not stop. Sound on.">
+<meta name="theme-color" content="#030305">
+<link rel="canonical" href="https://12345.party/">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="1·23·45">
+<meta property="og:title" content="1·23·45 · Classified">
+<meta property="og:description" content="A dance floor on a tumbling rock, out past Earth and the Moon. Zoom in. It does not stop.">
+<meta property="og:url" content="https://12345.party/">
+<meta property="og:image" content="https://12345.party/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="1·23·45 in a cyan-to-ember gradient over a psychedelic spiral tunnel">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@imxp_org">
+<meta name="twitter:title" content="1·23·45 · Classified">
+<meta name="twitter:description" content="A dance floor on a tumbling rock, out past Earth and the Moon. Zoom in. It does not stop.">
+<meta name="twitter:image" content="https://12345.party/img/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=IM+Fell+English:ital@0;1&display=swap">
@@ -49,7 +66,7 @@ canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; t
 <canvas id="c" aria-label="An infinite zoom: deep space, a tumbling rock, a dance floor, one Seeker, the reflection in their visor, and a realm inside one city light that leads back to the rock"></canvas>
 <audio id="au" src="timespace.mp3" preload="auto" loop></audio>
 
-<div class="hud tl"><span class="t">Mission 1·23·45</span><a class="home" href="../" target="_blank" rel="noopener">← The Eclipse Missions</a><span>Opens in <b id="cd">counting</b></span></div>
+<div class="hud tl"><span class="t">Mission 1·23·45</span><a class="home" href="https://eclipsemissions.com/">← The Eclipse Missions</a><span>Opens in <b id="cd">counting</b></span></div>
 <div class="hud tr"><span id="lvl"><b>Level 0</b> · deep field</span><span>Magnification <span id="mag">×1</span></span><span class="x" id="loop">Loop 1</span></div>
 <div class="hud cap" id="cap">Out past Earth and the Moon, a rock tumbles.</div>
 <div class="ctl"><button type="button" id="out">Zoom out</button><button type="button" id="dive" aria-pressed="true">Dive</button><button type="button" id="in">Zoom in</button><button type="button" id="snd" aria-pressed="true">Sound</button></div>
@@ -60,7 +77,7 @@ canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; t
   <p>A dance floor clamped to a tumbling rock, out past Earth and the Moon. Zoom in. It does not stop.</p>
   <button type="button" class="go" id="go">Drop in · sound on</button>
   <span class="sm">Scroll, pinch or drag up to zoom. Dive keeps falling on its own.</span>
-  <a class="sm back" href="../" target="_blank" rel="noopener">← Back to the Eclipse Missions</a>
+  <a class="sm back" href="https://eclipsemissions.com/">← Back to the Eclipse Missions</a>
 </div></div>
 
 <script>
@@ -733,6 +750,8 @@ canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; t
   // the analyser joins on the first touch, so an autoplaying track is never routed through a sleeping context
   window.addEventListener('pointerdown', function () { if (!au.paused) { wireAudio(); if (actx && actx.state === 'suspended') actx.resume(); } }, { once: true });
   window.__em = { set: function (v) { target = depth = v; started = true; gate.hidden = true; }, dive: function (v) { setDive(v); } };
+  // arriving through the Moon floor on eclipsemissions.com: the gate says so, one tap from the drop
+  if (location.hash === '#floor') { var ey = gate.querySelector('.ey'), gb = document.getElementById('go'); if (ey) ey.innerHTML = '<b>Arriving</b> · through the floor'; if (gb) gb.textContent = 'Keep falling · sound on'; }
   document.getElementById('go').addEventListener('click', function () { gate.hidden = true; started = true; play(); });
   sndBtn.addEventListener('click', function () { if (au.paused) play(); else { au.pause(); sndBtn.setAttribute('aria-pressed', 'false'); } });
   // try straight away; if the browser allows it, skip the gate

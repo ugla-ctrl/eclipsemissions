@@ -367,6 +367,8 @@ a { color: var(--turq); text-underline-offset: 3px; }
 }
 
 /* the mission sheet: a card from the deck, opened beside the plate (a bottom sheet on phones) */
+.drop { position: fixed; inset: 0; z-index: 200; background: #030305; opacity: 0; pointer-events: none; transition: opacity .85s ease-in; }
+.drop.on { opacity: 1; pointer-events: auto; }
 .sheet-bg { position: fixed; inset: 0; z-index: 90; background: rgba(4,4,6,.62); }
 .sheet { position: fixed; z-index: 91; top: 0; right: 0; bottom: 0; width: min(780px, 100vw); background: var(--paper); border-left: 1.5px solid var(--ink); overflow-y: auto; overscroll-behavior: contain; animation: sheetIn .45s cubic-bezier(.2,.8,.2,1); }
 @keyframes sheetIn { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -499,7 +501,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
 <div class="m45-t">
 <span class="eyebrow"><b>Classified</b> · four on the floor</span>
 <h2>Mission 1·23·45</h2>
-<div class="m45-go"><a href="12345/" target="_blank" rel="noopener">Go deeper · sound on</a><button type="button" id="m45-out">Back to the floor</button></div>
+<div class="m45-go"><a href="12345/#floor">Go deeper · sound on</a><button type="button" id="m45-out">Back to the floor</button></div>
 <p class="m45-l">You found the floor. The first gathering on a world that orbits neither Earth nor the Moon: a tumbling rock out past both, reached from the psytrance floor on the Moon.</p>
 <dl class="m45-d"><div><dt>Arrival</dt><dd>23 Jan 2045 · 01:23:45 UTC</dd></div><div><dt>Departs</dt><dd>The floor on the Moon, at 145 BPM</dd></div><div><dt>Sunsets</dt><dd>Eight an hour. It tumbles.</dd></div><div><dt>Corridor</dt><dd>None yet. This one is off the map.</dd></div><div><dt>Crew</dt><dd>Seekers of every kind</dd></div><div><dt>Opens in</dt><dd id="m45-c">counting</dd></div></dl>
 <ol class="m45-log"><li><b>Orion log 0001</b>The rock turns every seven and a half minutes. Every turn is a sunset.</li><li><b>0002</b>The machine elves have started a second floor on the dark side.</li><li><b>0003</b>The visitors say they have been here before. They say "before" differently.</li><li><b>0004</b>Nobody can agree whether we found it or it found us.</li><li><b>0005</b>The timewave restarts here. One, two, three, four, five.</li></ol>
@@ -3639,7 +3641,17 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       if (e.detail.open) { away = !au.paused; if (away) { clearInterval(fadeT); fade(0, .8, function () { au.pause(); }); } }
       else if (away) { away = false; start().catch(function () {}); }
     });
-    document.querySelectorAll('.m45-go a').forEach(function (a) { a.addEventListener('click', function () { if (!au.paused) stop(); }); });
+    // Go deeper: on the live site this drops straight down into /12345 in the same tab, fading to black on the way
+    var drop = document.createElement('div'); drop.className = 'drop'; document.body.appendChild(drop);
+    document.querySelectorAll('.m45-go a').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (!au.paused) stop();
+        var href = a.getAttribute('href');
+        if (/^https?:/.test(href)) return;
+        e.preventDefault(); drop.classList.add('on');
+        setTimeout(function () { location.href = href; }, 900);
+      });
+    });
 
     window.__site = { zoom: function (f) { zoomCenter(f); }, uz: function () { return uz; }, go: go, open: openSheet, close: closeSheet, K: K, stops: STOPS, secrets: function () { return { egg: EGG, egg26: EGG26, floor: FLOOR, tri: TRI }; } };
   })();
