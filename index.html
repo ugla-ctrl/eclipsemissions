@@ -333,6 +333,14 @@ a { color: var(--turq); text-underline-offset: 3px; }
 .zbar { position: absolute; z-index: 5; right: clamp(12px, 2vw, 28px); bottom: 86px; display: grid; gap: 6px; justify-items: end; }
 .zbar button { font: inherit; font-family: var(--f-mono); font-size: 20px; line-height: 1; width: 42px; height: 42px; background: rgba(8,9,11,.88); color: var(--ink); border: 1px solid #4a463c; border-radius: 4px; cursor: pointer; }
 .zbar button:hover { border-color: var(--ink); }
+#z-in { position: relative; background: var(--corona); color: #14110d; border-color: var(--corona); font-weight: 500; }
+#z-in:hover { background: #ffc48a; }
+.zbar.hint #z-in::after { content: ""; position: absolute; inset: -6px; border: 2px solid var(--corona); border-radius: 8px; animation: zping 1.8s ease-out infinite; pointer-events: none; }
+@keyframes zping { 0% { opacity: .9; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.35); } }
+.zlbl { position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%); white-space: nowrap; font-family: var(--f-fell); font-style: italic; font-size: 15px; color: #14110d; background: var(--ink); padding: 4px 10px; pointer-events: none; transition: opacity .3s; }
+.zlbl::after { content: ""; position: absolute; left: 100%; top: 50%; margin-top: -5px; border: 5px solid transparent; border-left-color: var(--ink); }
+.zbar:not(.hint) .zlbl, .stage.zoomed .zlbl { opacity: 0; }
+.zin-wrap { position: relative; }
 .zbar .back { display: none; width: auto; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; padding: 0 12px; color: #14110d; background: var(--corona); border-color: var(--corona); }
 .stage.zoomed .zbar .back { display: block; }
 .stage.zoomed .fc.on { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility 0s .25s; }
@@ -346,7 +354,26 @@ a { color: var(--turq); text-underline-offset: 3px; }
 .readout .v small { font-size: 12px; color: var(--dim); letter-spacing: .1em; }
 .tip { position: absolute; z-index: 5; pointer-events: none; background: var(--ink); color: #14110d; font-family: var(--f-fell); font-style: italic; font-size: 15px; padding: 4px 9px; transform: translate(-50%, -140%); white-space: nowrap; opacity: 0; transition: opacity .15s; }
 .tip.on { opacity: 1; }
+.tip.w { background: var(--corona); font-size: 16px; }
+.sxw { position: absolute; z-index: 5; left: clamp(16px, 3vw, 40px); bottom: 18px; display: grid; gap: 8px; justify-items: start; max-width: min(360px, 70vw); }
+.sx { font: inherit; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); background: rgba(8,9,11,.85); border: 1px dashed #6a6252; border-radius: 999px; padding: 7px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.sx b { font-weight: 500; color: var(--corona); }
+.sx .st { color: var(--corona); display: inline-block; animation: sxs 4s ease-in-out infinite; }
+@keyframes sxs { 0%, 100% { transform: rotate(0) scale(1); opacity: .6; } 50% { transform: rotate(45deg) scale(1.25); opacity: 1; } }
+.sx:hover { color: var(--ink); border-color: var(--corona); }
+.sx.all { border-style: solid; border-color: var(--corona); color: var(--ink); }
+.sxr { order: -1; margin: 0; background: var(--ink); color: #14110d; font-family: var(--f-fell); font-style: italic; font-size: 16px; line-height: 1.35; padding: 8px 12px; text-wrap: balance; }
+@media (max-width: 900px) { .sxw { left: 10px; top: 54px; bottom: auto; max-width: calc(100% - 80px); } .sxr { order: 1; } .sx { padding: 6px 10px; font-size: 10.5px; } }
+.fc .more { display: none; }
 @media (max-width: 900px) {
+  .fc .more { display: inline-flex; align-items: center; gap: 6px; position: absolute; top: 10px; right: 10px; font: inherit; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); background: rgba(8,9,11,.9); border: 1px solid #4a463c; border-radius: 999px; padding: 6px 10px 6px 12px; cursor: pointer; z-index: 1; }
+  .fc .more i { font-style: normal; font-size: 14px; line-height: 1; color: var(--corona); }
+  .fc h2, .fc h1 { cursor: pointer; padding-right: 70px; }
+  .fc > .eyebrow { padding-right: 84px; }
+  .fcs:not(.open) .fc p, .fcs:not(.open) .fc .fig, .fcs:not(.open) .fc .slip, .fcs:not(.open) .fc.intro .cue, .fcs:not(.open) .fc.intro .count-k { display: none; }
+  .fcs:not(.open) .fc .go { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: -14px; padding-right: 14px; }
+  .fcs:not(.open) .fc .go::-webkit-scrollbar { display: none; }
+  .fcs:not(.open) .fc .go button, .fcs:not(.open) .fc .go .btn { flex: none; white-space: nowrap; }
   .fc, .fc.intro { left: 10px; right: 10px; width: auto; top: auto; bottom: 10px; transform: translateY(12px); max-height: 46%; padding: 14px 14px 12px; gap: 8px; }
   .fc.on { transform: none; }
   .fc.intro { max-height: 64%; gap: 10px; }
@@ -383,6 +410,10 @@ a { color: var(--turq); text-underline-offset: 3px; }
   .sheet-bar { border-radius: 14px 14px 0 0; }
   .sheet-bar .n { display: none; }
   .sheet-bar .sp { flex: 1; }
+}
+@media (max-width: 900px) and (min-aspect-ratio: 1/1) and (max-height: 520px) {
+  .fc, .fc.intro { right: auto; width: min(46vw, 400px); bottom: 8px; left: 8px; max-height: calc(100% - 56px); }
+  .fc.intro .wm { width: min(200px, 100%); }
 }
 @keyframes sheetUp { from { transform: translateY(60px); opacity: 0; } to { transform: none; opacity: 1; } }
 
@@ -423,6 +454,15 @@ legend { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .14em; t
 .checks { display: flex; flex-wrap: wrap; gap: 8px; }
 .checks label { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #4a463c; border-radius: 4px; padding: 8px 12px; font-size: 15px; cursor: pointer; }
 .checks input { accent-color: var(--corona); }
+legend .opt { text-transform: none; letter-spacing: .02em; color: #6f6a5e; }
+.checks.give { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.checks.give label { align-items: flex-start; padding: 10px 12px; }
+.checks.give input { margin-top: 4px; flex: none; }
+.checks.give span { display: grid; gap: 2px; min-width: 0; }
+.checks.give b { font-family: var(--f-fell); font-weight: 400; font-size: 19px; line-height: 1.1; color: var(--ink); }
+.checks.give small { font-size: 13px; line-height: 1.35; color: var(--dim); }
+.checks.give label:has(input:checked) { border-color: var(--corona); }
+@media (max-width: 640px) { .checks.give { grid-template-columns: minmax(0, 1fr); } }
 .ok { display: grid; gap: 8px; } .ok h3 { font-size: 32px; } .ok p { color: var(--body); }
 .pgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 18px; margin-top: 18px; }
 @media (max-width: 860px) { .pgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -530,8 +570,9 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     <div class="stage" id="stage">
       <svg class="map" id="src" role="img" aria-label="Plate I, the flight plan: an engraved chart of the missions from 2026 to 2040, from gatherings on Earth up through the altitude bands to the Moon"><g id="cam"></g></svg>
       <div class="tip" id="tip" aria-hidden="true"></div>
-      <div class="zbar" role="group" aria-label="Look closer">
-        <button type="button" id="z-in" aria-label="Zoom in">+</button>
+      <div class="sxw"><button type="button" class="sx" id="sx"><span class="st" aria-hidden="true">✦</span> Secrets <b id="sx-n">0</b>/3</button><p class="sxr" id="sx-r" role="status" hidden></p></div>
+      <div class="zbar hint" id="zbar" role="group" aria-label="Look closer">
+        <span class="zin-wrap"><span class="zlbl" aria-hidden="true">Look closer</span><button type="button" id="z-in" aria-label="Zoom in, look closer">+</button></span>
         <button type="button" id="z-out" aria-label="Zoom out">−</button>
         <button type="button" id="z-back" class="back">Back to the plan</button>
       </div>
@@ -543,7 +584,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           <h1>Watch Earth <i>eclipse the Sun.</i></h1>
           <p>From the Moon, a total lunar eclipse looks like this: Earth goes dark, and every sunrise and sunset on the planet glows around its edge at once. This is the flight plan to get there, together.</p>
           <div style="display:grid;gap:8px">
-            <span class="eyebrow"><b>Countdown to the first gathering on the Moon</b> · <span class="nw">Mission '36</span> · <span class="nw">7 Aug 2036</span></span>
+            <span class="eyebrow count-k"><b>Countdown to the first gathering on the Moon</b> · <span class="nw">Mission '36</span> · <span class="nw">7 Aug 2036</span></span>
             <div class="count" aria-label="Countdown to Mission '36">
               <div><b id="cd-d">0000</b><span>Days</span></div>
               <div><b id="cd-h">00</b><span>Hrs</span></div>
@@ -660,18 +701,12 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
             <label class="f" for="j-name">First name<input id="j-name" name="name" type="text" autocomplete="given-name" required></label>
             <label class="f" for="j-email">Email<input id="j-email" name="email" type="email" autocomplete="email" required></label>
           </div>
-          <label class="f" for="j-country">Where you're based
-            <select id="j-country" name="country">
-              <option value="">Choose a region</option>
-              <option>North America</option><option>Central and South America</option><option>Europe</option><option>Middle East and North Africa</option><option>Sub-Saharan Africa</option><option>Asia</option><option>Oceania</option>
-            </select>
-          </label>
           <fieldset>
-            <legend>Where I have abundance</legend>
-            <div class="checks">
-              <label for="c-eco"><input id="c-eco" type="checkbox" name="channel" value="economic"> Economic</label>
-              <label for="c-cre"><input id="c-cre" type="checkbox" name="channel" value="creative"> Creative</label>
-              <label for="c-phy"><input id="c-phy" type="checkbox" name="channel" value="physical"> Physical</label>
+            <legend>How would you like to participate? <span class="opt">(optional)</span></legend>
+            <div class="checks give">
+              <label for="c-phy"><input id="c-phy" type="checkbox" name="channel" value="physical" data-way="build"><span><b>Build it</b><small>crew, camps, caring for a place</small></span></label>
+              <label for="c-cre"><input id="c-cre" type="checkbox" name="channel" value="creative" data-way="make"><span><b>Make it</b><small>art, music, ceremony, film</small></span></label>
+              <label for="c-eco"><input id="c-eco" type="checkbox" name="channel" value="economic" data-way="fund"><span><b>Fund it</b><small>tickets, backing, partners</small></span></label>
             </div>
           </fieldset>
           <fieldset>
@@ -1665,7 +1700,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         el('path', { d: 'M ' + (e2[0] - 4) + ' ' + (e2[1] - 2) + ' L ' + (e2[0] + 1) + ' ' + (e2[1] - 16) + ' L ' + (e2[0] + 4) + ' ' + (e2[1] - 2) + ' Z', fill: EMBER }, eg);
         el('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 6; 0 0; 0 0; 0 6; 0 6', keyTimes: '0;.1;.6;.7;1', dur: (7 + i2 * 3) + 's', repeatCount: 'indefinite' }, eg);
       });
-      cap('the huldufólk,', rx2 - 50, b - 96, DIM); cap('consulted first', rx2 - 50, b - 72, DIM);
+      cap('the huldufólk,', rx2 - 84, b - 96, DIM); cap('consulted first', rx2 - 84, b - 72, DIM);
       // secret: ask the hidden folk first, then step through the Portal by the glacier
       EGG26 = { huld: [rx2, b - 30] };
       el('circle', { cx: rx2, cy: b - 30, r: 46, fill: 'none', stroke: TURQ, 'stroke-width': 2.5, opacity: 0, 'class': 'egg26-ring' }, W);
@@ -2192,7 +2227,11 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         arch(x, y, i === 0 ? 1.4 : 1);
         if (i === 0 && EGG26) { EGG26.arch = [x, y - 31]; el('circle', { cx: x, cy: y - 31, r: 40, fill: 'none', stroke: TURQ, 'stroke-width': 2.5, opacity: 0, 'class': 'egg26-ring' }, W); }
         if (prev) el('path', { d: 'M ' + prev[0] + ' ' + (prev[1] - 40) + ' Q ' + ((prev[0] + x) / 2) + ' ' + (Math.min(prev[1], y) - 160) + ' ' + x + ' ' + (y - 40), stroke: TURQ, 'stroke-width': 1.4, 'stroke-dasharray': '2 10', fill: 'none', opacity: .8 }, W);
-        if (s2[1]) cap(s2[1], x - 20, y - (i === 0 ? 250 : 60), TURQ);
+        if (i === 0) {
+          // the first Portal: a small label right over its door (Universe 26-A)
+          tx('The Portal,', { x: x, y: y - 82, 'text-anchor': 'middle', 'font-family': FELL, 'font-style': 'italic', 'font-size': 17, fill: TURQ, stroke: PAPER, 'stroke-width': 5, 'paint-order': 'stroke', 'stroke-linejoin': 'round' }, W);
+          tx('a month-long field lab', { x: x, y: y - 64, 'text-anchor': 'middle', 'font-family': FELL, 'font-style': 'italic', 'font-size': 17, fill: TURQ, stroke: PAPER, 'stroke-width': 5, 'paint-order': 'stroke', 'stroke-linejoin': 'round' }, W);
+        } else if (s2[1]) cap(s2[1], x - 20, y - 60, TURQ);
         prev = [x, y];
       });
       // and on the Moon, permanent
@@ -3300,17 +3339,18 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
 
     // ---------- camera keyframes, in plate units ----------
     // cx, cy: the point to centre; w, h: the span to fit. m*: the same on phones, where the plate is taller than wide.
+    // desktop spans were tightened ~20%, phones a lot more: the default view should already show the detail worth tapping
     var K = [
-      { cx: 5250, cy: 860, w: 2600, h: 1700, k: 'Plate I', v: '2026–40', u: '', cover: 1, mw: 1500, mcx: 5700, mcy: 900, mh: 2100 },
-      { cx: 230, cy: 1800, w: 760, h: 560, k: 'Mission precursors', v: 'the lineage', u: '', rail: 'Precursors', mw: 560, mh: 640, mcx: 250 },
-      { cx: 610, cy: 1520, w: 1000, h: 640, k: "Fig. 26 · altitude", v: '0', u: 'km', rail: "'26", mw: 700, mh: 700 },
-      { cx: 1080, cy: 1400, w: 1100, h: 700, k: "Fig. 27 · altitude", v: '0', u: 'km', rail: "'27", mw: 720, mh: 760 },
-      { cx: 1420, cy: 1240, w: 1400, h: 1060, k: 'Highest flight', v: '30', u: 'km', rail: "'28", mw: 900, mh: 1150, mcx: 1300 },
-      { cx: 1980, cy: 1150, w: 1700, h: 1200, k: 'Apophis passes at', v: '32,000', u: 'km', rail: "'29", mw: 1000, mh: 1250 },
-      { cx: 3000, cy: 1250, w: 1700, h: 1050, k: 'Highest flight', v: '400', u: 'km', rail: "'30–'32", mw: 1100, mh: 1200 },
-      { cx: 3950, cy: 950, w: 1800, h: 1500, k: 'Distance from Earth', v: '384,400', u: 'km', rail: "'33", m: 1, mw: 1200, mh: 1600 },
-      { cx: 5800, cy: 420, w: 1400, h: 1000, k: 'On the Moon', v: '1 h 35', u: 'min', rail: "'36", m: 1, mw: 900, mh: 1100, mcx: 5850 },
-      { cx: 7640, cy: 430, w: 1300, h: 900, k: 'On the Moon', v: 'for good', u: '', rail: "'40", m: 1, mw: 800, mh: 1000, mcx: 7800 },
+      { cx: 5250, cy: 860, w: 2600, h: 1700, k: 'Plate I', v: '2026–40', u: '', cover: 1, mw: 900, mcx: 1150, mcy: 820, mh: 1050 },
+      { cx: 210, cy: 1780, w: 620, h: 460, k: 'Mission precursors', v: 'the lineage', u: '', mw: 470, mh: 640, mcx: 190, mcy: 1820 },
+      { cx: 620, cy: 1540, w: 800, h: 520, k: "Fig. 26 · altitude", v: '0', u: 'km', rail: "'26", mw: 540, mh: 560, mcx: 680, mcy: 1580 },
+      { cx: 1080, cy: 1440, w: 880, h: 560, k: "Fig. 27 · altitude", v: '0', u: 'km', rail: "'27", mw: 500, mh: 780, mcx: 1100, mcy: 1330 },
+      { cx: 1420, cy: 1300, w: 1120, h: 850, k: 'Highest flight', v: '30', u: 'km', rail: "'28", mw: 620, mh: 700, mcx: 1470, mcy: 1500 },
+      { cx: 1980, cy: 1150, w: 1360, h: 960, k: 'Apophis passes at', v: '32,000', u: 'km', rail: "'29", mw: 640, mh: 900, mcx: 2010, mcy: 1000 },
+      { cx: 3000, cy: 1280, w: 1360, h: 840, k: 'Highest flight', v: '400', u: 'km', rail: "'30–'32", mw: 760, mh: 900, mcx: 3000, mcy: 1320 },
+      { cx: 3950, cy: 980, w: 1440, h: 1200, k: 'Distance from Earth', v: '384,400', u: 'km', rail: "'33", m: 1, mw: 640, mh: 900, mcx: 4080, mcy: 760 },
+      { cx: 5700, cy: 330, w: 1120, h: 800, k: 'On the Moon', v: '1 h 35', u: 'min', rail: "'36", m: 1, mw: 760, mh: 700, mcx: 5480, mcy: 250 },
+      { cx: 7700, cy: 420, w: 1040, h: 720, k: 'On the Moon', v: 'for good', u: '', rail: "'40", m: 1, mw: 560, mh: 600, mcx: 7920, mcy: 400 },
       { cx: 4150, cy: 1000, w: 8500, h: 2500, k: 'Plate I', v: '2026–40', u: '', rail: 'All', full: 1, mw: 3200, mh: 2500, mcx: 4300, mcy: 1000 }
     ];
     var S = K.length, STEP = 1.1;
@@ -3324,6 +3364,20 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       rail.appendChild(b);
     });
     var railBtns = rail.querySelectorAll('button');
+
+    // ---------- captions on phones: a summary first, the full story on tap ----------
+    var fcsEl = document.getElementById('fcs');
+    fcs.forEach(function (c) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'more'; b.setAttribute('aria-expanded', 'false'); b.innerHTML = '<span>More</span><i aria-hidden="true">+</i>';
+      b.addEventListener('click', function () { setOpen(!fcsEl.classList.contains('open')); });
+      c.insertBefore(b, c.firstChild);
+      var h = c.querySelector('h1, h2'); if (h) h.addEventListener('click', function () { if (vw <= 900) setOpen(!fcsEl.classList.contains('open')); });
+    });
+    function setOpen(o) {
+      fcsEl.classList.toggle('open', o);
+      fcsEl.querySelectorAll('.more').forEach(function (b) { b.setAttribute('aria-expanded', o ? 'true' : 'false'); b.firstChild.textContent = o ? 'Less' : 'More'; b.lastChild.textContent = o ? '–' : '+'; });
+      box = null; frame();
+    }
 
     var vh = window.innerHeight, vw = window.innerWidth, lastW = -1;
     function size() {
@@ -3351,12 +3405,14 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       var p = clamp(-top / (STEP * vh), 0, S - 1);
       var i = Math.min(Math.floor(p), S - 2), f = p - i;
       var e = ease(clamp((f - 0.25) / 0.5, 0, 1));
-      var mobile = vw <= 900, a = K[i], b = K[i + 1];
-      function g(k, key) { if (mobile && k['m' + key] !== undefined) return k['m' + key]; return k[key]; }
+      // a phone held sideways keeps the caption beside the plate, not over it
+      var mobile = vw <= 900, flat = mobile && vw > vh && vh < 520, a = K[i], b = K[i + 1];
+      function g(k, key) { if (mobile && (!flat || k.cover) && k['m' + key] !== undefined) return k['m' + key]; return k[key]; }
       var cx = g(a, 'cx') + (g(b, 'cx') - g(a, 'cx')) * e, cy = g(a, 'cy') + (g(b, 'cy') - g(a, 'cy')) * e;
       var w = g(a, 'w') + (g(b, 'w') - g(a, 'w')) * e, h = g(a, 'h') + (g(b, 'h') - g(a, 'h')) * e;
       var sw = stage.clientWidth, sh = stage.clientHeight, cr = fcBox(), l, r, t, bt;
-      if (mobile) { l = 0; r = sw; t = 44; bt = Math.max(t + 140, cr.top - 6); }
+      if (flat) { l = cr.right + 8; r = sw - 56; t = 44; bt = sh - 6; }
+      else if (mobile) { l = 0; r = sw; t = 44; bt = Math.max(t + 140, cr.top - 6); }
       else { l = cr.right + 16; r = sw - 110; t = 16; bt = sh - 16; }
       // the opening plate fills the whole stage behind the title
       var cv = (a.cover ? 1 - e : 0) + (b.cover ? e : 0);
@@ -3379,6 +3435,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       var tx0 = ACX - (CX + px) * Z, ty0 = ACY - (CY + py) * Z;
       cam.setAttribute('transform', 'translate(' + tx0.toFixed(1) + ' ' + ty0.toFixed(1) + ') scale(' + Z.toFixed(4) + ')');
       var zoomed = uz > 1.04;
+      if (zoomed && typeof noteZoom === 'function') noteZoom();
       if (zoomed !== stage.classList.contains('zoomed')) { stage.classList.toggle('zoomed', zoomed); tip.classList.remove('on'); }
     }
     var ticking = false;
@@ -3411,6 +3468,11 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         tween = k < 1 ? requestAnimationFrame(st) : null; })();
     }
     function reset() { animateTo(1, 0, 0, 450); }
+    // the + glows until the visitor has looked closer once
+    var zbar = document.getElementById('zbar'), seenZoom = false;
+    try { seenZoom = localStorage.getItem('em-zoomed') === '1'; } catch (e) {}
+    if (seenZoom) zbar.classList.remove('hint');
+    function noteZoom() { if (seenZoom) return; seenZoom = true; zbar.classList.remove('hint'); try { localStorage.setItem('em-zoomed', '1'); } catch (e) {} }
     function zoomCenter(f) {
       var Zt = BZ * uz, wx = CX + px, wy = CY + py, tuz = clamp(uz * f, 1, UZMAX);
       if (tuz < 1.01) { reset(); return; }
@@ -3496,12 +3558,62 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     var hoverable = window.matchMedia && matchMedia('(hover: hover)').matches;
     if (hoverable) map.addEventListener('mousemove', function (ev) {
       var pt = plateAt(ev); if (!pt) return;
-      var s = nearest(pt), sr = stage.getBoundingClientRect();
-      map.classList.toggle('hand', !!s);
-      if (s) { tip.textContent = 'Fig. ' + s.code.replace("'", '') + ' · ' + s.name; tip.style.left = (ev.clientX - sr.left) + 'px'; tip.style.top = (ev.clientY - sr.top) + 'px'; tip.classList.add('on'); }
+      var s = nearest(pt), sr = stage.getBoundingClientRect(), tease = whisper(pt);
+      map.classList.toggle('hand', !!s || !!tease);
+      if (tease || s) { tip.textContent = tease || ('Fig. ' + s.code.replace("'", '') + ' · ' + s.name); tip.classList.toggle('w', !!tease); tip.style.left = (ev.clientX - sr.left) + 'px'; tip.style.top = (ev.clientY - sr.top) + 'px'; tip.classList.add('on'); }
       else tip.classList.remove('on');
     });
     map.addEventListener('mouseleave', function () { tip.classList.remove('on'); });
+
+    // ---------- the secrets, teased: glints on the plate, whispers on hover, a tally and riddles ----------
+    var SECRETS = [
+      { k: 'a26', el: 'portal26', riddle: "Iceland keeps an old courtesy: the hidden folk are asked first. There is a door beside them.", step: 2 },
+      { k: 'b27', el: 'portal', riddle: "Something at Luxor is watching the sky. Meet its gaze, then follow it up.", step: 3 },
+      { k: 'm45', el: 'm45', riddle: "The floor on the Moon keeps time at 145. It answers to four on the floor.", step: 9 }
+    ];
+    var found = {};
+    try { found = JSON.parse(localStorage.getItem('em-secrets') || '{}') || {}; } catch (e) { found = {}; }
+    var sx = document.getElementById('sx'), sxn = document.getElementById('sx-n'), sxr = document.getElementById('sx-r'), sxt = null, ri = 0;
+    function tally() {
+      var n = SECRETS.filter(function (q) { return found[q.k]; }).length;
+      sxn.textContent = n; sx.classList.toggle('all', n === SECRETS.length);
+      sx.setAttribute('aria-label', n + ' of ' + SECRETS.length + ' secrets found. Tap for a riddle.');
+    }
+    SECRETS.forEach(function (q) {
+      var o = document.getElementById(q.el); if (!o) return;
+      new MutationObserver(function () { if (!o.hidden && !found[q.k]) { found[q.k] = 1; try { localStorage.setItem('em-secrets', JSON.stringify(found)); } catch (e) {} tally(); } }).observe(o, { attributes: true, attributeFilter: ['hidden'] });
+    });
+    sx.addEventListener('click', function () {
+      var left = SECRETS.filter(function (q) { return !found[q.k]; });
+      var here = left.filter(function (q) { return q.step === cur; })[0];
+      sxr.textContent = here ? here.riddle : left.length ? left[ri++ % left.length].riddle : 'All three found. The Moon floor remembers you, Seeker.';
+      sxr.hidden = false; clearTimeout(sxt); sxt = setTimeout(function () { sxr.hidden = true; }, 7000);
+    });
+    tally();
+    // glints: every so often, the secret spots catch the light
+    function glint(c, r, delay, col) {
+      var g = el('g', { transform: 'translate(' + c[0].toFixed(1) + ' ' + c[1].toFixed(1) + ')', opacity: 0, 'pointer-events': 'none' }, cam);
+      el('path', { d: 'M 0 -' + r + ' L ' + (r * .18) + ' 0 L 0 ' + r + ' L -' + (r * .18) + ' 0 Z M -' + r + ' 0 L 0 ' + (r * .18) + ' L ' + r + ' 0 L 0 -' + (r * .18) + ' Z', fill: col || '#fff6e0' }, g);
+      el('circle', { r: r * .22, fill: '#ffffff' }, g);
+      el('animate', { attributeName: 'opacity', values: '0;0;1;0;0', keyTimes: '0;.86;.9;.95;1', dur: '9s', begin: delay + 's', repeatCount: 'indefinite' }, g);
+      el('animateTransform', { attributeName: 'transform', type: 'rotate', values: '0;0;45;90;90', keyTimes: '0;.86;.9;.95;1', dur: '9s', begin: delay + 's', repeatCount: 'indefinite', additive: 'sum' }, g);
+    }
+    if (EGG26) glint([EGG26.huld[0] - 30, EGG26.huld[1] - 22], 22, 1.5, '#8af5d8');
+    if (EGG) glint(EGG.eye, 20, 4.5);
+    if (FLOOR) {
+      glint(FLOOR, 30, 7, '#f2a65a');
+      // and the floor keeps time: a faint ring every four beats at 145 BPM
+      var ring = el('circle', { cx: FLOOR[0].toFixed(1), cy: FLOOR[1].toFixed(1), r: 60, fill: 'none', stroke: '#f2a65a', 'stroke-width': 3, opacity: 0, 'pointer-events': 'none' }, cam);
+      el('animate', { attributeName: 'r', values: '60;60;60;60;110', keyTimes: '0;.75;.75;.75;1', dur: '1.655s', repeatCount: 'indefinite' }, ring);
+      el('animate', { attributeName: 'opacity', values: '0;0;.55;0', keyTimes: '0;.74;.76;1', dur: '1.655s', repeatCount: 'indefinite' }, ring);
+    }
+    function whisper(pt) {
+      if (TRI) for (var q = 0; q < 3; q++) if (within(pt, TRI[q], 40)) return found.tri ? 'The first card in the deck' : 'One of these stars is holding something';
+      if (FLOOR && within(pt, FLOOR, 66)) return found.m45 ? 'Four on the floor' : 'The floor keeps time';
+      if (EGG && within(pt, EGG.eye, 16)) return found.b27 ? 'Universe 27-B' : 'It is watching the sky';
+      if (EGG26 && within(pt, EGG26.huld, 34)) return found.a26 ? 'Universe 26-A' : 'Ask first';
+      return '';
+    }
 
     // ---------- the sheet: a card from the deck ----------
     var sheet = document.getElementById('sheet'), sheetBg = document.getElementById('sheet-bg'), body = document.getElementById('sheet-body');
@@ -3591,12 +3703,13 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       e.preventDefault();
       var name = document.getElementById('j-name').value.trim(), v = document.getElementById('j-email').value.trim().toLowerCase(), err = document.getElementById('j-err');
       if (!name || !emailOk(v)) { err.hidden = false; return; }
-      var region = document.getElementById('j-country').value, ch = picked('channel'), it = picked('interest');
+      var ch = picked('channel'), it = picked('interest');
+      var ways = Array.prototype.map.call(full.querySelectorAll('input[name="channel"]:checked'), function (c) { return c.dataset.way; });
       var cio = window.cioanalytics;
       if (cio && cio.identify) {
         try {
-          cio.identify(v, { email: v, 'first name': name, source: 'eclipsemissions.com', signup_page: location.pathname, signup_placement: 'seeker-form', newsletter_subscribed: true, seeker: true, seeker_region: region, seeker_abundance: ch.join(', '), seeker_interests: it.join(', ') });
-          cio.track('Newsletter Signup', { source: 'eclipsemissions.com', form: 'Become a Seeker', region: region, abundance: ch, interests: it });
+          cio.identify(v, { email: v, 'first name': name, source: 'eclipsemissions.com', signup_page: location.pathname, signup_placement: 'seeker-form', newsletter_subscribed: true, seeker: true, seeker_participation: ways.join(', '), seeker_channels: ch.join(', '), seeker_interests: it.join(', ') });
+          cio.track('Newsletter Signup', { source: 'eclipsemissions.com', form: 'Become a Seeker', participation: ways, channels: ch, interests: it });
         } catch (x) {}
       }
       err.hidden = true; full.hidden = true; document.getElementById('j-done').hidden = false;
