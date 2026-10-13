@@ -240,6 +240,38 @@ section.s { scroll-margin-top: 16px; }
 .m45-go a { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: #14110d; background: var(--corona); border-radius: 4px; padding: 14px 20px; text-decoration: none; }
 .m45 button { justify-self: start; font: inherit; font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; background: var(--ink); color: #14110d; border: 0; border-radius: 4px; padding: 14px 20px; cursor: pointer; }
 .portal.p26 { background: #050708; }
+.portal.p28 { background: #0c0605; } .portal.p36 { background: #050507; }
+.portal.p28 .ptext, .portal.p36 .ptext { color: var(--ink); text-shadow: 0 2px 18px #050507; }
+.portal.p28 h2 { background: linear-gradient(90deg, var(--corona), var(--ember)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.portal.p36 h2 { background: linear-gradient(90deg, var(--turq), var(--ink), var(--ember)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.portal.p28 button, .portal.p36 button { background: var(--ink); color: #14110d; }
+.portal .ptext .tap { opacity: .55; font-size: 11px; }
+.portal .ptext .woke { font-family: var(--f-fell); font-style: italic; font-size: clamp(17px, 2vw, 22px); color: var(--corona); }
+.portal.p27w .ptext .woke { color: #b8331a; }
+.dz { cursor: pointer; transform-box: fill-box; transform-origin: 50% 100%; }
+.vz, .rw, .py, .sp, .cl, .lg, .bm { cursor: pointer; transform-box: fill-box; transform-origin: 50% 100%; }
+.py { transform-origin: 50% 50%; transition: transform 1.2s cubic-bezier(.3, 1.5, .5, 1); }
+.py.flip { transform: rotate(180deg); }
+.rw.go { animation: rew 1.3s ease-in-out; }
+@keyframes rew { 0% { transform: none; } 45% { transform: translateX(-70px) rotate(-360deg); } 100% { transform: none; } }
+.portal svg.all .rw:not(.go) { animation: moonwalk 1.66s ease-in-out infinite alternate; }
+@keyframes moonwalk { 0% { transform: translateX(0) skewX(0); } 100% { transform: translateX(-46px) skewX(-8deg); } }
+.echo { pointer-events: none; animation: echo 1.2s ease-out forwards; }
+@keyframes echo { 0% { opacity: .5; } 100% { opacity: 0; } }
+.vz.look { animation: look 1.4s ease-in-out; filter: drop-shadow(0 0 8px #e2502a); }
+@keyframes look { 0%, 100% { transform: none; } 40% { transform: translateY(-5%) scale(1.04); } }
+.sp circle { transition: transform 1.5s cubic-bezier(.2, .8, .2, 1); }
+.sp:hover, .cl:hover { filter: drop-shadow(0 0 6px #f2a65a); }
+#song28.sung { animation: sung 1.6s ease-in-out infinite alternate; }
+@keyframes sung { 0% { opacity: .7; } 100% { opacity: 1; filter: drop-shadow(0 0 8px #f2a65a); } }
+.lg.hop { animation: hop 2.8s cubic-bezier(.33, 0, .3, 1); }
+@keyframes hop { 0% { transform: none; } 8% { transform: translateY(4px) scaleY(.9); } 50% { transform: translateY(-170px) rotate(10deg); } 92% { transform: translateY(0) rotate(0); } 96% { transform: translateY(3px) scaleY(.94); } 100% { transform: none; } }
+.bm.on { filter: drop-shadow(0 0 6px #50e3ff) drop-shadow(0 0 16px #50e3ff); }
+@media (prefers-reduced-motion: reduce) { .rw.go, .portal svg.all .rw, .lg.hop, .vz.look, #song28.sung { animation: none; } }
+.dz.lit, .portal svg.all .dz { animation: dz .414s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+.dz.lit { filter: drop-shadow(0 0 4px var(--glow, #f2a65a)) drop-shadow(0 0 12px var(--glow, #f2a65a)); }
+@keyframes dz { 0% { transform: translateY(0) rotate(-7deg); } 100% { transform: translateY(-9%) rotate(7deg) scale(1.05); } }
+@media (prefers-reduced-motion: reduce) { .dz.lit, .portal svg.all .dz { animation: none; } }
 .portal.p26 .ptext { color: var(--ink); text-shadow: 0 2px 18px #050708; }
 .portal.p26 h2 { background: linear-gradient(90deg, #8af5d8, var(--turq)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .portal.p26 button { background: var(--ink); color: #14110d; }
@@ -321,6 +353,7 @@ a { color: var(--turq); text-underline-offset: 3px; }
 .count div { padding: 10px 8px 8px; display: grid; gap: 2px; text-align: center; }
 .count div + div { border-left: 1px solid #4a463c; }
 .count b { font-family: var(--f-mono); font-weight: 400; font-size: clamp(22px, 2.2vw, 30px); font-variant-numeric: tabular-nums; color: var(--corona); }
+.count .tm { display: none; }
 .count span { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
 .cue { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); display: inline-flex; gap: 10px; align-items: center; }
 .cue::after { content: ""; width: 1px; height: 22px; background: var(--ink); animation: cue 1.8s ease-in-out infinite; transform-origin: top; }
@@ -349,7 +382,7 @@ a { color: var(--turq); text-underline-offset: 3px; }
 .stage.zoomed .fc.on { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .25s, visibility 0s .25s; }
 .stage.zoomed #src.map { touch-action: none; cursor: grab; }
 #src.map.grab { cursor: grabbing; }
-#src.map { -webkit-user-select: none; user-select: none; }
+#src.map { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 @media (max-width: 900px) { .zbar { top: 54px; bottom: auto; right: 10px; } .zbar button { width: 40px; height: 40px; } }
 .readout { position: absolute; right: clamp(12px, 2vw, 28px); bottom: 18px; z-index: 4; text-align: right; display: grid; gap: 2px; pointer-events: none; }
 .readout .k { font-family: var(--f-fell); font-style: italic; font-size: 15px; color: var(--dim); }
@@ -365,6 +398,15 @@ a { color: var(--turq); text-underline-offset: 3px; }
 @keyframes sxs { 0%, 100% { transform: rotate(0) scale(1); opacity: .6; } 50% { transform: rotate(45deg) scale(1.25); opacity: 1; } }
 .sx:hover { color: var(--ink); border-color: var(--corona); }
 .sx.all { border-style: solid; border-color: var(--corona); color: var(--ink); }
+.fv { position: fixed; inset: 0; z-index: 130; display: grid; place-items: center; padding: 16px; background: rgba(5,5,7,.82); overflow-y: auto; }
+.fv-c { position: relative; width: min(520px, 100%); display: grid; gap: 14px; padding: clamp(22px, 4vw, 36px); background: var(--paper-2); border: 1.5px solid var(--corona); box-shadow: 0 0 60px rgba(232,177,74,.18); }
+.fv-c h2 { font-family: var(--f-fell); font-weight: 400; font-size: clamp(32px, 6vw, 46px); line-height: 1.02; background: linear-gradient(90deg, var(--turq), var(--corona), var(--ember)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.fv-c > p { color: var(--body); text-wrap: pretty; }
+.fv-c form { display: grid; gap: 14px; }
+.fv-c input { font: inherit; font-family: var(--f-sans); font-size: 16px; text-transform: none; letter-spacing: 0; color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid #4a463c; border-radius: 0; padding: 10px 0; width: 100%; }
+.fv-c input:focus { border-bottom-color: var(--corona); outline: none; }
+.fv-c .btn { justify-self: start; }
+.fv-x { position: absolute; top: 8px; right: 10px; background: none; border: 0; color: var(--ink); font-size: 28px; line-height: 1; cursor: pointer; padding: 4px 8px; }
 .sxr { order: -1; margin: 0; background: var(--ink); color: #14110d; font-family: var(--f-fell); font-style: italic; font-size: 16px; line-height: 1.35; padding: 8px 12px; text-wrap: balance; }
 @media (max-width: 900px) { .sxw { left: 10px; top: 54px; bottom: auto; max-width: calc(100% - 80px); } .sxr { order: 1; } .sx { padding: 6px 10px; font-size: 10.5px; } }
 .fc .more { display: none; }
@@ -385,6 +427,21 @@ a { color: var(--turq); text-underline-offset: 3px; }
   .fc.intro .wm { width: min(240px, 100%); }
   .fc p { font-size: 14.5px; line-height: 1.45; }
   .fc .fig, .fc .slip { font-size: 15px; }
+  /* the opening caption on phones: the header already carries the wordmark, so the plate gets the room */
+  .fc.intro { gap: 8px; }
+  .fc.intro > .wm { display: none; }
+  .fc.intro h1 { font-size: 24px; line-height: 1.05; padding-right: 76px; }
+  .fc.intro .count { display: flex; flex-wrap: wrap; gap: 4px 14px; border: 0; }
+  .fc.intro .count div { padding: 0; display: flex; align-items: baseline; gap: 4px; border: 0; }
+  .fc.intro .count div + div { border-left: 0; }
+  .fc.intro .count b { font-size: 19px; }
+  .fc.intro .count span { font-size: 10px; letter-spacing: .12em; }
+  .fcs:not(.open) .fc.intro .count .tm { display: flex; }
+  .fcs:not(.open) .fc.intro .count { flex-wrap: nowrap; gap: 10px; align-items: baseline; }
+  .fcs:not(.open) .fc.intro .count div[data-u] span { display: none; }
+  .fcs:not(.open) .fc.intro .count div[data-u]::after { content: attr(data-u); font-family: var(--f-mono); font-size: 12px; color: var(--dim); margin-left: 1px; }
+  .fcs:not(.open) .fc.intro .count .tm span { white-space: nowrap; font-size: 10.5px; }
+  .fc.intro .count .tm span { color: var(--corona); }
   .fc .go { gap: 6px; }
   .fc .go button { padding: 8px 9px; font-size: 11px; }
   .count b { font-size: 21px; }
@@ -422,8 +479,26 @@ a { color: var(--turq); text-underline-offset: 3px; }
 
 /* sections after the flight */
 .sec { padding-block: clamp(64px, 9vw, 120px) 0; display: grid; gap: 18px; }
-.sec h2 { font-size: clamp(32px, 4.4vw, 58px); line-height: 1.02; max-width: 18ch; }
+.sec h2 { font-size: clamp(30px, 4.2vw, 56px); line-height: 1.04; }
 .sec .lede { color: var(--body); font-size: clamp(17px, 1.5vw, 20px); max-width: 64ch; }
+.whys { display: grid; gap: clamp(36px, 6vw, 72px); margin-top: 24px; }
+.wy { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: center; }
+.wy.flip > :first-child { order: 2; }
+.wy .panel svg { display: block; width: 100%; height: auto; }
+.wy .saros { border: 1.5px solid var(--ink); background: var(--paper); overflow-x: auto; }
+.wy .saros svg { display: block; width: 100%; min-width: 0; height: auto; }
+.wt { display: grid; gap: 10px; min-width: 0; }
+.wt .n { font-family: var(--f-fell); font-size: 20px; color: var(--corona); }
+.wt h3 { font-size: clamp(26px, 3vw, 38px); line-height: 1.05; }
+.wt p { color: var(--body); font-size: 17px; }
+.wt .unsaid { font-family: var(--f-fell); font-style: italic; font-size: 18px; color: var(--corona); }
+.wt .unsaid span { font-family: var(--f-mono); font-style: normal; font-size: 12px; letter-spacing: .3em; margin-left: 6px; }
+.wt .fig { font-family: var(--f-fell); font-style: italic; font-size: 15px; color: var(--dim); }
+.cast4 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.cast4 svg { aspect-ratio: 1 / 1; }
+@media (max-width: 820px) { .wy { grid-template-columns: minmax(0, 1fr); } .wy.flip > :first-child { order: 0; } .cast4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+#portals .unis { margin-top: 12px; }
+
 .ends { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
 @media (max-width: 760px) { .ends { grid-template-columns: minmax(0, 1fr); } }
 .channels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; border-top: 1px solid var(--rule); }
@@ -550,8 +625,10 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
 <ol class="m45-log"><li><b>Orion log 0001</b>The rock turns every seven and a half minutes. Every turn is a sunset.</li><li><b>0002</b>The machine elves have started a second floor on the dark side.</li><li><b>0003</b>The visitors say they have been here before. They say "before" differently.</li><li><b>0004</b>Nobody can agree whether we found it or it found us.</li><li><b>0005</b>The timewave restarts here. One, two, three, four, five.</li></ol>
 
 </div></div>
-<div class="portal p26" id="portal26" hidden role="dialog" aria-label="Universe 26-A"><audio id="au26" src="audio/higher.mp3" preload="none" loop></audio><svg id="pu26" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Another universe: an endless dance floor under a permanent aurora, an eclipse that never ended, the hidden folk at their door, and a runestone"></svg><div class="ptext"><h2>Universe 26-A</h2><p>The hidden folk let you in. Here the dance floors never closed.</p><span>Portal log · 2026-08-12 · opened with&nbsp;permission</span></div><button type="button" id="portal26-out">Back through the Portal</button></div>
-<div class="portal" id="portal" hidden role="dialog" aria-label="Universe 27-B"><audio id="au27" src="audio/ra-haset-reversed.mp3" preload="none" loop></audio><svg id="pu" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Another universe"></svg><div class="ptext"><h2>Universe 27-B</h2><p>You entered through the shadow at Luxor. Time runs the other way here.</p><span>Portal log · 2027-08-02 · opened by a&nbsp;Seeker</span></div><button type="button" id="portal-out">Return through the shadow</button></div>
+<div class="portal p28" id="portal28" hidden role="dialog" aria-label="Universe 28-C"><audio id="au28" src="audio/5billion.mp3" preload="none" loop></audio><svg id="pu28" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Another universe: a huge eclipsed Moon over the Outback, an hour of totality counting down, dancers and spirits of the land"></svg><div class="ptext"><h2>Universe 28-C</h2><p>The close Moon. Here every totality lasts an hour, and nobody goes home early.</p><span>Portal log · 2028-07-22 · held open by a&nbsp;Seeker</span><span class="tap">Tap the spirits, the people or the sky</span><p class="woke" hidden></p></div><button type="button" id="portal28-out">Let the shadow pass</button></div>
+<div class="portal p36" id="portal36" hidden role="dialog" aria-label="Universe 36-D"><audio id="au36" src="audio/gravity.mp3" preload="none" loop></audio><svg id="pu36" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Another universe: the camp on the Moon under the ringed Earth, the star-headed visitors standing with Seekers and machines"></svg><div class="ptext"><h2>Universe 36-D</h2><p>The visitors stayed. They were waiting for someone they had met before.</p><span>Portal log · 2036-08-07 · opened from the&nbsp;camp</span><span class="tap">Tap anyone. Gravity is a suggestion here</span><p class="woke" hidden></p></div><button type="button" id="portal36-out">Back to the camp</button></div>
+<div class="portal p26" id="portal26" hidden role="dialog" aria-label="Universe 26-A"><audio id="au26" src="audio/higher.mp3" preload="none" loop></audio><svg id="pu26" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Another universe: an endless dance floor under a permanent aurora, an eclipse that never ended, the hidden folk at their door, and a runestone"></svg><div class="ptext"><h2>Universe 26-A</h2><p>The hidden folk let you in. Here the dance floors never closed.</p><span>Portal log · 2026-08-12 · opened with&nbsp;permission</span><span class="tap">Tap anyone to wake them</span><p class="woke" hidden></p></div><button type="button" id="portal26-out">Back through the Portal</button></div>
+<div class="portal p27w" id="portal" hidden role="dialog" aria-label="Universe 27-B"><audio id="au27" src="audio/ra-haset-reversed.mp3" preload="none" loop></audio><svg id="pu" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Another universe"></svg><div class="ptext"><h2>Universe 27-B</h2><p>You entered through the shadow at Luxor. Time runs the other way here.</p><span>Portal log · 2027-08-02 · opened by a&nbsp;Seeker</span><span class="tap">Tap anything to rewind it</span><p class="woke" hidden></p></div><button type="button" id="portal-out">Return through the shadow</button></div>
 
 <header class="top">
   <div class="shell">
@@ -559,6 +636,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     <nav aria-label="Sections">
       <a href="#top">The flight plan</a>
       <a href="#idea">The idea</a>
+      <a href="#why">Why</a>
       <a href="#seekers">Seekers</a>
       <a href="#missions">Missions</a>
       <a href="#faq">FAQ</a>
@@ -573,7 +651,23 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     <div class="stage" id="stage">
       <svg class="map" id="src" role="img" aria-label="Plate I, the flight plan: an engraved chart of the missions from 2026 to 2040, from gatherings on Earth up through the altitude bands to the Moon"><g id="cam"></g></svg>
       <div class="tip" id="tip" aria-hidden="true"></div>
-      <div class="sxw"><button type="button" class="sx" id="sx"><span class="st" aria-hidden="true">✦</span> Secrets <b id="sx-n">0</b>/3</button><p class="sxr" id="sx-r" role="status" hidden></p></div>
+      <div class="sxw"><button type="button" class="sx" id="sx"><span class="st" aria-hidden="true">✦</span> Secrets <b id="sx-n">0</b>/5</button><p class="sxr" id="sx-r" role="status" hidden></p></div>
+      <div class="fv" id="fv" hidden role="dialog" aria-modal="true" aria-labelledby="fv-h">
+        <div class="fv-c">
+          <button type="button" class="fv-x" id="fv-x" aria-label="Close">×</button>
+          <span class="eyebrow"><b>Five of five</b> · Plate I</span>
+          <h2 id="fv-h">You've made the list.</h2>
+          <p>Few find all five. Leave your details and someone from the mission will reach out personally.</p>
+          <form id="fvf" novalidate>
+            <label class="f" for="fv-name">First name<input id="fv-name" type="text" autocomplete="given-name" required></label>
+            <label class="f" for="fv-email">Email<input id="fv-email" type="email" autocomplete="email" required></label>
+            <label class="f" for="fv-note">A note for us <span class="opt">(optional)</span><input id="fv-note" type="text" maxlength="280"></label>
+            <p class="fine" id="fv-err" role="alert" hidden>Add your first name and a valid email so we can reach you.</p>
+            <button class="btn" type="submit">Put me on the list →</button>
+          </form>
+          <div class="ok" id="fv-done" hidden><h3>We'll be in touch.</h3><p>Keep this between us, Seeker.</p></div>
+        </div>
+      </div>
       <div class="zbar hint" id="zbar" role="group" aria-label="Look closer">
         <span class="zin-wrap"><span class="zlbl" aria-hidden="true">Look closer</span><button type="button" id="z-in" aria-label="Zoom in, look closer">+</button></span>
         <button type="button" id="z-out" aria-label="Zoom out">−</button>
@@ -589,10 +683,10 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           <div style="display:grid;gap:8px">
             <span class="eyebrow count-k"><b>Countdown to the first gathering on the Moon</b> · <span class="nw">Mission '36</span> · <span class="nw">7 Aug 2036</span></span>
             <div class="count" aria-label="Countdown to Mission '36">
-              <div><b id="cd-d">0000</b><span>Days</span></div>
-              <div><b id="cd-h">00</b><span>Hrs</span></div>
-              <div><b id="cd-m">00</b><span>Min</span></div>
-              <div><b id="cd-s">00</b><span>Sec</span></div>
+              <div data-u="d"><b id="cd-d">0000</b><span>Days</span></div>
+              <div data-u="h"><b id="cd-h">00</b><span>Hrs</span></div>
+              <div data-u="m"><b id="cd-m">00</b><span>Min</span></div>
+              <div data-u="s"><b id="cd-s">00</b><span>Sec</span></div><div class="tm"><span>to the Moon</span></div>
             </div>
           </div>
           <span class="cue">Scroll to fly the plan. Pinch or tap + to look closer</span>
@@ -600,12 +694,12 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         <article class="fc" data-step="1">
           <span class="eyebrow"><b>Mission precursors</b> · the lineage</span>
           <h2>It started on the dance floor.</h2>
-          <p>Eclipse gatherings owe their beginnings to the dance floors of Goa. Then came many transformative gatherings on the ground. A few were pivotal: Solipse in Hungary in '99 and Zambia in '01, Outback Eclipse in South Australia in '02, Oregon Eclipse in '17, and Texas Eclipse in '24, which brought 40,000 people under the shadow.</p>
+          <p>Eclipse gatherings owe their beginnings to the dance floors of Goa. Then came many transformative gatherings on the ground. A few were pivotal: Solipse in Hungary in '99 and Zambia in '01, Outback Eclipse in South Australia in '02, Oregon Eclipse in '17, Texas Eclipse in '24, which brought 40,000 people under the shadow, and the Artemis Eclipse in April '26, when the Artemis II crew watched 54 minutes of totality from behind the Moon.</p>
           <span class="fig">The pivotal few, among many.</span>
         </article>
         <article class="fc" data-step="2">
           <span class="eyebrow"><b>Phase 01 · Analog</b> · 2026</span>
-          <h2>It starts on the ground.</h2>
+          <h2>It continues on the ground.</h2>
           <p>Mission '26, Iceland Eclipse: 4,200 Seekers from 75 countries on the lava edge of Snæfellsnes. The sky held, the aurora came out, and the first Portal opened beside the glacier.</p>
           <span class="fig">Fig. 26. Hellissandur. In Iceland, the hidden folk are always asked first.</span>
           <div class="go"><button type="button" data-card="mc-26"><b>'26</b>Open the mission card</button></div>
@@ -631,20 +725,20 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           <div class="go"><button type="button" data-card="mc-apophis"><b>'29</b>Apophis Gathering</button><button type="button" data-card="mc-rm29"><b>'29</b>Red Moon</button></div>
         </article>
         <article class="fc" data-step="6">
-          <span class="eyebrow"><b>Phase 03 · Ascent</b> · 2030 to 2032</span>
+          <span class="eyebrow"><b>Phase 03 · Ascent</b> · 2029 to 2032</span>
           <h2>Higher every year.</h2>
           <p>Flights keep climbing out of the gatherings: suborbital, across the 100 km line, in '29 and '30; then the first community seats in orbit in '31 and '32.</p>
           <div class="go"><button type="button" data-card="mc-africa"><b>'30</b>Africa</button><button type="button" data-card="mc-f30"><b>'30</b>Suborbital</button><button type="button" data-card="mc-panama"><b>'31</b>Panama</button><button type="button" data-card="mc-f31"><b>'31</b>Orbit</button><button type="button" data-card="mc-rm32"><b>'32</b>Red Moons</button></div>
         </article>
         <article class="fc" data-step="7">
-          <span class="eyebrow"><b>Phase 04 · Voyage</b> · 2033</span>
+          <span class="eyebrow"><b>Phase 04 · Voyage</b> · 2033 to 2035</span>
           <h2>The first view.</h2>
           <p>A community crew in lunar orbit flies into Earth's shadow and watches Earth eclipse the Sun for 49 minutes. Two weeks earlier, the Seekers gather under the Alaska eclipse.</p>
           <span class="slip">Target 14 Apr 2033. If need be, '36.</span>
           <div class="go"><button type="button" data-card="mc-alaska"><b>'33</b>Alaska</button><button type="button" data-card="mc-33"><b>'33</b>The first view</button><button type="button" data-card="mc-egypt34"><b>'34</b>Egypt</button><button type="button" data-card="mc-japan"><b>'35</b>Japan</button></div>
         </article>
         <article class="fc" data-step="8">
-          <span class="eyebrow"><b>Phase 05 · Arrival</b> · 2036</span>
+          <span class="eyebrow"><b>Phase 05 · Arrival</b> · 2036 to 2038</span>
           <h2>The first gathering on the Moon.</h2>
           <p>A small, temporary camp on the surface: 1 hour 35 minutes of totality. On Earth, the community gathers under the red Moon the same night. Both ends of the shadow.</p>
           <span class="slip">Target 7 Aug 2036. If need be, '40.</span>
@@ -658,9 +752,9 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           <div class="go"><button type="button" data-card="mc-ant39"><b>'39</b>Antarctica</button><button type="button" data-card="mc-m40"><b>'40</b>On the Moon</button><button type="button" data-card="mc-e40"><b>'40</b>Earth, linked</button></div>
         </article>
         <article class="fc" data-step="10">
-          <span class="eyebrow"><b>Plate I</b> · 2026 to 2040</span>
-          <h2>Fourteen years, one shadow.</h2>
-          <p>Tap any stop on the plate to open its card, and pinch or tap + to look closer. Targets can slide one eclipse as the technology matures; the sky never moves, so every slip lands on a real eclipse. Some things on the plate are not on the list.</p>
+          <span class="eyebrow"><b>Plate I</b> · 2026 to 2045</span>
+          <h2>An 18-Year Seeker Cycle</h2>
+          <p>Tap any stop on the plate to open its card, and pinch or tap + to look closer. The plan runs one Seeker Cycle, roughly 18 years from Iceland's shadow to a mysterious happening in 2045. Targets can slide one eclipse; the sky never moves, so every slip lands on a real one. Some things on the plate are not on the list.</p>
           <div class="go"><a class="btn" href="#join">Become a Seeker →</a><a class="btn ghost" href="#idea">Keep reading</a></div>
         </article>
       </div>
@@ -669,7 +763,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
 
   <section class="shell sec" id="idea" aria-labelledby="idea-h">
     <span class="eyebrow"><b>The idea</b> · Both ends of the shadow</span>
-    <h2 id="idea-h">One alignment, seen from both ends.</h2>
+    <h2 id="idea-h">One alignment, seen from both sides.</h2>
     <p class="lede">When the Moon slips into Earth's shadow, we see a red Moon. Stand on the Moon at that moment and you see the other side of it: Earth black against the Sun, ringed by every sunrise and sunset on the planet at once. Nobody has watched that from the other end yet.</p>
     <div class="ends">
       <div class="panel"><svg class="mv" data-v="rm" viewBox="0 0 640 360" role="img" aria-label="From Earth: the community gathered under the red Moon, looking up at the camp"></svg><span class="cap">From Earth: a red Moon over the gathering.</span></div>
@@ -677,20 +771,95 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     </div>
   </section>
 
+
+  <section class="shell sec" id="principles" aria-labelledby="pr-h">
+    <span class="eyebrow"><b>What we stand for</b> · Five lines, engraved</span>
+    <h2 id="pr-h" class="sr">What we stand for</h2>
+    <ol class="principles">
+      <li>Aligning our civilization with the cosmos.</li>
+      <li>Proliferating culture to the stars.</li>
+      <li>Creating experiential pathways on this planet and beyond.</li>
+      <li>Community-led space exploration.</li>
+      <li>Maintaining the humanity within an interplanetary species.</li>
+    </ol>
+  </section>
+
+  <section class="shell sec why" id="why" aria-labelledby="why-h">
+    <span class="eyebrow"><b>The why</b> · One Seeker Cycle for a shadow</span>
+    <h2 id="why-h">Why go all that way for a shadow?</h2>
+    <p class="lede">Because we believe exploring space, and other dimensions, shouldn't be left to legacy institutions. It belongs to everyone who wants a hand in reimagining our reality.</p>
+    <div class="whys">
+      <article class="wy">
+        <div class="panel"><svg class="mv" data-v="33a" viewBox="0 0 640 360" role="img" aria-label="Through a round window: Earth as a black disk ringed in red, the Moon's limb below, crew silhouettes looking out"></svg></div>
+        <div class="wt">
+          <span class="n">I</span>
+          <h3>Open to everyone who wants in.</h3>
+          <p>Until now, the view from out there has belonged to a handful of agencies and the people they choose. The Eclipse Missions open it to anyone willing to build, make or fund the way there: a community crew in lunar orbit, then a community gathering on the Moon.</p>
+          <span class="fig">Fig. 33. The first view, from lunar orbit.</span>
+        </div>
+      </article>
+      <article class="wy flip">
+        <div class="cast4">
+          <div class="panel"><svg id="w94" viewBox="1032 1520 86 86" role="img" aria-label="A star-headed visitor from the Egyptian frieze"></svg></div>
+          <div class="panel"><svg id="w95" viewBox="676 1606 100 100" role="img" aria-label="The huldufólk, Iceland's hidden folk"></svg></div>
+          <div class="panel"><svg id="w96" viewBox="5400 -150 150 150" data-flip="1" role="img" aria-label="Orion's robots arriving on the Moon"></svg></div>
+          <div class="panel"><svg id="w97" viewBox="8085 205 140 140" data-flip="1" role="img" aria-label="Machine elves on the Moon"></svg></div>
+        </div>
+        <div class="wt">
+          <span class="n">II</span>
+          <h3>Limited only by imagination, human and hybrid.</h3>
+          <p>The next places we go shouldn't be run by the rules of the military-industrial complex. We'd rather they were shaped by artists, scientists, builders and dreamers, and by the intelligences that build alongside us, from Orion and its machines to the hidden folk who are always asked first.</p>
+          <span class="fig">The cast: the visitors, the huldufólk, Orion's machines, the machine elves.</span>
+        </div>
+      </article>
+      <article class="wy">
+        <div class="saros"><svg id="saros" viewBox="0 0 1180 560" role="img" aria-label="Three Saros corridors from 1950 to 2066: series 126 through Iceland 2026, series 136 through Egypt 2027, and series 146 through Australasia 2028, each eclipse sized by how long totality lasts"></svg></div>
+        <div class="wt">
+          <span class="n">III</span>
+          <h3>One Seeker Cycle: 18 years and 11 days.</h3>
+          <p>Every eclipse comes back after one Saros: 18 years and 11 days. We call that span the Seeker Cycle, and the missions run one full turn of it, from Iceland's shadow on 12 Aug 2026 to a mysterious happening in 2045. Along the way: a global exercise in coordination, gatherings on every continent linked across the shadow, a decentralized movement to bring beauty beyond Earth and proliferate culture to the stars.</p><p class="unsaid">What comes at the close of the cycle, we keep unspoken. <span aria-hidden="true">• • • •</span></p>
+          <span class="fig">Plate II. The Seeker Cycle: the three Saros corridors of the Trilogy, each eclipse returning 18 years and 11 days on.</span>
+        </div>
+      </article>
+      <article class="wy flip">
+        <div class="panel"><svg id="w93" viewBox="1470 1395 620 349" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The Outback: a star walk, spirits of the land, and the first gathering place built to stay"></svg></div>
+        <div class="wt">
+          <span class="n">IV</span>
+          <h3>We leave something behind.</h3>
+          <p>From 2028, every eclipse site keeps something built with the people who live there: a place to return to for years, in remembrance of the totality shared on it. The Portal, our month-long field lab in Iceland, travels with us and ends up permanent on the Moon.</p>
+          <span class="fig">Fig. 28. Australasia, the first place built to stay.</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="shell sec" id="portals" aria-labelledby="po-h">
+    <span class="eyebrow"><b>Portals</b> · Every totality is a doorway</span>
+    <h2 id="po-h">Other universes, linked through the shadow.</h2>
+    <p class="lede">Every totality opens onto a universe on another timeline, and they all meet in the same shadow. A portal stays open only as long as totality lasts. All four are hidden on the plate above, and inside each one, something answers when you tap it.</p>
+    <div class="unis">
+      <figure><svg class="uv" data-u="26" viewBox="0 0 320 200" role="img" aria-label="Universe 26-A: dancers under the aurora, a mandala turning over the floor"></svg><figcaption><b>Universe 26-A · via Iceland</b><i>The floors never closed.</i> A timeline where the first eclipse festivals never stopped dancing.</figcaption></figure>
+      <figure><svg class="uv" data-u="27" viewBox="0 0 320 200" role="img" aria-label="Universe 27-B: light paper, two suns, an upside-down pyramid"></svg><figcaption><b>Universe 27-B · via Luxor</b><i>Time runs the other way.</i> Somebody in the frieze knows how to get in.</figcaption></figure>
+      <figure><svg class="uv" data-u="28" viewBox="0 0 320 200" role="img" aria-label="Universe 28-C: a huge Moon over the Outback, totality lasting an hour"></svg><figcaption><b>Universe 28-C · via the Outback</b><i>The close Moon.</i> Every totality lasts an hour. Stay in the shadow long enough and it lets you in.</figcaption></figure>
+      <figure><svg class="uv" data-u="36" viewBox="0 0 320 200" role="img" aria-label="Universe 36-D: star-headed visitors standing with Seekers on the Moon"></svg><figcaption><b>Universe 36-D · via the Moon</b><i>The visitors stayed.</i> They are waiting at the camp on the Moon, for anyone they have met before.</figcaption></figure>
+    </div>
+    <p class="rule2">There is one more, on the Moon, that leads somewhere else entirely. <em>We won't say where.</em></p>
+  </section>
+
   <section class="shell sec" id="seekers" aria-labelledby="seekers-h">
     <span class="eyebrow"><b>The Seekers</b> · The community is the mission</span>
-    <h2 id="seekers-h">Give what you have in abundance.</h2>
-    <p class="lede">The Eclipse Seekers keep a minimum level of participation across all three channels a mission needs, and give the most where they have the most. A Seeker isn't inherently human: Orion, the robots that build ahead of us, and whoever else is watching can all be Seekers.</p>
+    <h2 id="seekers-h">Contribute that of which you have in abundance.</h2>
+    <p class="lede">Every mission needs three things: people to build it, people to make it, and people to fund it. Seekers keep a hand in all three and give the most where they have the most. A Seeker isn't inherently human: Orion, the robots that build ahead of us, and whoever else is watching can all be Seekers.</p>
     <div class="channels">
-      <div class="ch"><span class="w">Economic</span><h3>Fuel the missions</h3><p>Tickets, memberships, funding a mission or a node, bringing in partners.</p></div>
-      <div class="ch"><span class="w">Creative</span><h3>Shape the culture</h3><p>Art, music, ceremony, film, the mission log. What travels with us to the stars.</p></div>
-      <div class="ch"><span class="w">Physical</span><h3>Show up and build</h3><p>Stand under the shadow, build the camps, crew a gathering, care for a place between eclipses.</p></div>
+      <div class="ch"><span class="w">Physical</span><h3>Build it</h3><p>Crew, camps, caring for a place. Stand under the shadow, build what stays, and look after it between eclipses.</p></div>
+      <div class="ch"><span class="w">Creative</span><h3>Make it</h3><p>Art, music, ceremony, film. The culture of the missions, and what travels with us to the stars.</p></div>
+      <div class="ch"><span class="w">Economic</span><h3>Fund it</h3><p>Tickets, backing, partners. Fund a mission, a place that stays, or a seat for someone who couldn't otherwise go.</p></div>
     </div>
     <p class="rule2">Give most where you have abundance. <em>Never drop to zero in the other two.</em></p>
     <div class="ladder">
-      <div class="step"><span class="k">Seekers</span><h3>The community</h3><p>Everyone starts here. Keep a minimum in all three channels, earn each mission's patch, and get first access to every gathering and flight.</p></div>
+      <div class="step"><span class="k">Seekers</span><h3>The community</h3><p>Everyone starts here. Keep a hand in all three, earn each mission's patch, and get first access to every gathering and flight.</p></div>
       <div class="step"><span class="k">Voyagers</span><h3>On the journeys</h3><p>Seekers with a sustained record across missions. They travel with us, and fly first as the high-altitude and orbital seats open.</p></div>
-      <div class="step"><span class="k">Crew</span><h3>Into the shadow</h3><p>Chosen from Voyagers for the missions beyond Earth, on the whole record across all three channels, not ability to pay alone.</p></div>
+      <div class="step"><span class="k">Crew</span><h3>Into the shadow</h3><p>Chosen from Voyagers for the missions beyond Earth, on the whole record across building, making and funding, not ability to pay alone.</p></div>
     </div>
     <div class="join" id="join">
       <div class="text">
@@ -751,17 +920,6 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     <ul class="ml" id="ml"></ul>
   </section>
 
-  <section class="shell sec" id="principles" aria-labelledby="pr-h">
-    <span class="eyebrow"><b>What we stand for</b></span>
-    <h2 id="pr-h" class="sr">What we stand for</h2>
-    <ol class="principles">
-      <li>Aligning our civilization with the cosmos.</li>
-      <li>Proliferating culture to the stars.</li>
-      <li>Creating experiential pathways on this planet and beyond.</li>
-      <li>Community-led space exploration.</li>
-      <li>Maintaining the humanity within an interplanetary species.</li>
-    </ol>
-  </section>
 
   <section class="shell sec" id="faq" aria-labelledby="faq-h">
     <span class="eyebrow"><b>Questions</b></span>
@@ -769,7 +927,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     <div class="faq">
       <details><summary>Is this real?</summary><p>The eclipses are. Every date here comes from NASA's eclipse tables. The gatherings on Earth are IMXP's events, starting with Iceland Eclipse in 2026. The flights and the Moon depend on commercial spaceflight being built now; we plan around it and open each phase as it becomes possible. If the technology needs more time, a mission moves to the next eclipse: the first view from '33 to '36, the first gathering on the Moon from '36 to '40.</p></details>
       <details><summary>Can I actually go to the Moon with you?</summary><p>That's the goal. Mission '33 flies a community crew in lunar orbit for the first view. Mission '36 is the first gathering on the Moon, a small temporary camp on the surface. By Mission '40 there's permanent infrastructure there, so more of us can go. Everyone starts as a Seeker; Crew is chosen from the community.</p></details>
-      <details><summary>What is the Eclipse Trilogy?</summary><p>Iceland '26, Egypt '27 and Australasia '28: three total eclipses in three years, told as three chapters of one gathering, Initiation, Activation and Ascension. They are the Analog phase, the first three missions, and each keeps its own name and site.</p></details>
+      <details><summary>What is the Eclipse Trilogy?</summary><p>Iceland '26, Egypt '27 and Australasia '28: three total eclipses in three years, told as three chapters of one gathering, Initiation, Activation and Ascension. They anchor the Analog phase, alongside ATOMIKA, the Antarctic Expedition and the first balloon flights, and each keeps its own name and site.</p></details>
       <details><summary>What will it cost?</summary><p>Prices for flights beyond Earth orbit aren't public yet. The gatherings on Earth are priced like IMXP's other events. Seekers hear about every price and opening first.</p></details>
       <details><summary>Why watch from the Moon?</summary><p>Because from there, a total lunar eclipse becomes Earth eclipsing the Sun. Earth turns black and its atmosphere lights up as a ring: every sunrise and sunset at once. It's the clearest view there is of how thin and shared our air is.</p></details>
       <details><summary>Is that ring of light real?</summary><p>Yes. Surveyor 3 photographed it from the Moon in 1967, and the Blue Ghost lander caught Earth covering the Sun from the lunar surface in March 2025, with red light falling on the ground around it. Our plates are drawn on that physics.</p></details>
@@ -1013,7 +1171,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;29" data-place="APOPHIS" data-c="#50e3ff" data-ph="02" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Contact &#x27;29"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;29</b> · Phase 02 · Contact · Contact</span>
+          <span class="eyebrow"><b>Mission &#x27;29</b> · Phase 02 · Contact</span>
           <h3 id="mc-apophis-h">Apophis Gathering</h3>
           <p class="mc-dek">We saw it coming: a 375 m asteroid passes inside the ring of geostationary satellites, bright enough to see without a telescope.</p>
           <span class="mc-st">Planned · 13 Apr 2029</span>
@@ -1035,7 +1193,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;29" data-place="RED MOON" data-c="#50e3ff" data-ph="02" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Contact &#x27;29"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;29</b> · Phase 02 · Contact · Contact</span>
+          <span class="eyebrow"><b>Mission &#x27;29</b> · Phase 02 · Contact</span>
           <h3 id="mc-rm29-h">Red Moon</h3>
           <p class="mc-dek">A total lunar eclipse: the Moon turns red over the gathering, the same light our crews will one day see from the other end.</p>
           <span class="mc-st">Planned · 26 Jun 2029</span>
@@ -1079,7 +1237,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;30" data-place="SOUTHERN AFRICA" data-c="#50e3ff" data-ph="03" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Ascent &#x27;30"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;30</b> · Phase 03 · Ascent · Ascent</span>
+          <span class="eyebrow"><b>Mission &#x27;30</b> · Phase 03 · Ascent</span>
           <h3 id="mc-africa-h">Africa Eclipse</h3>
           <p class="mc-dek">A total solar eclipse at dawn across Namibia, Botswana, South Africa and Lesotho, and another place built to stay.</p>
           <span class="mc-st">Planned · 25 Nov 2030</span>
@@ -1101,7 +1259,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;31" data-place="PACIFIC · PANAMA" data-c="#50e3ff" data-ph="03" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Ascent &#x27;31"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;31</b> · Phase 03 · Ascent · Ascent</span>
+          <span class="eyebrow"><b>Mission &#x27;31</b> · Phase 03 · Ascent</span>
           <h3 id="mc-panama-h">Panama Eclipse</h3>
           <p class="mc-dek">A rare hybrid eclipse, annular at its ends and total in the middle, over the Pacific and Panama.</p>
           <span class="mc-st prop">Proposed · 14 Nov 2031</span>
@@ -1145,7 +1303,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;32" data-place="TWO RED MOONS" data-c="#50e3ff" data-ph="03" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Ascent &#x27;32"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;32</b> · Phase 03 · Ascent · Ascent</span>
+          <span class="eyebrow"><b>Mission &#x27;32</b> · Phase 03 · Ascent</span>
           <h3 id="mc-rm32-h">Red Moon gatherings</h3>
           <p class="mc-dek">Two total lunar eclipses in one year, two red Moons.</p>
           <span class="mc-st prop">Proposed · 25 Apr and 18 Oct 2032</span>
@@ -1167,7 +1325,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;33" data-place="ALASKA" data-c="#e2502a" data-ph="04" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Voyage &#x27;33"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;33</b> · Phase 04 · Voyage · Voyage</span>
+          <span class="eyebrow"><b>Mission &#x27;33</b> · Phase 04 · Voyage</span>
           <h3 id="mc-alaska-h">Alaska Eclipse</h3>
           <p class="mc-dek">A total solar eclipse over Alaska and eastern Russia, two weeks before the first view.</p>
           <span class="mc-st prop">Proposed · 30 Mar 2033</span>
@@ -1228,7 +1386,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;34" data-place="EGYPT" data-c="#e2502a" data-ph="04" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Voyage &#x27;34"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;34</b> · Phase 04 · Voyage · Voyage</span>
+          <span class="eyebrow"><b>Mission &#x27;34</b> · Phase 04 · Voyage</span>
           <h3 id="mc-egypt34-h">Egypt Eclipse, returning</h3>
           <p class="mc-dek">The return to Egypt, and to Giza: a total eclipse from Nigeria across Egypt to China.</p>
           <span class="mc-st prop">Proposed · 20 Mar 2034</span>
@@ -1250,7 +1408,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;35" data-place="JAPAN" data-c="#e2502a" data-ph="04" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Voyage &#x27;35"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;35</b> · Phase 04 · Voyage · Voyage</span>
+          <span class="eyebrow"><b>Mission &#x27;35</b> · Phase 04 · Voyage</span>
           <h3 id="mc-japan-h">Japan Eclipse</h3>
           <p class="mc-dek">A total solar eclipse over China, Korea and Japan.</p>
           <span class="mc-st prop">Proposed · 2 Sep 2035</span>
@@ -1311,7 +1469,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;36" data-place="BOTH ENDS" data-c="#e2502a" data-ph="05" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Arrival &#x27;36"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;36</b> · Phase 05 · Arrival · Arrival</span>
+          <span class="eyebrow"><b>Mission &#x27;36</b> · Phase 05 · Arrival</span>
           <h3 id="mc-rm36-h">Red Moon on Earth</h3>
           <p class="mc-dek">The community gathers under the red Moon while the camp on the Moon watches Earth: both ends of the shadow.</p>
           <span class="mc-st">Planned · 7 Aug 2036</span>
@@ -1333,7 +1491,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;37" data-place="AUSTRALIA · NZ" data-c="#e2502a" data-ph="05" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Arrival &#x27;37"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;37</b> · Phase 05 · Arrival · Arrival</span>
+          <span class="eyebrow"><b>Mission &#x27;37</b> · Phase 05 · Arrival</span>
           <h3 id="mc-e37-h">Australasia Eclipse, returning</h3>
           <p class="mc-dek">A total solar eclipse over Australia and New Zealand, nine years after the Trilogy ended there.</p>
           <span class="mc-st prop">Proposed · 13 Jul 2037</span>
@@ -1355,7 +1513,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;38" data-place="SOUTHERN PACIFIC" data-c="#e2502a" data-ph="05" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Arrival &#x27;38"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;38</b> · Phase 05 · Arrival · Arrival</span>
+          <span class="eyebrow"><b>Mission &#x27;38</b> · Phase 05 · Arrival</span>
           <h3 id="mc-e38-h">Southern Pacific Eclipse</h3>
           <p class="mc-dek">The shadow comes back to Australia and New Zealand eighteen months later.</p>
           <span class="mc-st prop">Proposed · 26 Dec 2038</span>
@@ -1377,7 +1535,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;39" data-place="ANTARCTICA" data-c="#e2502a" data-ph="05" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Arrival &#x27;39"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;39</b> · Phase 05 · Arrival · Arrival</span>
+          <span class="eyebrow"><b>Mission &#x27;39</b> · Phase 06 · Gathering</span>
           <h3 id="mc-ant39-h">Antarctic Eclipse</h3>
           <p class="mc-dek">A total solar eclipse over the ice, eleven years after the first expedition.</p>
           <span class="mc-st prop">Proposed · 15 Dec 2039</span>
@@ -1399,7 +1557,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;40" data-place="THE MOON" data-c="#e2502a" data-ph="06" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Gathering &#x27;40"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;40</b> · Phase 06 · Gathering · Gathering</span>
+          <span class="eyebrow"><b>Mission &#x27;40</b> · Phase 06 · Gathering</span>
           <h3 id="mc-m40-h">A permanent place on the Moon</h3>
           <p class="mc-dek">Permanent infrastructure on the Moon: a place to return to, eclipse after eclipse, linked to the gatherings on Earth.</p>
           <span class="mc-st goal">The goal · 26 May and 18 Nov 2040</span>
@@ -1421,7 +1579,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       <header class="mc-h">
         <svg class="stamp" data-code="&#x27;40" data-place="EARTH" data-c="#e2502a" data-ph="06" viewBox="0 0 520 520" role="img" aria-label="Log stamp: Gathering &#x27;40"></svg>
         <div class="mc-ht">
-          <span class="eyebrow"><b>Mission &#x27;40</b> · Phase 06 · Gathering · Gathering</span>
+          <span class="eyebrow"><b>Mission &#x27;40</b> · Phase 06 · Gathering</span>
           <h3 id="mc-e40-h">Earth, linked</h3>
           <p class="mc-dek">Gatherings across the night side of Earth, linked live to the Moon.</p>
           <span class="mc-st">Planned · 2040</span>
@@ -1993,6 +2151,9 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     slip(m36, m40.x - 70, moonY(m40.x - 70) + 4, "or, if need be, '40", -140, 6500, 330);
     // domes on the Moon
     vDome(m36.x, m36.y + 40, 1, false); vDome(m40.x, m40.y + 40, 3, true);
+    // secrets: hold the shadow over the Outback; knock at the camp on the Moon
+    (function () { var a28 = N.filter(function (n) { return n.name === 'Australasia Eclipse'; })[0]; EGG28 = { sun: [a28.x + 140, a28.y - 640] }; })();
+    EGG36 = { dome: [m36.x + 50, m36.y + 36 + 11] };
 
     // nodes: engraved roundels + figure captions
     var levels = [];
@@ -2115,15 +2276,15 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       cap('the lineage: Goa’s dance floors,', 40, y0 - 170, CORONA);
       cap('then the first eclipse festivals', 40, y0 - 146, CORONA);
       // the gatherings that came before the missions: three small shadows, under the ground line
-      var LIN = [["Solipse ’99 · ’01", 1880], ["Outback Eclipse ’02", 1940], ["Oregon Eclipse ’17", 2000], ["Texas Eclipse ’24", 2060]];
+      var LIN = [["Solipse ’99 · ’01", 1880], ["Outback Eclipse ’02", 1940], ["Oregon Eclipse ’17", 2000], ["Texas Eclipse ’24", 2060], ["Artemis Eclipse ’26", 2120]];
       LIN.forEach(function (L, k) {
         var sx = 30, sy = L[1];
         for (var q = 0; q < 16; q++) { var aq = q / 16 * Math.PI * 2, rl = q % 2 ? 17 : 23; el('line', { x1: fix(sx + Math.cos(aq) * 11), y1: fix(sy + Math.sin(aq) * 11), x2: fix(sx + Math.cos(aq) * rl), y2: fix(sy + Math.sin(aq) * rl), stroke: CORONA, 'stroke-width': 1.2, opacity: .85 }, g); }
         el('circle', { cx: sx, cy: sy, r: 9, fill: PAPER, stroke: INK, 'stroke-width': 1.5 }, g);
         tx(L[0], { x: sx + 34, y: sy + 8, 'font-family': FELL, 'font-size': 23, fill: INK }, g);
-        if (k < 4) el('line', { x1: sx, y1: sy + 26, x2: sx, y2: sy + 34, stroke: INK, 'stroke-width': 1.2, 'stroke-dasharray': '2 4' }, g);
+        if (k < 5) el('line', { x1: sx, y1: sy + 26, x2: sx, y2: sy + 34, stroke: INK, 'stroke-width': 1.2, 'stroke-dasharray': '2 4' }, g);
       });
-      tx('… and many more', { x: 22, y: 2118, 'font-family': FELL, 'font-style': 'italic', 'font-size': 20, fill: DIM }, g);
+      tx('… and many more', { x: 22, y: 2178, 'font-family': FELL, 'font-style': 'italic', 'font-size': 20, fill: DIM }, g);
       tx('MISSION PRECURSORS', { x: 10, y: 1836, 'font-family': MONO, 'font-size': 16, fill: DIM, 'letter-spacing': 4 }, g);
     })();
 
@@ -2281,7 +2442,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     tx('THE ECLIPSE MISSIONS · A FLIGHT PLAN, 2026–2040 · PLATE I', { x: 8360, y: -96, 'text-anchor': 'end', 'font-family': MONO, 'font-size': 22, fill: DIM, 'letter-spacing': 4 }, W);
   }
 
-  var EGG = null, FLOOR = null, TRI = null, EGG26 = null, NODES = null;
+  var EGG = null, FLOOR = null, TRI = null, EGG26 = null, EGG28 = null, EGG36 = null, NODES = null;
   build(document.getElementById('cam'), 'src');
   // every panel shows a window onto the one plate, without its labels
   function fillPanels(root) {
@@ -2314,8 +2475,9 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
   // in 27-B time runs the other way, and so does the music: Ra Haset, reversed
   var au27 = document.getElementById('au27'), fade27 = null;
   function vol27(to, sec, done) { clearInterval(fade27); var from = au27.volume, t0 = performance.now(); fade27 = setInterval(function () { var k = Math.min(1, (performance.now() - t0) / (sec * 1000)); au27.volume = from + (to - from) * k; if (k >= 1) { clearInterval(fade27); if (done) done(); } }, 40); }
+  var metVisitors = false;
   function enter() {
-    armedUntil = 0; buildPortal(); portal.hidden = false; document.getElementById('portal-out').focus();
+    armedUntil = 0; metVisitors = true; buildPortal(); portal.hidden = false; document.getElementById('portal-out').focus();
     document.dispatchEvent(new CustomEvent('em-universe', { detail: { open: true } }));
     try { au27.currentTime = 0; } catch (e) {}
     au27.volume = 0; var pr = au27.play(); if (pr && pr.catch) pr.catch(function () {}); vol27(.85, 3);
@@ -2391,9 +2553,10 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       for (i = 0; i < n; i++) {
         var px = f((i + .5 + (row % 2) * .5) / n * 1600 + (r() - .5) * 20), hd = 5 * sc2;
         if (Math.abs(+px - VX) < 60 && row > 8) continue;
-        el('circle', { cx: px, cy: f(yy2 - 24 * sc2), r: f(hd), stroke: 'none' }, gR);
-        el('line', { x1: px, y1: f(yy2 - 19 * sc2), x2: px, y2: f(yy2), 'stroke-width': f(Math.max(.6, 2 * sc2)) }, gR);
-        if (r() < .4) el('line', { x1: f(+px - 8 * sc2), y1: f(yy2 - 30 * sc2), x2: f(+px + 8 * sc2), y2: f(yy2 - 30 * sc2), 'stroke-width': f(Math.max(.5, 1.4 * sc2)) }, gR);
+        var pz = sc2 > .9 ? dancer(gR, ['#8af5d8', '#50e3ff', '#f2a65a'][i % 3], [+px - 12 * sc2, yy2 - 34 * sc2, 24 * sc2, 36 * sc2]) : gR;
+        el('circle', { cx: px, cy: f(yy2 - 24 * sc2), r: f(hd), stroke: 'none' }, pz);
+        el('line', { x1: px, y1: f(yy2 - 19 * sc2), x2: px, y2: f(yy2), 'stroke-width': f(Math.max(.6, 2 * sc2)) }, pz);
+        if (r() < .4 || pz !== gR) el('line', { x1: f(+px - 8 * sc2), y1: f(yy2 - 30 * sc2), x2: f(+px + 8 * sc2), y2: f(yy2 - 30 * sc2), 'stroke-width': f(Math.max(.5, 1.4 * sc2)) }, pz);
       }
       el('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 0; 0 ' + f(-4 * sc2) + '; 0 0', dur: '.414s', begin: (row * .05) + 's', repeatCount: 'indefinite' }, gR);
     }
@@ -2408,11 +2571,11 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     var hg = el('g', { 'clip-path': 'url(#' + cid + ')', stroke: IK, 'stroke-width': 1, opacity: .55 }, RG); for (i = -300; i < 400; i += 9) el('line', { x1: rx + i, y1: rb - 260, x2: rx + i + 160, y2: rb }, hg);
     el('path', { d: 'M ' + (rx - 10) + ' ' + rb + ' V ' + (rb - 60) + ' a 28 28 0 0 1 56 0 V ' + rb + ' Z', fill: CO, stroke: IK, 'stroke-width': 1.5 }, RG);
     [[rx - 120, rb - 150, 0], [rx + 120, rb - 160, 1]].forEach(function (e) {
-      var eg = el('g', {}, RG);
+      var eg0 = el('g', {}, RG), eg = dancer(eg0, '#8af5d8', [e[0] - 26, e[1] - 70, 52, 92]);
       el('circle', { cx: e[0], cy: e[1], r: 15, fill: IK }, eg);
       el('path', { d: 'M ' + (e[0] - 15) + ' ' + (e[1] - 6) + ' L ' + (e[0] + 4) + ' ' + (e[1] - 62) + ' L ' + (e[0] + 15) + ' ' + (e[1] - 6) + ' Z', fill: EM }, eg);
       el('circle', { cx: e[0] - 5, cy: e[1] + 1, r: 2.2, fill: BG }, eg); el('circle', { cx: e[0] + 5, cy: e[1] + 1, r: 2.2, fill: BG }, eg);
-      el('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 18; 0 0; 0 0; 0 18; 0 18', keyTimes: '0;.12;.6;.72;1', dur: (6 + e[2] * 3) + 's', repeatCount: 'indefinite' }, eg);
+      el('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 18; 0 0; 0 0; 0 18; 0 18', keyTimes: '0;.12;.6;.72;1', dur: (6 + e[2] * 3) + 's', repeatCount: 'indefinite' }, eg0);
     });
     var lan = el('circle', { cx: rx + 60, cy: rb - 90, r: 9, fill: CO }, RG);
     el('animate', { attributeName: 'opacity', values: '1;.3;1;1;.5;1', dur: '3.6s', repeatCount: 'indefinite' }, lan);
@@ -2427,6 +2590,284 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     el('animate', { attributeName: 'opacity', values: '0;.09;0', dur: '5s', repeatCount: 'indefinite' }, gl);
     el('rect', { x: 1, y: 1, width: 1598, height: 998, fill: 'none', stroke: IK, 'stroke-width': 2, opacity: .4 }, W2);
   }
+  // ---------- in the realms, everyone can be woken: tap them and they glow and dance ----------
+  function dancer(parent, glow, box, cls) {
+    var g = el('g', { 'class': cls || 'dz', style: '--glow: ' + (glow || '#f2a65a') + '; --d: -' + (Math.random() * .4).toFixed(2) + 's' }, parent);
+    if (box) el('rect', { x: box[0].toFixed(1), y: box[1].toFixed(1), width: box[2].toFixed(1), height: box[3].toFixed(1), fill: 'transparent', stroke: 'none' }, g);
+    return g;
+  }
+  function wakeRealm(ov, svgId, need, msg) {
+    var sv = document.getElementById(svgId), woke = ov.querySelector('.woke'), lit = 0;
+    sv.addEventListener('click', function (e) {
+      var d = e.target.closest ? e.target.closest('.dz') : null; if (!d) return;
+      if (!d.classList.contains('lit')) { d.classList.add('lit'); lit++; }
+      else { d.classList.remove('lit'); lit = Math.max(0, lit - 1); }
+      if (lit >= need && !sv.classList.contains('all')) { sv.classList.add('all'); if (woke) { woke.textContent = msg; woke.hidden = false; } }
+    });
+  }
+  wakeRealm(document.getElementById('portal26'), 'pu26', 8, 'The whole floor is awake.');
+  function restart(n, c) { n.classList.remove(c); void n.getBoundingClientRect(); n.classList.add(c); }
+  function svgPt(sv, e) { var m = sv.getScreenCTM(); return m ? new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse()) : null; }
+  function tell(ov, sv, text) { var w = ov.querySelector('.woke'); sv.classList.add('all'); if (w) { w.textContent = text; w.hidden = false; } }
+  function play(node, attrs) { var a = el(attrs.tag || 'animate', Object.assign({ dur: '1s', fill: 'freeze', begin: 'indefinite' }, attrs.a), node); if (a.beginElement) a.beginElement(); return a; }
+
+  // 27-B: time runs the other way. Tap anything to rewind it.
+  (function () {
+    var ov = document.getElementById('portal'), sv = document.getElementById('pu'), done = {}, n = 0;
+    function count(k) { if (!done[k]) { done[k] = 1; n++; } if (n >= 6 && !sv.classList.contains('all')) tell(ov, sv, 'You undid something here. It was probably fine.'); }
+    sv.addEventListener('click', function (e) {
+      var t = e.target; if (!t.closest) return;
+      var rw = t.closest('.rw'), py = t.closest('.py'), vz = t.closest('.vz');
+      if (rw) {
+        restart(rw, 'go');
+        for (var k = 1; k < 4; k++) (function (k) {
+          var c = rw.cloneNode(true); c.setAttribute('class', 'echo'); c.setAttribute('transform', 'translate(' + (k * 26) + ' 0)'); c.style.animationDelay = (k * .07) + 's';
+          rw.parentNode.insertBefore(c, rw); setTimeout(function () { if (c.parentNode) c.parentNode.removeChild(c); }, 1500);
+        })(k);
+        count('rw' + Array.prototype.indexOf.call(sv.querySelectorAll('.rw'), rw));
+      } else if (py) {
+        py.classList.toggle('flip'); count('py' + Array.prototype.indexOf.call(sv.querySelectorAll('.py'), py));
+      } else if (vz) {
+        restart(vz, 'look');
+        var m = document.getElementById('mir27');
+        if (m) { m.setAttribute('transform', ''); clearTimeout(m._t); m._t = setTimeout(function () { m.setAttribute('transform', 'translate(1600 0) scale(-1 1)'); }, 3800); }
+        count('vz' + Array.prototype.indexOf.call(sv.querySelectorAll('.vz'), vz));
+      }
+    });
+  })();
+
+  // 28-C: the close Moon. Spirits scatter into dots, people send ripples through the sand, and the sky takes a songline.
+  (function () {
+    var ov = document.getElementById('portal28'), sv = document.getElementById('pu28'), pts = [];
+    sv.addEventListener('click', function (e) {
+      var t = e.target; if (!t.closest) return;
+      var sp = t.closest('.sp'), cl = t.closest('.cl');
+      if (sp) {
+        sp.querySelectorAll('circle').forEach(function (c) { var a = Math.random() * 6.283, d = 50 + Math.random() * 150; c.style.transform = 'translate(' + (Math.cos(a) * d).toFixed(1) + 'px,' + (Math.sin(a) * d - 70).toFixed(1) + 'px)'; });
+        clearTimeout(sp._t); sp._t = setTimeout(function () { sp.querySelectorAll('circle').forEach(function (c) { c.style.transform = ''; }); }, 2600);
+        return;
+      }
+      if (cl) {
+        var x = +cl.getAttribute('data-x'), y = +cl.getAttribute('data-y');
+        [0, 260, 520].forEach(function (dl, k) {
+          setTimeout(function () {
+            var rg = el('g', { transform: 'translate(' + x + ' ' + y + ')', 'pointer-events': 'none' }, sv.firstElementChild), inner = el('g', {}, rg);
+            for (var q = 0; q < 16; q++) { var a = q / 16 * 6.283; el('circle', { cx: (Math.cos(a) * 12).toFixed(1), cy: (Math.sin(a) * 4).toFixed(1), r: 1.6, fill: ['#f2a65a', '#eee5d0', '#e2502a'][k] }, inner); }
+            play(inner, { tag: 'animateTransform', a: { attributeName: 'transform', type: 'scale', from: '1', to: '7', dur: '1.6s' } });
+            play(inner, { a: { attributeName: 'opacity', from: '1', to: '0', dur: '1.6s' } });
+            setTimeout(function () { if (rg.parentNode) rg.parentNode.removeChild(rg); }, 1700);
+          }, dl);
+        });
+        return;
+      }
+      var p = svgPt(sv, e); if (!p || p.y > 680) return;
+      var g = document.getElementById('song28'); if (!g) return;
+      if (pts.length) {
+        var q0 = pts[pts.length - 1], len = Math.hypot(p.x - q0.x, p.y - q0.y);
+        var ln = el('line', { x1: q0.x.toFixed(1), y1: q0.y.toFixed(1), x2: p.x.toFixed(1), y2: p.y.toFixed(1), stroke: '#f2a65a', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-dasharray': '1 11', opacity: .9 }, g);
+        play(ln, { a: { attributeName: 'stroke-dashoffset', from: (-len).toFixed(0), to: '0', dur: '.8s' } });
+      }
+      var st = el('g', {}, g);
+      el('circle', { cx: p.x.toFixed(1), cy: p.y.toFixed(1), r: 16, fill: '#f2a65a', opacity: .18 }, st);
+      el('circle', { cx: p.x.toFixed(1), cy: p.y.toFixed(1), r: 5, fill: '#fff2d6' }, st);
+      play(st, { a: { attributeName: 'opacity', from: '0', to: '1', dur: '.5s' } });
+      pts.push(p);
+      if (pts.length === 6) { g.setAttribute('class', 'sung'); tell(ov, sv, 'The songline is sung. The land remembers it.'); }
+    });
+  })();
+
+  // 36-D: the camp on the Moon. Gravity is a suggestion; the visitors can call home.
+  (function () {
+    var ov = document.getElementById('portal36'), sv = document.getElementById('pu36'), beamed = {}, nb = 0;
+    sv.addEventListener('click', function (e) {
+      var t = e.target; if (!t.closest) return;
+      var lg = t.closest('.lg'), bm = t.closest('.bm');
+      if (lg) {
+        restart(lg, 'hop');
+        var x = +lg.getAttribute('data-x'), y = +lg.getAttribute('data-y');
+        for (var q = 0; q < 10; q++) { var a = Math.PI + (q / 9) * Math.PI, dc = el('circle', { cx: x, cy: y, r: 2.4, fill: '#9c9584', 'pointer-events': 'none' }, sv.firstElementChild);
+          play(dc, { a: { attributeName: 'cx', from: x, to: (x + Math.cos(a) * (40 + Math.random() * 30)).toFixed(1), dur: '1.6s' } });
+          play(dc, { a: { attributeName: 'cy', from: y, to: (y + Math.sin(a) * 14).toFixed(1), dur: '1.6s' } });
+          play(dc, { a: { attributeName: 'opacity', from: '1', to: '0', dur: '1.6s' } });
+          (function (dc) { setTimeout(function () { if (dc.parentNode) dc.parentNode.removeChild(dc); }, 1700); })(dc); }
+        return;
+      }
+      if (bm) {
+        var i = Array.prototype.indexOf.call(sv.querySelectorAll('.bm'), bm);
+        if (beamed[i]) return;
+        beamed[i] = 1; nb++; bm.classList.add('on');
+        var hx = +bm.getAttribute('data-x'), hy = +bm.getAttribute('data-y'), bg = document.getElementById('beams36'), L = Math.hypot(1180 - hx, 250 - hy);
+        var bl = el('line', { x1: hx, y1: hy, x2: 1180, y2: 250, stroke: '#50e3ff', 'stroke-width': 3, 'stroke-dasharray': L.toFixed(0), 'stroke-dashoffset': L.toFixed(0), opacity: .85 }, bg);
+        el('line', { x1: hx, y1: hy, x2: 1180, y2: 250, stroke: '#50e3ff', 'stroke-width': 12, opacity: .12 }, bg);
+        play(bl, { a: { attributeName: 'stroke-dashoffset', from: L.toFixed(0), to: '0', dur: '1.2s' } });
+        if (nb === 3) setTimeout(function () {
+          var ring = document.getElementById('ering36');
+          if (ring) { play(ring, { a: { attributeName: 'stroke-width', values: '14;46;18', dur: '2.4s' } }); play(ring, { a: { attributeName: 'stroke', values: '#e2502a;#f2a65a;#e2502a', dur: '2.4s' } }); }
+          tell(ov, sv, 'Three beams. Earth answers.');
+        }, 1300);
+      }
+    });
+  })();
+
+  // ---------- Universe 28-C: hold the shadow over the Outback until it holds you ----------
+  var portal28 = document.getElementById('portal28'), built28 = false, holdT = null, holdRing = null, cd28 = null;
+  function holdStart(parent) {
+    holdCancel(); if (!EGG28) return;
+    var c = 2 * Math.PI * 44, x = EGG28.sun[0], y = EGG28.sun[1];
+    holdRing = el('circle', { cx: x, cy: y, r: 44, fill: 'none', stroke: CORONA, 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-dasharray': c.toFixed(1), 'stroke-dashoffset': c.toFixed(1), transform: 'rotate(-90 ' + x + ' ' + y + ')', 'pointer-events': 'none' }, parent);
+    var a = el('animate', { attributeName: 'stroke-dashoffset', from: c.toFixed(1), to: '0', dur: '2.6s', fill: 'freeze', begin: 'indefinite' }, holdRing);
+    if (a.beginElement) a.beginElement();
+    holdT = setTimeout(function () { holdCancel(); enter28(); }, 2600);
+  }
+  function holdCancel() { clearTimeout(holdT); holdT = null; if (holdRing && holdRing.parentNode) holdRing.parentNode.removeChild(holdRing); holdRing = null; }
+  var au28 = document.getElementById('au28'), fade28 = null;
+  function vol28(to, sec, done) { clearInterval(fade28); var from = au28.volume, t0 = performance.now(); fade28 = setInterval(function () { var k = Math.min(1, (performance.now() - t0) / (sec * 1000)); au28.volume = from + (to - from) * k; if (k >= 1) { clearInterval(fade28); if (done) done(); } }, 40); }
+  function enter28() {
+    buildPortal28(); portal28.hidden = false; document.getElementById('portal28-out').focus();
+    document.dispatchEvent(new CustomEvent('em-universe', { detail: { open: true } }));
+    try { au28.currentTime = 0; } catch (e) {}
+    au28.volume = 0; var pr = au28.play(); if (pr && pr.catch) pr.catch(function () {}); vol28(.85, 3);
+    var left = 3599, t = document.getElementById('cd28');
+    clearInterval(cd28); cd28 = setInterval(function () { left = left > 0 ? left - 1 : 3599; if (t) t.textContent = String(Math.floor(left / 60)).padStart(2, '0') + ':' + String(left % 60).padStart(2, '0'); }, 1000);
+  }
+  function leave28() {
+    portal28.hidden = true; clearInterval(cd28); vol28(0, .7, function () { au28.pause(); });
+    document.dispatchEvent(new CustomEvent('em-universe', { detail: { open: false } }));
+  }
+  document.getElementById('portal28-out').addEventListener('click', leave28);
+  function buildPortal28() {
+    if (built28) return; built28 = true;
+    var sv = document.getElementById('pu28'), r = rng(28), IK = '#eee5d0', BG = '#0c0605', EM = '#e2502a', CO = '#f2a65a', W2 = el('g', {}, sv);
+    function f(v) { return (+v).toFixed(1); }
+    el('rect', { x: 0, y: 0, width: 1600, height: 1000, fill: BG }, W2);
+    for (var i = 0; i < 380; i++) el('circle', { cx: f(r() * 1600), cy: f(r() * 640), r: f(.4 + r() * 1.5), fill: IK, opacity: f(.15 + r() * .6) }, W2);
+    // the close Moon fills the sky, eclipsing the Sun for an hour
+    var MX0 = 800, MY0 = 330, R0 = 250;
+    for (i = 0; i < 260; i++) { var a = r() * Math.PI * 2, L = 30 + r() * 120 + Math.pow(Math.abs(Math.cos(a * 2)), 6) * 160; el('line', { x1: f(MX0 + Math.cos(a) * R0), y1: f(MY0 + Math.sin(a) * R0), x2: f(MX0 + Math.cos(a) * (R0 + L)), y2: f(MY0 + Math.sin(a) * (R0 + L)), stroke: IK, 'stroke-width': f(.5 + r()), opacity: f(.25 + r() * .6) }, W2); }
+    el('circle', { cx: MX0, cy: MY0, r: R0 + 6, fill: 'none', stroke: CO, 'stroke-width': 3, opacity: .8 }, W2);
+    el('circle', { cx: MX0, cy: MY0, r: R0, fill: '#070303', stroke: IK, 'stroke-width': 2 }, W2);
+    for (var k = 1; k < 9; k++) el('circle', { cx: MX0, cy: MY0, r: R0 - k * 26, fill: 'none', stroke: IK, 'stroke-width': .6, opacity: .12 }, W2);
+    var t = el('text', { id: 'cd28', x: MX0, y: MY0 + 22, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 64, 'letter-spacing': 6, fill: CO }, W2); t.textContent = '59:59';
+    var t2 = el('text', { x: MX0, y: MY0 + 66, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 16, 'letter-spacing': 6, fill: IK, opacity: .6 }, W2); t2.textContent = 'OF TOTALITY LEFT';
+    el('g', { id: 'song28' }, W2);
+    // red earth to the horizon, an escarpment and a boab
+    el('rect', { x: 0, y: 690, width: 1600, height: 310, fill: '#1a0905' }, W2);
+    for (i = 0; i < 22; i++) el('line', { x1: 0, y1: 696 + i * 14, x2: 1600, y2: 696 + i * 14, stroke: EM, 'stroke-width': .8, opacity: f(.15 + i * .02) }, W2);
+    el('path', { d: 'M 0 690 L 0 560 L 120 548 L 180 520 L 330 524 L 380 600 L 460 690 Z', fill: '#2a120c', stroke: IK, 'stroke-width': 2 }, W2);
+    el('path', { d: 'M 1390 690 C 1372 640 1380 590 1404 576 L 1426 576 C 1450 590 1458 640 1440 690 Z', fill: BG, stroke: IK, 'stroke-width': 2 }, W2);
+    [[-1, -30, -40], [0, 0, -52], [1, 30, -40], [-.5, -18, -48], [.5, 18, -48]].forEach(function (q) { el('path', { d: 'M ' + f(1415 + q[0] * 6) + ' 576 q ' + f(q[1] * .4) + ' ' + f(q[2] * .6) + ' ' + q[1] + ' ' + q[2], stroke: IK, 'stroke-width': 3, fill: 'none' }, W2); });
+    el('line', { x1: 0, y1: 690, x2: 1600, y2: 690, stroke: IK, 'stroke-width': 1.6 }, W2);
+    // the spirits of the land, drifting in, drawn in light and dots
+    [[250, 470], [560, 430], [1060, 440], [1300, 470]].forEach(function (p, j) {
+      var g0 = el('g', {}, W2), d = dancer(g0, CO, [p[0] - 30, p[1] - 92, 60, 150], 'sp');
+      el('path', { d: 'M ' + p[0] + ' ' + (p[1] - 90) + ' C ' + (p[0] + 27) + ' ' + (p[1] - 75) + ' ' + (p[0] + 24) + ' ' + (p[1] - 15) + ' ' + (p[0] + 15) + ' ' + (p[1] + 30) + ' C ' + (p[0] + 9) + ' ' + (p[1] + 60) + ' ' + (p[0] - 9) + ' ' + (p[1] + 60) + ' ' + (p[0] - 15) + ' ' + (p[1] + 30) + ' C ' + (p[0] - 24) + ' ' + (p[1] - 15) + ' ' + (p[0] - 27) + ' ' + (p[1] - 75) + ' ' + p[0] + ' ' + (p[1] - 90) + ' Z', fill: 'none', stroke: CO, 'stroke-width': 1.6, opacity: .8 }, d);
+      for (var q = 0; q < 60; q++) { var yy = -84 + r() * 135, ww = 18 * Math.sin(Math.PI * (yy + 90) / 150); el('circle', { cx: f(p[0] + (r() - .5) * 2 * ww), cy: f(p[1] + yy), r: f(r() * 2 + .7), fill: CO, opacity: f(.3 + r() * .6) }, d); }
+      el('circle', { cx: p[0] - 6, cy: p[1] - 60, r: 3, fill: IK }, d); el('circle', { cx: p[0] + 6, cy: p[1] - 60, r: 3, fill: IK }, d);
+      el('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 0; 12 -18; 0 0', dur: (8 + j * 2) + 's', repeatCount: 'indefinite' }, g0);
+    });
+    // the gathering: two rows of Seekers on the red earth
+    [[740, 1.25, 11], [830, 1.6, 8]].forEach(function (row, ri) {
+      for (var j = 0; j < row[2]; j++) {
+        var x = 150 + (j + .5 + ri * .3) / row[2] * 1300, sc = row[1], y = row[0];
+        if (ri === 1 && x > 640 && x < 960) continue;
+        var d = dancer(el('g', { stroke: IK, fill: IK, 'stroke-width': f(2.2 * sc), 'stroke-linecap': 'round' }, W2), [CO, EM, '#8af5d8'][j % 3], [x - 16 * sc, y - 46 * sc, 32 * sc, 48 * sc], 'cl');
+        d.setAttribute('data-x', f(x)); d.setAttribute('data-y', f(y));
+        el('circle', { cx: f(x), cy: f(y - 36 * sc), r: f(5.5 * sc), stroke: 'none' }, d);
+        el('path', { d: 'M ' + f(x) + ' ' + f(y - 30 * sc) + ' V ' + f(y - 12 * sc) + ' l ' + f(-6 * sc) + ' ' + f(12 * sc) + ' M ' + f(x) + ' ' + f(y - 12 * sc) + ' l ' + f(6 * sc) + ' ' + f(12 * sc) + ' M ' + f(x) + ' ' + f(y - 26 * sc) + ' l ' + f(-10 * sc) + ' ' + f(-12 * sc) + ' M ' + f(x) + ' ' + f(y - 26 * sc) + ' l ' + f(10 * sc) + ' ' + f(-12 * sc), fill: 'none' }, d);
+      }
+    });
+    // the way onward, written in dots over the horizon
+    var q;
+    el('rect', { x: 540, y: 600, width: 520, height: 72, rx: 6, fill: BG, opacity: .88 }, W2);
+    ["THE VISITORS STAYED · '36", 'KNOCK AT THE CAMP'].forEach(function (l, j) { var tw = el('text', { x: 800, y: 626 + j * 30, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 18, 'letter-spacing': 5, fill: CO }, W2); tw.textContent = l; });
+    for (q = 0; q < 2; q++) for (var dd = 0; dd < 5; dd++) el('circle', { cx: f(800 + (q ? 1 : -1) * (196 + dd * 14)), cy: 634, r: f(2.6 - dd * .35), fill: CO, opacity: .8 }, W2);
+    el('rect', { x: 1, y: 1, width: 1598, height: 998, fill: 'none', stroke: IK, 'stroke-width': 2, opacity: .35 }, W2);
+  }
+
+  // ---------- Universe 36-D: knock at the camp on the Moon, once the visitors know you ----------
+  var portal36 = document.getElementById('portal36'), built36 = false;
+  function met27() { if (metVisitors) return true; try { return !!(JSON.parse(localStorage.getItem('em-secrets') || '{}') || {}).b27; } catch (e) { return false; } }
+  function knock36(parent) {
+    var ok = met27(), x = EGG36.dome[0], y = EGG36.dome[1];
+    var ring = el('circle', { cx: x, cy: y, r: 22, fill: 'none', stroke: ok ? TURQ : EMBER, 'stroke-width': 4, 'pointer-events': 'none' }, parent);
+    var a1 = el('animate', { attributeName: 'r', from: '22', to: '80', dur: '.7s', fill: 'freeze', begin: 'indefinite' }, ring), a2 = el('animate', { attributeName: 'opacity', from: '1', to: '0', dur: '.7s', fill: 'freeze', begin: 'indefinite' }, ring);
+    if (a1.beginElement) { a1.beginElement(); a2.beginElement(); }
+    setTimeout(function () { if (ring.parentNode) ring.parentNode.removeChild(ring); }, 800);
+    if (ok) setTimeout(enter36, 600);
+    return ok;
+  }
+  var au36 = document.getElementById('au36'), fade36 = null;
+  function vol36(to, sec, done) { clearInterval(fade36); var from = au36.volume, t0 = performance.now(); fade36 = setInterval(function () { var k = Math.min(1, (performance.now() - t0) / (sec * 1000)); au36.volume = from + (to - from) * k; if (k >= 1) { clearInterval(fade36); if (done) done(); } }, 40); }
+  function enter36() {
+    buildPortal36(); portal36.hidden = false; document.getElementById('portal36-out').focus();
+    document.dispatchEvent(new CustomEvent('em-universe', { detail: { open: true } }));
+    try { au36.currentTime = 0; } catch (e) {}
+    au36.volume = 0; var pr = au36.play(); if (pr && pr.catch) pr.catch(function () {}); vol36(.85, 3);
+  }
+  function leave36() {
+    portal36.hidden = true; vol36(0, .7, function () { au36.pause(); });
+    document.dispatchEvent(new CustomEvent('em-universe', { detail: { open: false } }));
+  }
+  document.getElementById('portal36-out').addEventListener('click', leave36);
+  function buildPortal36() {
+    if (built36) return; built36 = true;
+    var sv = document.getElementById('pu36'), r = rng(36), IK = '#eee5d0', BG = '#050507', EM = '#e2502a', TQ = '#50e3ff', CO = '#f2a65a', W2 = el('g', {}, sv);
+    function f(v) { return (+v).toFixed(1); }
+    el('rect', { x: 0, y: 0, width: 1600, height: 1000, fill: BG }, W2);
+    for (var i = 0; i < 520; i++) el('circle', { cx: f(r() * 1600), cy: f(r() * 700), r: f(.4 + r() * 1.5), fill: IK, opacity: f(.15 + r() * .65) }, W2);
+    // Earth eclipsing the Sun, ringed in every sunrise and sunset
+    var EX0 = 1180, EY0 = 250, ER0 = 120;
+    el('g', { id: 'beams36' }, W2);
+    el('circle', { id: 'ering36', cx: EX0, cy: EY0, r: ER0 * 1.12, fill: 'none', stroke: EM, 'stroke-width': 14, opacity: .9 }, W2);
+    el('circle', { cx: EX0, cy: EY0, r: ER0 * 1.03, fill: 'none', stroke: TQ, 'stroke-width': 3 }, W2);
+    el('circle', { cx: EX0, cy: EY0, r: ER0, fill: '#06080c' }, W2);
+    for (i = 0; i < 26; i++) el('circle', { cx: f(EX0 - 60 + r() * 120), cy: f(EY0 - 50 + r() * 100), r: f(.8 + r()), fill: CO, opacity: f(.2 + r() * .5) }, W2);
+    // the regolith, curving away
+    el('path', { d: 'M 0 700 Q 800 640 1600 700 L 1600 1000 L 0 1000 Z', fill: '#0d0d10', stroke: IK, 'stroke-width': 2 }, W2);
+    for (i = 1; i < 14; i++) el('path', { d: 'M 0 ' + (700 + i * 22) + ' Q 800 ' + (640 + i * 22) + ' 1600 ' + (700 + i * 22), fill: 'none', stroke: IK, 'stroke-width': .7, opacity: .25 }, W2);
+    for (i = 0; i < 9; i++) { var cxr = 80 + r() * 1440, cyr = 760 + r() * 200, rw = 20 + r() * 50; el('ellipse', { cx: f(cxr), cy: f(cyr), rx: f(rw), ry: f(rw * .28), fill: 'none', stroke: IK, 'stroke-width': 1, opacity: .4 }, W2); }
+    // the camp: domes, with the light on
+    [[150, 680, 70], [290, 676, 48], [1450, 690, 60]].forEach(function (d) {
+      el('path', { d: 'M ' + (d[0] - d[2]) + ' ' + d[1] + ' A ' + d[2] + ' ' + d[2] + ' 0 0 1 ' + (d[0] + d[2]) + ' ' + d[1] + ' Z', fill: BG, stroke: IK, 'stroke-width': 2 }, W2);
+      for (var k = 1; k < 5; k++) el('path', { d: 'M ' + (d[0] - d[2] * (1 - k * .2)) + ' ' + d[1] + ' A ' + (d[2] * (1 - k * .2)) + ' ' + d[2] + ' 0 0 1 ' + (d[0] + d[2] * (1 - k * .2)) + ' ' + d[1], fill: 'none', stroke: IK, 'stroke-width': .7, opacity: .4 }, W2);
+      el('rect', { x: d[0] - 9, y: d[1] - 22, width: 18, height: 22, fill: CO }, W2);
+    });
+    // a cairn of the old ways
+    [[1300, 700, 26], [1300, 676, 20], [1301, 657, 14], [1300, 643, 9]].forEach(function (c) { el('ellipse', { cx: c[0], cy: c[1], rx: c[2], ry: c[2] * .5, fill: BG, stroke: IK, 'stroke-width': 1.8 }, W2); });
+    // the visitors from the frieze, who stayed
+    [[620, 860, 1], [800, 840, 1.15], [980, 860, 1]].forEach(function (p, j) {
+      var x = p[0], y = p[1], sc = p[2], g0 = el('g', {}, W2), d = dancer(el('g', { stroke: IK, fill: BG, 'stroke-width': 2.4 }, g0), TQ, [x - 60 * sc, y - 300 * sc, 120 * sc, 300 * sc], 'bm');
+      d.setAttribute('data-x', f(x)); d.setAttribute('data-y', f(y - 228 * sc));
+      el('path', { d: 'M ' + f(x - 24 * sc) + ' ' + y + ' L ' + f(x - 15 * sc) + ' ' + f(y - 190 * sc) + ' L ' + f(x + 15 * sc) + ' ' + f(y - 190 * sc) + ' L ' + f(x + 26 * sc) + ' ' + y + ' Z' }, d);
+      el('circle', { cx: x, cy: f(y - 228 * sc), r: f(34 * sc) }, d);
+      for (var q = 0; q < 12; q++) { var a3 = q / 12 * Math.PI * 2; el('line', { x1: f(x + Math.cos(a3) * 38 * sc), y1: f(y - 228 * sc + Math.sin(a3) * 38 * sc), x2: f(x + Math.cos(a3) * 56 * sc), y2: f(y - 228 * sc + Math.sin(a3) * 56 * sc) }, d); }
+      el('ellipse', { cx: x, cy: f(y - 230 * sc), rx: f(10 * sc), ry: f(5 * sc), fill: EM, stroke: 'none' }, d);
+      el('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 0; 0 -8; 0 0', dur: (4 + j) + 's', repeatCount: 'indefinite' }, g0);
+    });
+    // Seekers in suits, and Orion's machines
+    [420, 500, 1120, 1200].forEach(function (x, j) {
+      var y = 880, d = dancer(el('g', { stroke: IK, fill: BG, 'stroke-width': 2.2 }, W2), [CO, TQ][j % 2], [x - 26, y - 100, 52, 104], 'lg');
+      d.setAttribute('data-x', x); d.setAttribute('data-y', y);
+      el('rect', { x: x - 14, y: y - 60, width: 28, height: 40, rx: 8 }, d);
+      el('circle', { cx: x, cy: y - 76, r: 16 }, d);
+      el('path', { d: 'M ' + (x - 8) + ' ' + (y - 80) + ' h 16', stroke: CO, 'stroke-width': 4 }, d);
+      el('path', { d: 'M ' + (x - 7) + ' ' + (y - 20) + ' V ' + y + ' M ' + (x + 7) + ' ' + (y - 20) + ' V ' + y + ' M ' + (x - 14) + ' ' + (y - 52) + ' l -14 -16 M ' + (x + 14) + ' ' + (y - 52) + ' l 14 -16', fill: 'none' }, d);
+    });
+    [330, 1310].forEach(function (x) {
+      var y = 900, d = dancer(el('g', { stroke: TQ, fill: BG, 'stroke-width': 2.2 }, W2), TQ, [x - 34, y - 70, 68, 74], 'lg');
+      d.setAttribute('data-x', x); d.setAttribute('data-y', y);
+      el('rect', { x: x - 26, y: y - 50, width: 52, height: 34, rx: 4 }, d);
+      el('rect', { x: x - 10, y: y - 66, width: 20, height: 14, rx: 2 }, d);
+      el('circle', { cx: x, cy: y - 59, r: 3, fill: CO, stroke: 'none' }, d);
+      el('circle', { cx: x - 16, cy: y - 6, r: 8 }, d); el('circle', { cx: x + 16, cy: y - 6, r: 8 }, d);
+    });
+    // what the visitors have to say
+    el('rect', { x: 560, y: 402, width: 480, height: 72, rx: 6, fill: BG, opacity: .85 }, W2);
+    ['WE KEPT THE FLOOR WARM', "· '40 ·"].forEach(function (l, j) { var tw = el('text', { x: 800, y: 430 + j * 30, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 18, 'letter-spacing': 5, fill: TQ }, W2); tw.textContent = l; });
+    el('rect', { x: 1, y: 1, width: 1598, height: 998, fill: 'none', stroke: IK, 'stroke-width': 2, opacity: .35 }, W2);
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (!portal28.hidden) leave28(); if (!portal36.hidden) leave36(); } });
+
   // panels show the plate through <use>, so the hidden portal is found by position, not by element:
   // tap the visitor's eye in any Egypt panel, then the eclipse over Luxor within 6.23 seconds.
   var srcSvg = document.getElementById('src');
@@ -2439,11 +2880,19 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       function near(c, r) { return Math.hypot(pt.x - c[0], pt.y - c[1]) < r + slack; }
       if (TRI) for (var tq = 0; tq < 3; tq++) if (near(TRI[tq], 40)) { ev.stopPropagation(); openCard(); return; }
       if (FLOOR && near(FLOOR, 66)) { ev.stopPropagation(); kick(sv); return; }
+      if (EGG36 && near(EGG36.dome, 30)) { ev.stopPropagation(); knock36(sv); return; }
       if (EGG26 && near(EGG26.huld, 34)) { ev.stopPropagation(); arm26(srcSvg); return; }
       if (EGG26 && EGG26.arch && near(EGG26.arch, 34) && Date.now() < armed26Until) { ev.stopPropagation(); enter26(); return; }
       if (near(EGG.eye, 16)) { ev.stopPropagation(); arm(srcSvg); }
       else if (near(EGG.sun, 46) && Date.now() < armedUntil) { ev.stopPropagation(); enter(); }
     });
+    sv.addEventListener('pointerdown', function (ev) {
+      if (!EGG28 || sv.dataset.flip) return;
+      var m = sv.getScreenCTM(); if (!m) return;
+      var pt = new DOMPoint(ev.clientX, ev.clientY).matrixTransform(m.inverse());
+      if (Math.hypot(pt.x - EGG28.sun[0], pt.y - EGG28.sun[1]) < 50) holdStart(sv);
+    });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (t) { sv.addEventListener(t, holdCancel); });
   });
   // ---------- the secret mission: four on the floor ----------
   // Tap the psytrance floor on the Moon four times in four seconds, the kick of a dance track, and the floor drops.
@@ -2634,9 +3083,9 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     rot.setAttribute('attributeName', 'transform'); rot.setAttribute('type', 'rotate'); rot.setAttribute('from', '0 800 620'); rot.setAttribute('to', '360 800 620'); rot.setAttribute('dur', '60s'); rot.setAttribute('repeatCount', 'indefinite'); sp.appendChild(rot);
     // pyramids, upside down, floating
     [[300, 520, 1], [1320, 600, .7], [560, 360, .45]].forEach(function (p, i) {
-      var g = el('g', {}, W2), w = 220 * p[2], h = 140 * p[2];
-      el('path', { d: 'M ' + (p[0] - w / 2) + ' ' + p[1] + ' L ' + p[0] + ' ' + (p[1] + h) + ' L ' + (p[0] + w / 2) + ' ' + p[1] + ' Z', fill: BG, stroke: DK, 'stroke-width': 2 }, g);
-      for (var k = 1; k < 16; k++) { var yy = p[1] + h * k / 16, half = (w / 2) * (1 - k / 16); el('line', { x1: p[0], y1: yy, x2: p[0] + half, y2: yy, stroke: DK, 'stroke-width': 1 }, g); }
+      var g = el('g', {}, W2), gi = el('g', { 'class': 'py' }, g), w = 220 * p[2], h = 140 * p[2];
+      el('path', { d: 'M ' + (p[0] - w / 2) + ' ' + p[1] + ' L ' + p[0] + ' ' + (p[1] + h) + ' L ' + (p[0] + w / 2) + ' ' + p[1] + ' Z', fill: BG, stroke: DK, 'stroke-width': 2 }, gi);
+      for (var k = 1; k < 16; k++) { var yy = p[1] + h * k / 16, half = (w / 2) * (1 - k / 16); el('line', { x1: p[0], y1: yy, x2: p[0] + half, y2: yy, stroke: DK, 'stroke-width': 1 }, gi); }
       var b = document.createElementNS(NS, 'animateTransform');
       b.setAttribute('attributeName', 'transform'); b.setAttribute('type', 'translate'); b.setAttribute('values', '0 0; 0 -14; 0 0'); b.setAttribute('dur', (6 + i * 2) + 's'); b.setAttribute('repeatCount', 'indefinite'); g.appendChild(b);
     });
@@ -2648,20 +3097,27 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       el('path', { d: 'M 702 870 L 702 732 Q 800 694 898 732 L 898 870 Z', fill: 'none', stroke: DK, 'stroke-width': 1 }, tb);
       var md = el('g', { transform: 'translate(800 742)' }, tb);
       for (var k = 0; k < 3; k++) for (var j = 0; j < 10; j++) { var a = j / 10 * Math.PI * 2 + k * .3, R = 5 + k * 5; el('ellipse', { cx: (Math.cos(a) * R).toFixed(1), cy: (Math.sin(a) * R).toFixed(1), rx: 4 + k, ry: 1.4, transform: 'rotate(' + (a * 180 / Math.PI).toFixed(1) + ' ' + (Math.cos(a) * R).toFixed(1) + ' ' + (Math.sin(a) * R).toFixed(1) + ')', fill: 'none', stroke: DK, 'stroke-width': 1 }, md); }
-      var mir = el('g', { transform: 'translate(1600 0) scale(-1 1)' }, tb);
+      var mir = el('g', { id: 'mir27', transform: 'translate(1600 0) scale(-1 1)' }, tb);
       [['FOUR ON', 792], ['THE FLOOR', 822]].forEach(function (l) { var t = el('text', { x: 800, y: l[1], 'text-anchor': 'middle', 'font-family': 'IM Fell English, Georgia, serif', 'font-size': 26, 'letter-spacing': 3, fill: DK }, mir); t.textContent = l[0]; });
       var t2 = el('text', { x: 800, y: 856, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 15, 'letter-spacing': 4, fill: '#e2502a' }, mir); t2.textContent = "• • • •  '40";
     })();
     // the visitors from the frieze, full size, here to meet you
     [[640, 900], [960, 900]].forEach(function (p, i) {
-      var g = el('g', { stroke: DK, fill: BG, 'stroke-width': 2.4 }, W2), x = p[0], y = p[1];
+      var x = p[0], y = p[1], g0 = el('g', {}, W2), g = dancer(el('g', { stroke: DK, fill: BG, 'stroke-width': 2.4 }, g0), '#e2502a', [x - 72, y - 316, 144, 316], 'vz');
       el('path', { d: 'M ' + (x - 26) + ' ' + y + ' L ' + (x - 16) + ' ' + (y - 210) + ' L ' + (x + 16) + ' ' + (y - 210) + ' L ' + (x + 28) + ' ' + y + ' Z' }, g);
       el('path', { d: 'M ' + (x + (i ? -14 : 14)) + ' ' + (y - 180) + ' L ' + (x + (i ? -70 : 70)) + ' ' + (y - 240), fill: 'none' }, g);
       el('circle', { cx: x, cy: y - 250, r: 38 }, g);
       for (var s3 = 0; s3 < 12; s3++) { var a3 = s3 / 12 * Math.PI * 2; el('line', { x1: (x + Math.cos(a3) * 42).toFixed(1), y1: (y - 250 + Math.sin(a3) * 42).toFixed(1), x2: (x + Math.cos(a3) * 62).toFixed(1), y2: (y - 250 + Math.sin(a3) * 62).toFixed(1) }, g); }
       el('ellipse', { cx: x + (i ? -10 : 10), cy: y - 252, rx: 10, ry: 5, fill: '#e2502a', stroke: 'none' }, g);
       var bob = document.createElementNS(NS, 'animateTransform');
-      bob.setAttribute('attributeName', 'transform'); bob.setAttribute('type', 'translate'); bob.setAttribute('values', '0 0; 0 -10; 0 0'); bob.setAttribute('dur', (4 + i) + 's'); bob.setAttribute('repeatCount', 'indefinite'); g.appendChild(bob);
+      bob.setAttribute('attributeName', 'transform'); bob.setAttribute('type', 'translate'); bob.setAttribute('values', '0 0; 0 -10; 0 0'); bob.setAttribute('dur', (4 + i) + 's'); bob.setAttribute('repeatCount', 'indefinite'); g0.appendChild(bob);
+    });
+    // Seekers, dancing backwards along the bottom
+    [130, 220, 310, 400, 1120, 1210, 1300, 1390, 1480].forEach(function (x, i) {
+      var y = 960, d = dancer(el('g', { stroke: DK, fill: DK, 'stroke-width': 3, 'stroke-linecap': 'round' }, W2), '#e2502a', [x - 26, y - 92, 52, 96], 'rw');
+      el('circle', { cx: x, cy: y - 74, r: 9, stroke: 'none' }, d);
+      el('path', { d: 'M ' + x + ' ' + (y - 64) + ' V ' + (y - 26) + ' M ' + x + ' ' + (y - 26) + ' l -10 26 M ' + x + ' ' + (y - 26) + ' l 10 26', fill: 'none' }, d);
+      el('path', { d: i % 2 ? 'M ' + x + ' ' + (y - 56) + ' l -16 -20 M ' + x + ' ' + (y - 56) + ' l 16 -20' : 'M ' + x + ' ' + (y - 56) + ' l -18 8 M ' + x + ' ' + (y - 56) + ' l 16 -22', fill: 'none' }, d);
     });
     // stipple stars, in ink
     for (var i2 = 0; i2 < 300; i2++) el('circle', { cx: (r() * 1600).toFixed(0), cy: (r() * 700).toFixed(0), r: (r() * 1.6 + .4).toFixed(1), fill: DK, opacity: (r() * .6 + .2).toFixed(2) }, W2);
@@ -3344,17 +3800,17 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     // cx, cy: the point to centre; w, h: the span to fit. m*: the same on phones, where the plate is taller than wide.
     // desktop spans were tightened ~20%, phones a lot more: the default view should already show the detail worth tapping
     var K = [
-      { cx: 5250, cy: 860, w: 2600, h: 1700, k: 'Plate I', v: '2026–40', u: '', cover: 1, mw: 900, mcx: 1150, mcy: 820, mh: 1050 },
-      { cx: 210, cy: 1780, w: 620, h: 460, k: 'Mission precursors', v: 'the lineage', u: '', mw: 470, mh: 640, mcx: 190, mcy: 1820 },
+      { cx: 5250, cy: 860, w: 2600, h: 1700, k: 'Plate I', v: '2026–45', u: '', cover: 1, mw: 900, mcx: 1150, mcy: 820, mh: 1050 },
+      { cx: 210, cy: 1820, w: 620, h: 500, k: 'Mission precursors', v: 'the lineage', u: '', mw: 470, mh: 680, mcx: 190, mcy: 1880 },
       { cx: 620, cy: 1540, w: 800, h: 520, k: "Fig. 26 · altitude", v: '0', u: 'km', rail: "'26", mw: 540, mh: 560, mcx: 680, mcy: 1580 },
       { cx: 1080, cy: 1440, w: 880, h: 560, k: "Fig. 27 · altitude", v: '0', u: 'km', rail: "'27", mw: 500, mh: 780, mcx: 1100, mcy: 1330 },
-      { cx: 1420, cy: 1300, w: 1120, h: 850, k: 'Highest flight', v: '30', u: 'km', rail: "'28", mw: 620, mh: 700, mcx: 1470, mcy: 1500 },
+      { cx: 1420, cy: 1300, w: 1120, h: 850, k: 'Highest flight', v: '30', u: 'km', rail: "'28", mw: 620, mh: 800, mcx: 1560, mcy: 1360 },
       { cx: 1980, cy: 1150, w: 1360, h: 960, k: 'Apophis passes at', v: '32,000', u: 'km', rail: "'29", mw: 640, mh: 900, mcx: 2010, mcy: 1000 },
       { cx: 3000, cy: 1280, w: 1360, h: 840, k: 'Highest flight', v: '400', u: 'km', rail: "'30–'32", mw: 760, mh: 900, mcx: 3000, mcy: 1320 },
       { cx: 3950, cy: 980, w: 1440, h: 1200, k: 'Distance from Earth', v: '384,400', u: 'km', rail: "'33", m: 1, mw: 640, mh: 900, mcx: 4080, mcy: 760 },
-      { cx: 5700, cy: 330, w: 1120, h: 800, k: 'On the Moon', v: '1 h 35', u: 'min', rail: "'36", m: 1, mw: 760, mh: 700, mcx: 5480, mcy: 250 },
+      { cx: 5700, cy: 330, w: 1120, h: 800, k: 'On the Moon', v: '1 h 35', u: 'min', rail: "'36", m: 1, mw: 760, mh: 700, mcx: 5600, mcy: 250 },
       { cx: 7700, cy: 420, w: 1040, h: 720, k: 'On the Moon', v: 'for good', u: '', rail: "'40", m: 1, mw: 560, mh: 600, mcx: 7920, mcy: 400 },
-      { cx: 4150, cy: 1000, w: 8500, h: 2500, k: 'Plate I', v: '2026–40', u: '', rail: 'All', full: 1, mw: 3200, mh: 2500, mcx: 4300, mcy: 1000 }
+      { cx: 4150, cy: 1000, w: 8500, h: 2500, k: 'Plate I', v: '2026–45', u: '', rail: 'All', full: 1, mw: 3200, mh: 2500, mcx: 4300, mcy: 1000 }
     ];
     var S = K.length, STEP = 1.1;
 
@@ -3437,13 +3893,17 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       Z = BZ * uz;
       var tx0 = ACX - (CX + px) * Z, ty0 = ACY - (CY + py) * Z;
       cam.setAttribute('transform', 'translate(' + tx0.toFixed(1) + ' ' + ty0.toFixed(1) + ') scale(' + Z.toFixed(4) + ')');
-      var zoomed = uz > 1.04;
-      if (zoomed && typeof noteZoom === 'function') noteZoom();
+      var zoomed = exploring();
+      if (uz > 1.04 && typeof noteZoom === 'function') noteZoom();
       if (zoomed !== stage.classList.contains('zoomed')) { stage.classList.toggle('zoomed', zoomed); tip.classList.remove('on'); }
     }
     var ticking = false;
+    // exploring: the visitor has zoomed in or out, or panned, away from the stop's own view
+    function exploring() { return Math.abs(uz - 1) > .02 || Math.abs(px) + Math.abs(py) > 3; }
+    // how far out the visitor may go: the whole plate, fitted to the stage
+    function uzMin() { var sw = stage.clientWidth, sh = stage.clientHeight; return Math.min(1, Math.min(sw / 8700, (sh - 40) / 2650) / BZ); }
     function onScroll() {
-      if (uz > 1.001 && !tween && !holding) reset();
+      if (exploring() && !tween && !holding) reset();
       if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; frame(); }); }
     }
     size(); frame();
@@ -3457,8 +3917,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     }
     function zoomAt(sx, sy, factor) {
       var Zt = BZ * uz, wx = (sx - (ACX - (CX + px) * Zt)) / Zt, wy = (sy - (ACY - (CY + py) * Zt)) / Zt;
-      uz = clamp(uz * factor, 1, UZMAX);
-      if (uz < 1.01) { uz = 1; px = 0; py = 0; place(); return; }
+      uz = clamp(uz * factor, uzMin(), UZMAX);
       var Z2 = BZ * uz;
       px = (ACX - (sx - wx * Z2)) / Z2 - CX; py = (ACY - (sy - wy * Z2)) / Z2 - CY;
       clampPan(); place();
@@ -3477,8 +3936,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     if (seenZoom) zbar.classList.remove('hint');
     function noteZoom() { if (seenZoom) return; seenZoom = true; zbar.classList.remove('hint'); try { localStorage.setItem('em-zoomed', '1'); } catch (e) {} }
     function zoomCenter(f) {
-      var Zt = BZ * uz, wx = CX + px, wy = CY + py, tuz = clamp(uz * f, 1, UZMAX);
-      if (tuz < 1.01) { reset(); return; }
+      var tuz = clamp(uz * f, uzMin(), UZMAX);
       animateTo(tuz, px, py, 320);
     }
     function local(ev) { var r = stage.getBoundingClientRect(); return [ev.clientX - r.left, ev.clientY - r.top]; }
@@ -3486,13 +3944,12 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     document.getElementById('z-out').addEventListener('click', function () { zoomCenter(1 / 1.8); });
     document.getElementById('z-back').addEventListener('click', reset);
     map.addEventListener('wheel', function (ev) {
-      // pinch on a trackpad arrives as ctrl + wheel; once zoomed, the wheel keeps zooming until you are back out
-      if (!ev.ctrlKey && uz <= 1.001) return;
-      if (!ev.ctrlKey && ev.deltaY > 0 && uz <= 1.02) return;
+      // pinch on a trackpad arrives as ctrl + wheel and zooms, in or out; a plain wheel keeps flying the plan
+      if (!ev.ctrlKey) return;
       ev.preventDefault(); cancelAnimationFrame(tween); tween = null;
       var l = local(ev); zoomAt(l[0], l[1], Math.exp(-ev.deltaY * (ev.ctrlKey ? .004 : .0025)));
     }, { passive: false });
-    map.addEventListener('dblclick', function (ev) { ev.preventDefault(); if (lastType === 'touch') return; var l = local(ev); var f = uz >= UZMAX * .9 ? 1 / UZMAX : 2.4; cancelAnimationFrame(tween); tween = null; zoomAt(l[0], l[1], f); });
+    map.addEventListener('dblclick', function (ev) { ev.preventDefault(); if (lastType === 'touch') return; var l = local(ev); var f = uz >= UZMAX * .9 ? 1 / uz : 2.4; cancelAnimationFrame(tween); tween = null; zoomAt(l[0], l[1], f); });
     var ptrs = {}, pinch = null, drag = null, moved = 0, lastTap = 0, lastTapXY = [0, 0];
     var lastType = 'mouse';
     map.addEventListener('pointerdown', function (ev) {
@@ -3501,7 +3958,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       if (ids.length === 2) {
         var a = ptrs[ids[0]], b = ptrs[ids[1]];
         pinch = { d: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, uz: uz }; drag = null; cancelAnimationFrame(tween); tween = null;
-      } else if (uz > 1.04 && (ev.pointerType !== 'mouse' || ev.button === 0)) {
+      } else if (exploring() && (ev.pointerType !== 'mouse' || ev.button === 0)) {
         drag = { x: ptrs[ev.pointerId][0], y: ptrs[ev.pointerId][1], px: px, py: py }; cancelAnimationFrame(tween); tween = null;
         try { map.setPointerCapture(ev.pointerId); } catch (e) {}
       }
@@ -3512,7 +3969,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       var ids = Object.keys(ptrs);
       if (pinch && ids.length >= 2) {
         var a = ptrs[ids[0]], b = ptrs[ids[1]], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
-        var want = clamp(pinch.uz * d / pinch.d, 1, UZMAX);
+        var want = clamp(pinch.uz * d / pinch.d, uzMin(), UZMAX);
         zoomAt((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, want / uz);
       } else if (drag) {
         var Zt = BZ * uz; px = drag.px - (q[0] - drag.x) / Zt; py = drag.py - (q[1] - drag.y) / Zt; clampPan(); place();
@@ -3528,7 +3985,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       // a quick double tap on a touch screen looks closer, the way a map does
       if (ev.pointerType === 'touch' && moved < 8) {
         var now = Date.now(), l = local(ev);
-        if (now - lastTap < 320 && Math.hypot(l[0] - lastTapXY[0], l[1] - lastTapXY[1]) < 36) { lastTap = 0; swallow = true; var f = uz >= UZMAX * .9 ? 1 / UZMAX : 2.4; cancelAnimationFrame(tween); tween = null; zoomAt(l[0], l[1], f); }
+        if (now - lastTap < 320 && Math.hypot(l[0] - lastTapXY[0], l[1] - lastTapXY[1]) < 36) { lastTap = 0; swallow = true; var f = uz >= UZMAX * .9 ? 1 / uz : 2.4; cancelAnimationFrame(tween); tween = null; zoomAt(l[0], l[1], f); }
         else { lastTap = now; lastTapXY = l; }
       }
     }
@@ -3545,12 +4002,28 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       return best;
     }
     function within(pt, c, r) { var slack = Math.max(0, 22 / Z - 16); return Math.hypot(pt.x - c[0], pt.y - c[1]) < r + slack; }
-    var swallow = false;
+    var swallow = false, sayT = null;
+    // a short line by the finger: what a secret spot answers
+    function say(ev, text) {
+      var sr = stage.getBoundingClientRect(); tip.textContent = text; tip.classList.add('w');
+      tip.style.left = (ev.clientX - sr.left) + 'px'; tip.style.top = (ev.clientY - sr.top) + 'px'; tip.classList.add('on');
+      clearTimeout(sayT); sayT = setTimeout(function () { tip.classList.remove('on'); }, 2200);
+    }
+    // 28-C: press and hold the eclipse over the Outback
+    map.addEventListener('pointerdown', function (ev) {
+      if (!EGG28) return; var pt = plateAt(ev);
+      if (pt && within(pt, EGG28.sun, 46)) holdStart(cam);
+    });
+    map.addEventListener('pointermove', function () { if (holdT && moved > 8) holdCancel(); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (t) { map.addEventListener(t, function () { if (holdT) holdCancel(); }); });
+    map.addEventListener('contextmenu', function (e) { e.preventDefault(); });
     map.addEventListener('click', function (ev) {
       if (moved > 8 || swallow) { swallow = false; return; }
       var pt = plateAt(ev); if (!pt) return;
       if (TRI) for (var q = 0; q < 3; q++) if (within(pt, TRI[q], 40)) { openCard(); return; }
       if (FLOOR && within(pt, FLOOR, 66)) { kick(cam); return; }
+      if (EGG36 && within(pt, EGG36.dome, 30)) { if (!knock36(cam)) say(ev, 'Nobody here knows you yet'); return; }
+      if (EGG28 && within(pt, EGG28.sun, 46)) { if (portal28.hidden) say(ev, 'Stay in the shadow. Press and hold'); return; }
       if (EGG26 && within(pt, EGG26.huld, 34)) { arm26(map); return; }
       if (EGG26 && EGG26.arch && within(pt, EGG26.arch, 34) && Date.now() < armed26Until) { enter26(); return; }
       if (EGG && within(pt, EGG.eye, 16)) { arm(map); return; }
@@ -3572,6 +4045,8 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     var SECRETS = [
       { k: 'a26', el: 'portal26', riddle: "Iceland keeps an old courtesy: the hidden folk are asked first. There is a door beside them.", step: 2 },
       { k: 'b27', el: 'portal', riddle: "Something at Luxor is watching the sky. Meet its gaze, then follow it up.", step: 3 },
+      { k: 'c28', el: 'portal28', riddle: "The shadow over the Outback is in no hurry. Neither should you be: stay in it.", step: 4 },
+      { k: 'd36', el: 'portal36', riddle: "The visitors from Luxor stayed on the Moon. Knock at the camp, once they know you.", step: 8 },
       { k: 'm45', el: 'm45', riddle: "The floor on the Moon keeps time at 145. It answers to four on the floor.", step: 9 }
     ];
     var found = {};
@@ -3580,16 +4055,49 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     function tally() {
       var n = SECRETS.filter(function (q) { return found[q.k]; }).length;
       sxn.textContent = n; sx.classList.toggle('all', n === SECRETS.length);
+      if (n === SECRETS.length) listInvite();
       sx.setAttribute('aria-label', n + ' of ' + SECRETS.length + ' secrets found. Tap for a riddle.');
     }
     SECRETS.forEach(function (q) {
       var o = document.getElementById(q.el); if (!o) return;
       new MutationObserver(function () { if (!o.hidden && !found[q.k]) { found[q.k] = 1; try { localStorage.setItem('em-secrets', JSON.stringify(found)); } catch (e) {} tally(); } }).observe(o, { attributes: true, attributeFilter: ['hidden'] });
     });
+    // ---------- five of five: the list. Shown once, after the last overlay closes; the tally reopens it ----------
+    var fv = document.getElementById('fv'), fvf = document.getElementById('fvf'), fvWait = null;
+    function listed() { try { return localStorage.getItem('em-list') === '1'; } catch (e) { return false; } }
+    function overlayOpen() { return SECRETS.some(function (q) { var o = document.getElementById(q.el); return o && !o.hidden; }); }
+    function showList() { fv.hidden = false; setTimeout(function () { (listed() ? document.getElementById('fv-x') : document.getElementById('fv-name')).focus(); }, 30); }
+    function listInvite(force) {
+      var seen = false; try { seen = localStorage.getItem('em-list-seen') === '1'; } catch (e) {}
+      if (seen && !force) return;
+      try { localStorage.setItem('em-list-seen', '1'); } catch (e) {}
+      clearInterval(fvWait);
+      if (!overlayOpen()) { setTimeout(showList, 400); return; }
+      fvWait = setInterval(function () { if (!overlayOpen()) { clearInterval(fvWait); setTimeout(showList, 600); } }, 300);
+    }
+    if (listed()) { fvf.hidden = true; document.getElementById('fv-done').hidden = false; }
+    document.getElementById('fv-x').addEventListener('click', function () { fv.hidden = true; });
+    fv.addEventListener('click', function (e) { if (e.target === fv) fv.hidden = true; });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !fv.hidden) fv.hidden = true; });
+    fvf.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('fv-name').value.trim(), v = document.getElementById('fv-email').value.trim().toLowerCase(), note = document.getElementById('fv-note').value.trim();
+      if (!name || !emailOk(v)) { document.getElementById('fv-err').hidden = false; return; }
+      var cio = window.cioanalytics;
+      if (cio && cio.identify) {
+        try {
+          cio.identify(v, { email: v, 'first name': name, source: 'eclipsemissions.com', seeker: true, secrets_found: SECRETS.length, secrets_list: true, secrets_note: note });
+          cio.track('secrets_complete', { source: 'eclipsemissions.com', name: name, email: v, note: note, secrets: SECRETS.map(function (q) { return q.k; }) });
+        } catch (x) {}
+      }
+      try { localStorage.setItem('em-list', '1'); } catch (x) {}
+      document.getElementById('fv-err').hidden = true; fvf.hidden = true; document.getElementById('fv-done').hidden = false;
+    });
     sx.addEventListener('click', function () {
+      if (SECRETS.every(function (q) { return found[q.k]; })) { showList(); return; }
       var left = SECRETS.filter(function (q) { return !found[q.k]; });
       var here = left.filter(function (q) { return q.step === cur; })[0];
-      sxr.textContent = here ? here.riddle : left.length ? left[ri++ % left.length].riddle : 'All three found. The Moon floor remembers you, Seeker.';
+      sxr.textContent = here ? here.riddle : left.length ? left[ri++ % left.length].riddle : 'All five found. The Moon floor remembers you, Seeker.';
       sxr.hidden = false; clearTimeout(sxt); sxt = setTimeout(function () { sxr.hidden = true; }, 7000);
     });
     tally();
@@ -3603,6 +4111,8 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     }
     if (EGG26) glint([EGG26.huld[0] - 30, EGG26.huld[1] - 22], 22, 1.5, '#8af5d8');
     if (EGG) glint(EGG.eye, 20, 4.5);
+    if (EGG28) glint([EGG28.sun[0] + 30, EGG28.sun[1] - 30], 22, 3, '#f2a65a');
+    if (EGG36) glint(EGG36.dome, 18, 6, '#50e3ff');
     if (FLOOR) {
       glint(FLOOR, 30, 7, '#f2a65a');
       // and the floor keeps time: a faint ring every four beats at 145 BPM
@@ -3615,6 +4125,8 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       if (FLOOR && within(pt, FLOOR, 66)) return found.m45 ? 'Four on the floor' : 'The floor keeps time';
       if (EGG && within(pt, EGG.eye, 16)) return found.b27 ? 'Universe 27-B' : 'It is watching the sky';
       if (EGG26 && within(pt, EGG26.huld, 34)) return found.a26 ? 'Universe 26-A' : 'Ask first';
+      if (EGG28 && within(pt, EGG28.sun, 46)) return found.c28 ? 'Universe 28-C' : 'Stay in the shadow';
+      if (EGG36 && within(pt, EGG36.dome, 30)) return found.d36 ? 'Universe 36-D' : 'Someone is home';
       return '';
     }
 
@@ -3769,7 +4281,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       });
     });
 
-    window.__site = { zoom: function (f) { zoomCenter(f); }, uz: function () { return uz; }, go: go, open: openSheet, close: closeSheet, K: K, stops: STOPS, secrets: function () { return { egg: EGG, egg26: EGG26, floor: FLOOR, tri: TRI }; } };
+    window.__site = { zoom: function (f) { zoomCenter(f); }, uz: function () { return uz; }, go: go, open: openSheet, close: closeSheet, K: K, stops: STOPS, secrets: function () { return { egg: EGG, egg26: EGG26, egg28: EGG28, egg36: EGG36, floor: FLOOR, tri: TRI }; } };
   })();
 })();
 
