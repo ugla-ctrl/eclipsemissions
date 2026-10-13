@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mission 1·23·45</title>
+<meta name="description" content="The secret mission of the Eclipse Missions: zoom into a techno-shamanic dance party on a tumbling rock, from the engraved plate down to unbearable detail.">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=IM+Fell+English:ital@0;1&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #030305; --ink: #eee5d0; --dim: #9c9584; --turq: #50e3ff; --ember: #e2502a; --corona: #f2a65a;
+  --f-fell: "IM Fell English", "Iowan Old Style", Georgia, serif;
+  --f-mono: "Geist Mono", ui-monospace, Menlo, monospace;
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); overflow: hidden; overscroll-behavior: none; -webkit-font-smoothing: antialiased; }
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: zoom-in; }
+.hud { position: fixed; z-index: 5; pointer-events: none; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+.hud b { font-weight: 500; color: var(--ink); }
+.tl .home { pointer-events: auto; color: var(--ink); text-decoration: none; border-bottom: 1px solid #4a463c; justify-self: start; padding-bottom: 2px; }
+.tl .home:hover { border-color: var(--corona); color: var(--corona); }
+.tl { top: calc(14px + env(safe-area-inset-top, 0px)); left: 16px; display: grid; gap: 4px; }
+.tl .t { font-family: var(--f-fell); font-size: 22px; letter-spacing: 0; text-transform: none; background: linear-gradient(90deg, var(--turq), var(--corona), var(--ember)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tr { top: calc(14px + env(safe-area-inset-top, 0px)); right: 16px; text-align: right; display: grid; gap: 4px; }
+.tr #mag { color: var(--corona); font-variant-numeric: tabular-nums; }
+.cap { left: 16px; right: 16px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); text-align: center; font-family: var(--f-fell); font-style: italic; font-size: clamp(18px, 2.4vw, 26px); letter-spacing: 0; text-transform: none; color: var(--ink); text-wrap: balance; transition: opacity .6s; text-shadow: 0 0 12px #000, 0 0 2px #000; }
+.ctl { position: fixed; z-index: 6; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 8px; flex-wrap: nowrap; }
+.ctl button { font: inherit; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; background: rgba(5,5,7,.72); color: var(--ink); border: 1px solid #4a463c; border-radius: 4px; padding: 10px 12px; cursor: pointer; white-space: nowrap; backdrop-filter: blur(4px); }
+.ctl button[aria-pressed="true"] { border-color: var(--corona); color: var(--corona); }
+.gate { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, rgba(20,14,10,.55), rgba(3,3,5,.96) 60%); padding: 24px 16px; }
+.gate[hidden] { display: none; }
+.gate .in { max-width: 560px; display: grid; gap: 14px; text-align: center; justify-items: center; }
+.gate .ey { font-family: var(--f-mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+.gate .ey b { color: var(--corona); font-weight: 500; }
+.gate h1 { margin: 0; font-family: var(--f-fell); font-weight: 400; font-size: clamp(48px, 10vw, 96px); line-height: .95; background: linear-gradient(90deg, var(--turq), var(--corona), var(--ember)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.gate p { margin: 0; font-family: var(--f-fell); font-style: italic; font-size: 20px; color: #d9d1bc; text-wrap: balance; }
+.gate .go { font: inherit; font-family: var(--f-mono); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; background: var(--ink); color: #14110d; border: 0; border-radius: 4px; padding: 16px 24px; cursor: pointer; margin-top: 8px; }
+.gate .back { color: var(--ink); text-decoration: none; border-bottom: 1px solid #4a463c; padding-bottom: 2px; }
+.gate .sm { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; color: var(--dim); text-transform: none; }
+@media (max-width: 560px) { .tr .x { display: none; } .ctl button { padding: 10px 9px; font-size: 10.5px; } }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="An infinite zoom: deep space, a tumbling rock, a dance floor, one Seeker, the reflection in their visor, and a realm inside one city light that leads back to the rock"></canvas>
+<audio id="au" src="timespace.mp3" preload="auto" loop></audio>
+
+<div class="hud tl"><span class="t">Mission 1·23·45</span><a class="home" href="../" target="_blank" rel="noopener">← The Eclipse Missions</a><span>Opens in <b id="cd">counting</b></span></div>
+<div class="hud tr"><span id="lvl"><b>Level 0</b> · deep field</span><span>Magnification <span id="mag">×1</span></span><span class="x" id="loop">Loop 1</span></div>
+<div class="hud cap" id="cap">Out past Earth and the Moon, a rock tumbles.</div>
+<div class="ctl"><button type="button" id="out">Zoom out</button><button type="button" id="dive" aria-pressed="true">Dive</button><button type="button" id="in">Zoom in</button><button type="button" id="snd" aria-pressed="true">Sound</button></div>
+
+<div class="gate" id="gate"><div class="in">
+  <span class="ey"><b>Classified</b> · four on the floor</span>
+  <h1>1·23·45</h1>
+  <p>A dance floor clamped to a tumbling rock, out past Earth and the Moon. Zoom in. It does not stop.</p>
+  <button type="button" class="go" id="go">Drop in · sound on</button>
+  <span class="sm">Scroll, pinch or drag up to zoom. Dive keeps falling on its own.</span>
+  <a class="sm back" href="../" target="_blank" rel="noopener">← Back to the Eclipse Missions</a>
+</div></div>
+
+<script>
+(function () {
+  'use strict';
+  var cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  var W = 0, H = 0, DPR = 1;
+  function resize() { DPR = Math.min(window.devicePixelRatio || 1, 2); W = window.innerWidth; H = window.innerHeight; cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR); }
+  resize(); window.addEventListener('resize', resize);
+
+  var INK = '#eee5d0', DIM = '#9c9584', TQ = '#50e3ff', EM = '#e2502a', CO = '#f2a65a', BG = '#030305';
+  var MONO = '"Geist Mono", ui-monospace, Menlo, monospace', FELL = '"IM Fell English", Georgia, serif';
+  function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }; }
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function sstep(a, b, x) { var t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
+  function pick(r, a) { return a[Math.floor(r() * a.length)]; }
+
+  // ---------------- the zoom: every level sits inside the last, ten times smaller ----------------
+  var Z = 10, NL = 8;
+  var PORTAL = [null, null, null, .05, .18, null, null, .045];
+  var PRAMP = [null, null, null, [1.5, 24], [1.5, 24], null, null, [28, 140]];
+  var SPEED = [1, 1, 1, .9, .5, .45, .45, .6];
+  // when each level hands over to the next: late for the eye (the view is inside the pupil by then), long for the wormhole
+  var XF = [[.42, .92], [.42, .92], [.3, .95], [.45, .95], [.76, .99], [.3, .9], [.3, .9], [.3, .98]];
+  var CHILD = [[0, 0], [-0.05, -0.155], [0.1, 0.3], [0, -0.3], [0, 0], [0, 0], [0, 0], [0, 0]];
+  var NAMES = ['deep field', 'the rock', 'the floor', 'one Seeker', 'the eye', 'the pupil opens', 'the spiral', 'the threshold'];
+  var CAPS = [
+    'Out past Earth and the Moon, a rock tumbles.',
+    'Every turn of the rock is a sunset. Eight an hour.',
+    'The floor. Seekers of every kind, all on the kick.',
+    'One Seeker. Arms up. Heart rate matched to the kick.',
+    'In the eye: one glint of home, dead centre.',
+    'The pupil opens. The glint becomes a spiral.',
+    'Inside, the elves are singing in shapes.',
+    'At the end of the spiral, the eclipse again. Through it, the rock.'
+  ];
+  function camAt(i, t) { var c = CHILD[i], k = (1 - Math.pow(Z, -t)) / (1 - 1 / Z); return [c[0] * k, c[1] * k]; }
+
+  // ---------------- labels: data on everything, more of it the deeper you go ----------------
+  var VOC = [
+    { n: ['OBJECT 12345', 'SUN', 'HOME', 'SIGNAL', 'DUST TAIL', 'STAR', 'SHADOW', 'ORBIT'], p: [['TUMBLE PERIOD', ' min'], ['SUNSETS', ' / h'], ['SIGNAL DELAY', ' s'], ['ALBEDO', ''], ['CATALOGUED', ' YES'], ['DISTANCE', ' AU']] },
+    { n: ['BOULDER', 'CRATER', 'TETHER', 'ANCHOR BOLT', 'ROBOT', 'LASER', 'DUST PLUME', 'REGOLITH', 'ANTENNA', 'SEEKER', 'CABLE RUN', 'RIDGE', 'SOLAR WING'], p: [['MASS', ' t'], ['TEMP', ' °C'], ['AGE', ' Gyr'], ['SPIN', ' rpm'], ['LOAD', ' kN'], ['GRAIN', ' mm'], ['JOY', '']] },
+    { n: ['DANCER', 'MACHINE ELF', 'VISITOR', 'ROBOT', 'SPIRIT', 'SPEAKER CONE', 'DOME STRUT', 'LASER', 'FOG PARTICLE', 'FOOTPRINT', 'DJ', 'MANDALA PETAL', 'SUB BIN', 'GLOW STICK', 'HEADLAMP', 'SHADOW'], p: [['HR', ' bpm'], ['EXCURSION', ' mm'], ['FACETS', ''], ['INTENT', ''], ['WAVELENGTH', ' nm'], ['DRIFT', ' cm/s'], ['ON THE KICK', ' %'], ['WAS HERE BEFORE', ''], ['SMILE', ' %'], ['STEPS', '']] },
+    { n: ['SEAM', 'STITCH', 'PATCH THREAD', 'LED', 'VALVE', 'GLOVE KNUCKLE', 'TETHER CLIP', 'FABRIC FOLD', 'DUST GRAIN', 'SWEAT BEAD', 'O2 HOSE', 'BOOT TREAD', 'VISOR BOLT', 'ZIP TOOTH', 'RIVET', 'GASKET', 'WRIST DIAL', 'CABLE TIE', 'SCUFF'], p: [['TENSION', ' N'], ['TEMP', ' °C'], ['VOLUME', ' µL'], ['PITCH', ' mm'], ['BLINK', ' Hz'], ['WEAR', ' %'], ['AGE', ' days'], ['LOVED', ' YES'], ['TORQUE', ' N·m'], ['GLINT', ' lx']] },
+    { n: ['IRIS FIBRE', 'CRYPT', 'COLLARETTE', 'LIMBAL RING', 'PUPIL EDGE', 'PUPILLARY RUFF', 'CONTRACTION FURROW', 'PIGMENT FRECKLE', 'STROMA STRAND', 'DILATOR FIBRE', 'SPHINCTER RING', 'MELANIN GRAIN', 'TEAR FILM', 'CATCHLIGHT', 'CORNEA', 'VISOR SCRATCH', 'DROPLET', 'GOLD FILM', 'REFLECTED LASER', 'REFLECTED DANCER', 'CITY LIGHT', 'PHOTON', 'FLOATER', 'NIGHT SIDE', 'HOME, VERY SMALL'], p: [['DEPTH', ' µm'], ['VOLUME', ' nL'], ['LUX', ''], ['REFLECTANCE', ' %'], ['DILATION', ' mm'], ['FLOW', ' µL/min'], ['PIGMENT', ' %'], ['THICKNESS', ' µm'], ['AGE', ' yr'], ['BLINKS', ' / min'], ['LONGING', ' %'], ['WONDER', ' %'], ['POPULATION', ''], ['TEMP', ' °C']] },
+    { n: ['GLYPH', 'ELF', 'FACET', 'SHAPE-SONG', 'EYE', 'TIMEWAVE NODE', 'NOVELTY SPIKE', 'FRACTAL ARM', 'MEANING', 'ECHO', 'DOOR', 'FILAMENT', 'NEBULA KNOT', 'COLOUR', 'HUE NOT YET NAMED', 'WORMHOLE RING', 'LIGHT YEAR', 'STAR STREAK', 'SPIRAL', 'MEMORY', 'BREATH', 'TOTALITY', 'THRESHOLD', 'SEEKER, UNFOLDED'], p: [['NOVELTY', ''], ['MEANING', ' PENDING'], ['SINGING', ' YES'], ['FACETS', ''], ['DIMENSION', ''], ['RECURSION', ''], ['TRUST', ' %'], ['FOUND US', ' MAYBE'], ['WAVELENGTH', ' nm'], ['VELOCITY', ' c'], ['WARMTH', ' %'], ['TIME', ' REVERSED'], ['DEPTH', ' ∞'], ['FAMILIAR', ' %']] }
+  ];
+  function mkLabels(li, n, ext, size, seed) {
+    // every label says something different, and none sits on top of another
+    var r = rng(seed), out = [], v = VOC[li], combos = [], used = {}, boxes = [];
+    for (var a = 0; a < v.n.length; a++) for (var b = 0; b < v.p.length; b++) combos.push([v.n[a], v.p[b]]);
+    for (var k = combos.length - 1; k > 0; k--) { var j = Math.floor(r() * (k + 1)), tmp = combos[k]; combos[k] = combos[j]; combos[j] = tmp; }
+    function val(pr) {
+      var u = pr[1];
+      if (u === ' YES' || u === ' PENDING' || u === ' MAYBE') return u.trim();
+      if (pr[0] === 'INTENT') return pick(r, ['UNKNOWN', 'TO DANCE', 'TO REMEMBER', 'UNCLEAR', 'PURE', 'SHARED']);
+      if (pr[0] === 'WAS HERE BEFORE') return pick(r, ['YES', 'DIFFERENTLY', 'ALWAYS']);
+      if (u === '') return (r() * .99 + .01).toFixed(r() > .5 ? 2 : 4);
+      return (r() * (r() > .7 ? 9999 : 99)).toFixed(r() > .5 ? 1 : 3) + u;
+    }
+    var tries = 0;
+    while (out.length < n && tries < n * 12) {
+      tries++;
+      var c = combos[out.length % combos.length], id;
+      do { id = Math.floor(r() * 9000 + 100); } while (used[c[0] + id]);
+      var txt = c[0] + ' #' + id + ' · ' + c[1][0] + ' ' + val(c[1]);
+      var sz = size * (.55 + r() * .9), ax = (r() - .5) * ext * 2, ay = (r() - .5) * ext * 1.4;
+      var dx = (r() > .5 ? 1 : -1) * sz * (2 + r() * 4), dy = -sz * (1 + r() * 3);
+      var w = txt.length * sz * .6, x0 = dx > 0 ? ax + dx + sz * .8 : ax + dx - sz * .8 - w, y0 = ay + dy - sz;
+      var hit = false;
+      for (var q = 0; q < boxes.length && !hit; q++) { var bb = boxes[q]; if (x0 < bb[2] && x0 + w > bb[0] && y0 < bb[3] && y0 + sz * 1.3 > bb[1]) hit = true; }
+      if (hit) continue;
+      used[c[0] + id] = 1; boxes.push([x0, y0, x0 + w, y0 + sz * 1.3]);
+      out.push({ ax: ax, ay: ay, dx: dx, dy: dy, t: txt, s: sz });
+    }
+    return out;
+  }
+  var LAB = [mkLabels(0, 16, .7, .012, 11), mkLabels(1, 46, .5, .008, 12), mkLabels(2, 130, .5, .0055, 13), mkLabels(3, 260, .45, .0032, 14), mkLabels(4, 420, .5, .0021, 15), mkLabels(5, 110, .5, .0042, 16), mkLabels(5, 110, .5, .0042, 17), mkLabels(5, 110, .5, .0042, 18)];
+  var labelBoost = 0;
+  function drawLabels(li, V, alpha) {
+    var L = LAB[li], S = V.S, col = li < 2 ? '220,212,190' : li < 4 ? '240,232,210' : '255,236,200';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    ctx.textBaseline = 'alphabetic';
+    for (var i = 0; i < L.length; i++) {
+      var l = L[i], fs = l.s * S;
+      if (fs < .8) continue;
+      var sx = V.ox + l.ax * S, sy = V.oy + l.ay * S;
+      if (sx < -400 || sx > W + 400 || sy < -100 || sy > H + 100) continue;
+      var tx = sx + l.dx * S, ty = sy + l.dy * S, a = alpha * (1 - sstep(20, 40, fs));
+      if (a <= .01) continue;
+      ctx.strokeStyle = 'rgba(' + col + ',' + (a * .45).toFixed(3) + ')'; ctx.lineWidth = Math.max(.4, fs * .05);
+      ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(tx, ty); ctx.lineTo(tx + (l.dx > 0 ? 1 : -1) * fs * .6, ty); ctx.stroke();
+      ctx.fillStyle = 'rgba(' + col + ',' + (a * .9).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(sx, sy, Math.max(.6, fs * .12), 0, 6.283); ctx.fill();
+      var w = l.t.length * fs * .6, x0 = l.dx > 0 ? tx + fs * .8 : tx - fs * .8 - w;
+      if (fs < 3.2) { // too small to read: a hairline where the words will be
+        ctx.fillStyle = 'rgba(' + col + ',' + (a * .35).toFixed(3) + ')'; ctx.fillRect(x0, ty - fs * .7, w, Math.max(.5, fs * .45));
+      } else { ctx.font = fs.toFixed(2) + 'px ' + MONO; ctx.fillText(l.t, x0, ty); }
+    }
+  }
+
+  // ---------------- shared drawing helpers (level units; 1 px = V.px) ----------------
+  function P(V, n) { return n * V.px; }
+  function circle(x, y, r) { ctx.beginPath(); ctx.arc(x, y, Math.max(r, 1e-6), 0, 6.2832); }
+  function fillCircle(x, y, r, c) { ctx.fillStyle = c; circle(x, y, r); ctx.fill(); }
+  function strokeCircle(x, y, r, c, w) { ctx.strokeStyle = c; ctx.lineWidth = w; circle(x, y, r); ctx.stroke(); }
+  function seg(x1, y1, x2, y2) { ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); }
+  function visible(V, x, y, r) { return x + r > V.x0 && x - r < V.x1 && y + r > V.y0 && y - r < V.y1; }
+  function bgFill(V, c) { ctx.fillStyle = c; ctx.fillRect(V.x0 - 1, V.y0 - 1, V.x1 - V.x0 + 2, V.y1 - V.y0 + 2); }
+  function stars(V, list, tw) {
+    for (var i = 0; i < list.length; i++) { var s = list[i]; if (!visible(V, s[0], s[1], s[2])) continue; var a = s[3] * (tw ? .7 + .3 * Math.sin(T * s[4] + i) : 1); ctx.globalAlpha = V.alpha * a; fillCircle(s[0], s[1], Math.max(s[2], P(V, .7)), s[5] || INK); }
+    ctx.globalAlpha = V.alpha;
+  }
+  function mkStars(n, ext, rmin, rmax, seed, cols) { var r = rng(seed), o = []; for (var i = 0; i < n; i++) o.push([(r() - .5) * 2 * ext, (r() - .5) * 2 * ext, rmin + Math.pow(r(), 3) * (rmax - rmin), .25 + r() * .75, .5 + r() * 3, cols ? pick(r, cols) : INK]); return o; }
+  function ringedEarth(x, y, R, V, real, seed) {
+    // corona rays, then the ember ring, the thin blue line, the dark disk and a few city lights
+    var r = rng(seed || 7);
+    ctx.lineCap = 'round';
+    for (var i = 0; i < 140; i++) { var a = r() * 6.2832, L = R * (.3 + r() * 1.1 + Math.pow(Math.abs(Math.cos(a * 2)), 6) * 1.6); ctx.strokeStyle = real ? 'rgba(255,240,220,' + (.08 + r() * .25).toFixed(2) + ')' : 'rgba(238,229,208,' + (.2 + r() * .5).toFixed(2) + ')'; ctx.lineWidth = Math.max(P(V, .6), R * (real ? .02 : .012)); ctx.beginPath(); seg(x + Math.cos(a) * R * 1.12, y + Math.sin(a) * R * 1.12, x + Math.cos(a) * (R * 1.12 + L), y + Math.sin(a) * (R * 1.12 + L)); ctx.stroke(); }
+    if (real) { var g = ctx.createRadialGradient(x, y, R * .95, x, y, R * 1.9); g.addColorStop(0, 'rgba(255,170,110,.55)'); g.addColorStop(.18, 'rgba(255,120,60,.18)'); g.addColorStop(1, 'rgba(255,120,60,0)'); ctx.fillStyle = g; circle(x, y, R * 1.9); ctx.fill(); }
+    strokeCircle(x, y, R * 1.08, EM, R * .1);
+    if (real) strokeCircle(x, y, R * 1.12, 'rgba(255,200,140,.6)', R * .03);
+    strokeCircle(x, y, R * 1.02, TQ, Math.max(P(V, 1), R * .03));
+    fillCircle(x, y, R, '#020203');
+    var L2 = [[-.3, -.15, .25], [.25, 0, .2], [-.05, .35, .16], [.3, -.32, .1]];
+    for (var k = 0; k < L2.length; k++) for (var j = 0; j < 14; j++) { var b = r() * 6.2832, d = Math.sqrt(r()) * L2[k][2]; ctx.globalAlpha = V.alpha * (.25 + r() * .5); fillCircle(x + (L2[k][0] + Math.cos(b) * d) * R, y + (L2[k][1] + Math.sin(b) * d) * R, Math.max(P(V, .6), R * .012), CO); }
+    ctx.globalAlpha = V.alpha;
+  }
+
+  // ---------------- the rock: one shape, used at every scale ----------------
+  var ROCK = (function () { var r = rng(12345), pts = []; for (var i = 0; i < 90; i++) { var b = i / 90 * 6.2832, rr = 1 + (r() - .5) * .1 + Math.sin(b * 3) * .03; pts.push([Math.cos(b) * .45 * rr, Math.sin(b) * .13 * rr + Math.sin(b * 2) * .01]); } return pts; })();
+  function rockPath(k, ox, oy) { ctx.beginPath(); for (var i = 0; i < ROCK.length; i++) { var p = ROCK[i]; if (i) ctx.lineTo(ox + p[0] * k, oy + p[1] * k); else ctx.moveTo(ox + p[0] * k, oy + p[1] * k); } ctx.closePath(); }
+  // seat the floor on the rock's real surface, so the floor level's ground line meets the rock exactly
+  (function () {
+    // the top surface at x; then take the lowest point under the dome's whole footprint, so both feet touch
+    function top(x) { var best = 0; for (var i = 0; i < ROCK.length; i++) { var a = ROCK[i], b = ROCK[(i + 1) % ROCK.length]; if ((a[0] - x) * (b[0] - x) <= 0 && a[0] !== b[0]) { var y = a[1] + (b[1] - a[1]) * (x - a[0]) / (b[0] - a[0]); if (y < best) best = y; } } return best; }
+    var low = -1; for (var k = -10; k <= 10; k++) low = Math.max(low, top(CHILD[1][0] + k * .0025));
+    CHILD[1][1] = low - .01 + .003;
+  })();
+  var CRATERS = (function () { var r = rng(77), o = []; for (var i = 0; i < 70; i++) { var x = (r() - .5) * .8, y = (r() - .5) * .2; if ((x * x) / .2 + (y * y) / .016 > 1) continue; o.push([x, y, .004 + Math.pow(r(), 2) * .03]); } return o; })();
+
+  // ---------------- pulse: the kick, from the track if it plays, else 145 BPM ----------------
+  var BOB = 0, T = 0, PULSE = 0, actx = null, an = null, fbuf = null, bassAvg = 0;
+
+  // glow sprites: one soft dot per colour, drawn as images instead of a fresh gradient each time
+  var SPR = {};
+  function sprite(rgb, prof) {
+    var key = rgb + (prof || ''); if (SPR[key]) return SPR[key];
+    var c = document.createElement('canvas'); c.width = c.height = 64; var g = c.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    if (prof === 'crypt') { gr.addColorStop(0, 'rgba(' + rgb + ',.85)'); gr.addColorStop(.7, 'rgba(' + rgb + ',.45)'); gr.addColorStop(1, 'rgba(' + rgb + ',0)'); }
+    else { gr.addColorStop(0, 'rgba(' + rgb + ',1)'); gr.addColorStop(.5, 'rgba(' + rgb + ',.35)'); gr.addColorStop(1, 'rgba(' + rgb + ',0)'); }
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64); SPR[key] = c; return c;
+  }
+  function glow(rgb, x, y, r, a, prof) { if (a <= .002) return; var o = ctx.globalAlpha; ctx.globalAlpha = o * a; ctx.drawImage(sprite(rgb, prof), x - r, y - r, r * 2, r * 2); ctx.globalAlpha = o; }
+  function hsl2rgb(h, s, l) { s /= 100; l /= 100; var k = function (n) { return (n + h / 30) % 12; }, a = s * Math.min(l, 1 - l), f = function (n) { return l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); }; return Math.round(f(0) * 255) + ',' + Math.round(f(8) * 255) + ',' + Math.round(f(4) * 255); }
+
+  // ================= LEVEL 0 · deep field =================
+  var L0S = mkStars(1400, 3.2, .0006, .006, 101);
+  function L0(V) {
+    bgFill(V, '#030305');
+    stars(V, L0S, true);
+    // the band of the galaxy, stippled
+    // the Sun, small and fierce
+    var sx = -.3, sy = -.21;
+    ctx.lineCap = 'round';
+    var r = rng(5);
+    for (var i = 0; i < 120; i++) { var a = r() * 6.2832, L = .008 + r() * .03 + Math.pow(Math.abs(Math.cos(a * 2)), 6) * .04; ctx.strokeStyle = 'rgba(238,229,208,' + (.2 + r() * .5).toFixed(2) + ')'; ctx.lineWidth = P(V, .8); ctx.beginPath(); seg(sx + Math.cos(a) * .02, sy + Math.sin(a) * .02, sx + Math.cos(a) * (.02 + L), sy + Math.sin(a) * (.02 + L)); ctx.stroke(); }
+    fillCircle(sx, sy, .018, INK);
+    // home: Earth and the Moon, far behind
+    strokeCircle(.3, -.24, .006, TQ, P(V, 1.4)); fillCircle(.315, -.245, .0025, INK);
+    ctx.strokeStyle = TQ; ctx.lineWidth = P(V, 1.2); ctx.setLineDash([P(V, 1), P(V, 7)]); ctx.beginPath(); ctx.moveTo(.29, -.23); ctx.bezierCurveTo(.22, -.15, .12, -.07, .03, -.01); ctx.stroke(); ctx.setLineDash([]);
+    // Orion's signal home: packets riding the line back to Earth and the Moon
+    for (var pk = 0; pk < 5; pk++) { var bt = frac(T * .06 + pk / 5), it = 1 - bt, bx = it * it * it * .03 + 3 * it * it * bt * .12 + 3 * it * bt * bt * .22 + bt * bt * bt * .29, by = it * it * it * -.01 + 3 * it * it * bt * -.07 + 3 * it * bt * bt * -.15 + bt * bt * bt * -.23; ctx.globalAlpha = V.alpha * Math.sin(bt * Math.PI); glow('80,227,255', bx, by, P(V, 7), .9); fillCircle(bx, by, P(V, 1.6), '#dffaff'); }
+    ctx.globalAlpha = V.alpha;
+    ctx.save(); ctx.translate(.31, -.262); ctx.scale(.0012, .0012); ctx.fillStyle = 'rgba(238,229,208,.8)'; ctx.font = 'italic 12px ' + FELL; ctx.fillText('home, far behind', 8, -6); ctx.restore();
+    // the rock, tiny, its floor lit; it fades up as it grows, so it never pops in
+    var ra = sstep(4, 40, .1 * V.S); ctx.globalAlpha = V.alpha * ra;
+    ctx.save(); ctx.fillStyle = '#0d0c0b'; rockPath(.1, 0, 0); ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = P(V, 1.2); ctx.stroke(); ctx.restore();
+    var g = ctx.createRadialGradient(-.005, -.0155, 0, -.005, -.0155, .03); g.addColorStop(0, 'rgba(242,166,90,' + (.55 + PULSE * .45).toFixed(2) + ')'); g.addColorStop(1, 'rgba(242,166,90,0)'); ctx.fillStyle = g; circle(-.005, -.0155, .03); ctx.fill();
+    // lasers from the floor, out into the dark
+    for (i = 0; i < 6; i++) { var an2 = -1.9 + i * .25 + Math.sin(T * .7 + i) * .1; ctx.strokeStyle = [TQ, EM, CO][i % 3]; ctx.globalAlpha = V.alpha * ra * (.25 + PULSE * .5); ctx.lineWidth = P(V, 1); ctx.beginPath(); seg(-.005, -.016, -.005 + Math.cos(an2) * .5, -.016 + Math.sin(an2) * .5); ctx.stroke(); }
+    ctx.globalAlpha = V.alpha;
+  }
+
+  // ================= LEVEL 1 · the rock =================
+  var L1S = mkStars(900, 1.6, .0004, .004, 202);
+  var L1F = (function () { var r = rng(303), o = []; for (var i = 0; i < 26; i++) o.push([(r() - .5) * .8, (r() - .5) * .5, r() * 6.28, r()]); return o; })();
+  function L1(V) {
+    bgFill(V, '#040406');
+    stars(V, L1S, true);
+    // the Sun now a glare on the left
+    var g = ctx.createRadialGradient(-1.2, -.6, 0, -1.2, -.6, .9); g.addColorStop(0, 'rgba(255,245,225,.5)'); g.addColorStop(.08, 'rgba(255,220,180,.18)'); g.addColorStop(1, 'rgba(255,220,180,0)'); ctx.fillStyle = g; ctx.fillRect(V.x0, V.y0, V.x1 - V.x0, V.y1 - V.y0);
+    // the rock, lit from a sun that sets eight times an hour
+    var la = Math.sin(T * .12) * .6 + 3.6, lx = Math.cos(la) * .5, ly = Math.sin(la) * .3;
+    ctx.save(); rockPath(1, 0, 0); ctx.clip();
+    var rg = ctx.createRadialGradient(lx * .5, ly * .5, .02, 0, 0, .55); rg.addColorStop(0, '#6f6254'); rg.addColorStop(.45, '#2f2924'); rg.addColorStop(1, '#0a0908'); ctx.fillStyle = rg; ctx.fillRect(-.5, -.2, 1, .4);
+    // engraved hatching still there under the paint
+    ctx.strokeStyle = 'rgba(238,229,208,.08)'; ctx.lineWidth = P(V, .8); ctx.beginPath(); for (var k = -.6; k < .6; k += .006) seg(k, -.2, k + .08, .2); ctx.stroke();
+    for (var c = 0; c < CRATERS.length; c++) { var cr = CRATERS[c]; if (!visible(V, cr[0], cr[1], cr[2])) continue; var cg = ctx.createRadialGradient(cr[0] - lx * cr[2] * .6, cr[1] - ly * cr[2] * .6, 0, cr[0], cr[1], cr[2]); cg.addColorStop(0, 'rgba(0,0,0,.65)'); cg.addColorStop(.75, 'rgba(20,16,12,.3)'); cg.addColorStop(1, 'rgba(160,140,120,.25)'); ctx.fillStyle = cg; ctx.beginPath(); ctx.ellipse(cr[0], cr[1], cr[2], cr[2] * .55, 0, 0, 6.2832); ctx.fill(); }
+    ctx.restore();
+    ctx.strokeStyle = INK; ctx.lineWidth = P(V, 1.6); rockPath(1, 0, 0); ctx.stroke();
+    // the floor's glow on top, and the dome, small
+    var fx = CHILD[1][0], fy = CHILD[1][1];
+    var gg = ctx.createRadialGradient(fx, fy, 0, fx, fy, .12); gg.addColorStop(0, 'rgba(242,166,90,' + (.35 + PULSE * .4).toFixed(2) + ')'); gg.addColorStop(1, 'rgba(242,166,90,0)'); ctx.fillStyle = gg; circle(fx, fy, .12); ctx.fill();
+    ctx.beginPath(); ctx.arc(fx, fy + .01, .025, Math.PI, 0); ctx.closePath(); ctx.fillStyle = '#16211f'; ctx.fill(); ctx.fillStyle = 'rgba(80,227,255,.18)'; ctx.fill(); ctx.strokeStyle = INK; ctx.lineWidth = P(V, 1.2); ctx.stroke();
+    fillCircle(fx, fy - .025, .006 * (1 + PULSE * .4), EM);
+    // lasers
+    for (var i = 0; i < 9; i++) { var a = -2.2 + i * .19 + Math.sin(T * .9 + i * 1.3) * .08; ctx.strokeStyle = [TQ, EM, CO][i % 3]; ctx.globalAlpha = V.alpha * (.2 + PULSE * .6); ctx.lineWidth = P(V, 1.2); ctx.beginPath(); seg(fx, fy - .012, fx + Math.cos(a) * 2, fy - .012 + Math.sin(a) * 2); ctx.stroke(); }
+    ctx.globalAlpha = V.alpha;
+    // the second floor, on the dark side
+    var dx = .28, dy = .125; var dg = ctx.createRadialGradient(dx, dy, 0, dx, dy, .07); dg.addColorStop(0, 'rgba(80,227,255,' + (.3 + PULSE * .3).toFixed(2) + ')'); dg.addColorStop(1, 'rgba(80,227,255,0)'); ctx.fillStyle = dg; circle(dx, dy, .07); ctx.fill();
+    // tethered Seekers drifting
+    for (i = 0; i < L1F.length; i++) { var f = L1F[i]; var x = f[0] + Math.sin(T * .2 + f[2]) * .01, y = f[1] < 0 ? f[1] - .1 : f[1] + .12; ctx.strokeStyle = 'rgba(238,229,208,.35)'; ctx.lineWidth = P(V, .8); ctx.setLineDash([P(V, 3), P(V, 3)]); ctx.beginPath(); ctx.moveTo(f[0] * .7, f[1] < 0 ? -.11 : .11); ctx.quadraticCurveTo(x, (y + (f[1] < 0 ? -.11 : .11)) / 2 + .02, x, y); ctx.stroke(); ctx.setLineDash([]); fillCircle(x, y, .004, INK); }
+  }
+
+  // ================= LEVEL 2 · the floor =================
+  var CROWD = (function () {
+    var r = rng(404), o = [];
+    for (var i = 0; i < 190; i++) { var y = .12 + Math.pow(r(), .8) * .32, x = (r() - .5) * 1.1; if (Math.abs(x - .1) < .05 && Math.abs(y - .34) < .05) continue; if (y > .27 && Math.abs(x - .1) < .13) continue; o.push({ x: x, y: y, k: pick(r, [0, 0, 0, 0, 1, 1, 2, 3, 4]), ph: r() * 6.28, up: r() > .45, h: .03 + (y - .1) * .16 }); }
+    o.sort(function (a, b) { return a.y - b.y; });
+    return o;
+  })();
+  var L2S = mkStars(500, 1.6, .0006, .004, 505);
+  var FOG = (function () { var r = rng(606), o = []; for (var i = 0; i < 70; i++) o.push([(r() - .5) * 1.4, -.1 + r() * .5, .02 + r() * .08, r() * 6.28]); return o; })();
+  function being(b, V, sc) {
+    var h = b.h * (sc || 1), x = b.x, y = b.y - Math.max(0, Math.sin(T * 6.07 + b.ph)) * h * .08 * (1 + PULSE);
+    if (!visible(V, x, y - h / 2, h)) return;
+    var lw = Math.max(P(V, .8), h * .05);
+    // a soft shadow on the regolith, lit from the floor
+    var oa = ctx.globalAlpha; ctx.globalAlpha = oa * .55; ctx.drawImage(sprite('0,0,0'), x - h * .34, b.y - h * .05, h * .68, h * .14); ctx.globalAlpha = oa;
+    if (b.k === 0) { // a Seeker in a suit
+      var sg = ctx.createLinearGradient(x - h * .15, 0, x + h * .15, 0); sg.addColorStop(0, '#8d8a84'); sg.addColorStop(.5, '#ece8df'); sg.addColorStop(1, '#6c6963'); ctx.fillStyle = sg;
+      ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x - h * .13, y - h * .62, h * .26, h * .42, h * .06) : ctx.rect(x - h * .13, y - h * .62, h * .26, h * .42); ctx.fill();
+      ctx.fillStyle = '#d9d4ca'; ctx.fillRect(x - h * .11, y - h * .22, h * .09, h * .22); ctx.fillRect(x + h * .02, y - h * .22, h * .09, h * .22);
+      fillCircle(x, y - h * .78, h * .15, '#e8e4dc'); fillCircle(x + h * .02, y - h * .78, h * .1, '#2a1f10');
+      ctx.strokeStyle = '#d9d4ca'; ctx.lineWidth = h * .08; ctx.lineCap = 'round'; ctx.beginPath();
+      if (b.up) { seg(x - h * .12, y - h * .58, x - h * .3, y - h * 1.0); seg(x + h * .12, y - h * .58, x + h * .3, y - h * 1.0); } else { seg(x - h * .12, y - h * .58, x - h * .26, y - h * .3); seg(x + h * .12, y - h * .58, x + h * .26, y - h * .3); }
+      ctx.stroke();
+      fillCircle(x + h * .07, y - h * .5, h * .025, PULSE > .4 ? TQ : '#1c5a66');
+    } else if (b.k === 1) { // a machine elf
+      ctx.fillStyle = '#e8e4dc'; ctx.strokeStyle = TQ; ctx.lineWidth = lw;
+      ctx.beginPath(); ctx.moveTo(x - h * .14, y); ctx.lineTo(x - h * .09, y - h * .4); ctx.lineTo(x + h * .09, y - h * .4); ctx.lineTo(x + h * .14, y); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillRect(x - h * .12, y - h * .64, h * .24, h * .24); ctx.strokeRect(x - h * .12, y - h * .64, h * .24, h * .24);
+      ctx.fillStyle = EM; ctx.beginPath(); ctx.moveTo(x - h * .14, y - h * .64); ctx.lineTo(x, y - h * 1.08 - PULSE * h * .1); ctx.lineTo(x + h * .14, y - h * .64); ctx.closePath(); ctx.fill();
+      fillCircle(x, y - h * .52, h * .04, TQ);
+    } else if (b.k === 2) { // a robot
+      ctx.fillStyle = '#1a1c1e'; ctx.strokeStyle = TQ; ctx.lineWidth = lw;
+      ctx.fillRect(x - h * .2, y - h * .5, h * .4, h * .3); ctx.strokeRect(x - h * .2, y - h * .5, h * .4, h * .3);
+      ctx.fillRect(x - h * .12, y - h * .76, h * .24, h * .22); ctx.strokeRect(x - h * .12, y - h * .76, h * .24, h * .22);
+      strokeCircle(x - h * .14, y - h * .1, h * .09, TQ, lw); strokeCircle(x + h * .14, y - h * .1, h * .09, TQ, lw);
+      fillCircle(x, y - h * .66, h * .04, PULSE > .3 ? EM : TQ);
+    } else if (b.k === 3) { // a visitor from the frieze
+      ctx.fillStyle = '#0c0b0a'; ctx.strokeStyle = INK; ctx.lineWidth = lw;
+      ctx.beginPath(); ctx.moveTo(x - h * .12, y); ctx.lineTo(x - h * .07, y - h * .72); ctx.lineTo(x + h * .07, y - h * .72); ctx.lineTo(x + h * .12, y); ctx.closePath(); ctx.fill(); ctx.stroke();
+      circle(x, y - h * .9, h * .16); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); for (var k = 0; k < 10; k++) { var a = k / 10 * 6.2832 + T * .3; seg(x + Math.cos(a) * h * .19, y - h * .9 + Math.sin(a) * h * .19, x + Math.cos(a) * h * .28, y - h * .9 + Math.sin(a) * h * .28); } ctx.stroke();
+      ctx.fillStyle = CO; ctx.beginPath(); ctx.ellipse(x + h * .03, y - h * .9, h * .06, h * .03, 0, 0, 6.2832); ctx.fill();
+    } else { // a spirit of the land: light and dots
+      var sp = rng(Math.floor(b.ph * 1000));
+      ctx.strokeStyle = 'rgba(242,166,90,.55)'; ctx.lineWidth = lw * .6; ctx.beginPath(); ctx.ellipse(x, y - h * .55, h * .16, h * .55, 0, 0, 6.2832); ctx.stroke();
+      for (var q = 0; q < 14; q++) fillCircle(x + (sp() - .5) * h * .22, y - h * .55 + (sp() - .5) * h * .9, h * .02, q % 3 ? CO : INK);
+    }
+  }
+  function L2(V) {
+    // space above, the rock's surface below
+    bgFill(V, '#050407');
+    stars(V, L2S, true);
+    var gy = .1;
+    var grd = ctx.createLinearGradient(0, gy, 0, 1.2); grd.addColorStop(0, '#3b322a'); grd.addColorStop(.3, '#1d1914'); grd.addColorStop(1, '#070605'); ctx.fillStyle = grd; ctx.fillRect(V.x0, gy, V.x1 - V.x0, Math.max(0, V.y1 - gy));
+    ctx.strokeStyle = 'rgba(238,229,208,.1)'; ctx.lineWidth = P(V, .8); ctx.beginPath(); for (var k = gy; k < Math.min(V.y1, 1.2); k += .004 + (k - gy) * .03) seg(V.x0, k, V.x1, k); ctx.stroke();
+    // floor light pooling on the regolith
+    var pl = ctx.createRadialGradient(0, .2, 0, 0, .2, .7); pl.addColorStop(0, 'rgba(242,166,90,' + (.28 + PULSE * .3).toFixed(2) + ')'); pl.addColorStop(.5, 'rgba(226,80,42,.08)'); pl.addColorStop(1, 'rgba(226,80,42,0)'); ctx.fillStyle = pl; ctx.fillRect(V.x0, V.y0, V.x1 - V.x0, V.y1 - V.y0);
+    // lasers sweeping
+    ctx.lineCap = 'round';
+    for (var i = 0; i < 14; i++) { var a = -2.4 + i * .13 + Math.sin(T * 1.1 + i) * .12; ctx.strokeStyle = [TQ, EM, CO, '#8af5d8'][i % 4]; ctx.globalAlpha = V.alpha * (.15 + PULSE * .6); ctx.lineWidth = P(V, 1.4); ctx.beginPath(); seg(0, -.02, Math.cos(a) * 3, -.02 + Math.sin(a) * 3); ctx.stroke(); }
+    ctx.globalAlpha = V.alpha;
+    // the dome: a geodesic of light
+    var dr = .25, dx = 0, dy = gy;
+    var dg = ctx.createRadialGradient(dx, dy, 0, dx, dy, dr); dg.addColorStop(0, 'rgba(80,227,255,.14)'); dg.addColorStop(1, 'rgba(80,227,255,.04)'); ctx.fillStyle = dg; ctx.beginPath(); ctx.arc(dx, dy, dr, Math.PI, 0); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = 'rgba(238,229,208,.55)'; ctx.lineWidth = P(V, 1); ctx.beginPath();
+    for (var ring = 1; ring <= 6; ring++) { var rr = dr * Math.cos(ring / 7 * Math.PI / 2), hh = dr * Math.sin(ring / 7 * Math.PI / 2); seg(dx - rr, dy - hh, dx + rr, dy - hh); }
+    for (var m = 0; m <= 16; m++) { var ang = Math.PI + m / 16 * Math.PI; ctx.moveTo(dx + Math.cos(ang) * dr, dy + Math.sin(ang) * dr); ctx.quadraticCurveTo(dx + Math.cos(ang) * dr * .4, dy - dr * .9, dx, dy - dr); }
+    ctx.stroke();
+    ctx.strokeStyle = INK; ctx.lineWidth = P(V, 1.8); ctx.beginPath(); ctx.arc(dx, dy, dr, Math.PI, 0); ctx.stroke();
+    // the stacks
+    [-.42, .32].forEach(function (sx) { for (var q = 0; q < 3; q++) for (var c = 0; c < 2; c++) { var bx = sx + c * .05, by = gy - .05 - q * .05; var sg = ctx.createLinearGradient(bx, by, bx + .05, by + .05); sg.addColorStop(0, '#2b2a28'); sg.addColorStop(1, '#0b0b0a'); ctx.fillStyle = sg; ctx.fillRect(bx, by, .048, .048); ctx.strokeStyle = '#6d675c'; ctx.lineWidth = P(V, 1); ctx.strokeRect(bx, by, .048, .048); var cr = .016 * (1 + PULSE * .12); var cg = ctx.createRadialGradient(bx + .024, by + .024, 0, bx + .024, by + .024, cr); cg.addColorStop(0, '#555'); cg.addColorStop(.6, '#151515'); cg.addColorStop(1, '#3a3a3a'); ctx.fillStyle = cg; circle(bx + .024, by + .024, cr); ctx.fill(); } });
+    // the mandala, a hologram above the floor
+    ctx.save(); ctx.translate(0, -.25); ctx.rotate(T * .25); var ms = 1 + PULSE * .15;
+    for (var kk = 0; kk < 4; kk++) for (var j = 0; j < 18; j++) { var b = j / 18 * 6.2832 + kk * .17, R = (.03 + kk * .028) * ms; ctx.save(); ctx.translate(Math.cos(b) * R, Math.sin(b) * R); ctx.rotate(b); ctx.strokeStyle = [TQ, CO, EM, '#c49cff'][kk]; ctx.globalAlpha = V.alpha * (.7 + PULSE * .3); ctx.lineWidth = P(V, 1.3); ctx.beginPath(); ctx.ellipse(0, 0, .016 + kk * .005, .005, 0, 0, 6.2832); ctx.stroke(); ctx.restore(); }
+    ctx.globalAlpha = V.alpha; fillCircle(0, 0, .012 * ms, EM); ctx.restore();
+    // fog
+    for (i = 0; i < FOG.length; i++) { var f = FOG[i], fx = f[0] + Math.sin(T * .1 + f[3]) * .05; glow('240,220,200', fx, f[1], f[2], .05); }
+    // the crowd, back to front, with our Seeker in the front row
+    var oy = CHILD[2][1] + .04, drawn = !!V.skipOurs;
+    function ours() { ctx.save(); ctx.translate(CHILD[2][0], CHILD[2][1]); ctx.scale(1 / Z, 1 / Z); seekerFig({ S: V.S / Z, px: V.px * Z, alpha: V.alpha, x0: -1, y0: -1, x1: 1, y1: 1 }); ctx.restore(); }
+    for (i = 0; i < CROWD.length; i++) { if (!drawn && CROWD[i].y > oy) { ours(); drawn = true; } being(CROWD[i], V); }
+    if (!drawn) ours();
+  }
+
+  // ================= LEVEL 3 · one Seeker =================
+  var BOKEH = (function () { var r = rng(707), o = []; for (var i = 0; i < 90; i++) o.push([(r() - .5) * 3, (r() - .5) * 2, .02 + r() * .12, pick(r, ['80,227,255', '226,80,42', '242,166,90', '196,156,255', '238,229,208']), r() * 6.28]); return o; })();
+  var DUST3 = mkStars(500, 1.4, .0006, .003, 808, [INK, CO, '#d8d0bf']);
+  var STITCH = (function () { var o = []; return o; })();
+  var OFF = document.createElement('canvas'), OCTX = OFF.getContext('2d');
+  function seekerFig(V) {
+    var i;
+    // the Seeker: a suit, lit warm from the floor and cold from the lasers
+    ctx.save(); ctx.translate(0, -BOB);
+    function suitFill(x0, x1) { var s = ctx.createLinearGradient(x0, 0, x1, 0); s.addColorStop(0, '#6f6b65'); s.addColorStop(.35, '#efebe3'); s.addColorStop(.6, '#d9d3c8'); s.addColorStop(1, '#5b5852'); return s; }
+    // legs and boots
+    ctx.fillStyle = suitFill(-.1, .1);
+    ctx.beginPath(); ctx.moveTo(-.1, .02); ctx.lineTo(-.095, .34); ctx.lineTo(-.02, .34); ctx.lineTo(-.01, .04); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(.1, .02); ctx.lineTo(.095, .34); ctx.lineTo(.02, .34); ctx.lineTo(.01, .04); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#26221e'; ctx.fillRect(-.11, .33, .1, .07); ctx.fillRect(.01, .33, .1, .07);
+    ctx.strokeStyle = 'rgba(0,0,0,.5)'; ctx.lineWidth = P(V, 1); ctx.beginPath(); for (var t = 0; t < 12; t++) { seg(-.11 + t * .008, .4, -.11 + t * .008, .385); seg(.01 + t * .008, .4, .01 + t * .008, .385); } ctx.stroke();
+    // torso
+    ctx.fillStyle = suitFill(-.13, .13);
+    ctx.beginPath(); ctx.moveTo(-.12, -.22); ctx.quadraticCurveTo(-.15, -.05, -.11, .05); ctx.lineTo(.11, .05); ctx.quadraticCurveTo(.15, -.05, .12, -.22); ctx.closePath(); ctx.fill();
+    // arms up, gloves open
+    ctx.lineCap = 'round'; ctx.strokeStyle = suitFill(-.3, .3); ctx.lineWidth = .055;
+    ctx.beginPath(); ctx.moveTo(-.11, -.19); ctx.quadraticCurveTo(-.22, -.26, -.25, -.4); ctx.moveTo(.11, -.19); ctx.quadraticCurveTo(.22, -.26, .25, -.4); ctx.stroke();
+    [[-.25, -.42], [.25, -.42]].forEach(function (h) { fillCircle(h[0], h[1], .03, '#3a342d'); ctx.strokeStyle = '#3a342d'; ctx.lineWidth = .01; ctx.beginPath(); for (var f = 0; f < 4; f++) { var a = -2.1 + f * .4 + (h[0] > 0 ? .35 : -.35); seg(h[0], h[1], h[0] + Math.cos(a) * .05, h[1] + Math.sin(a) * .05); } ctx.stroke(); });
+    // folds and seams, with stitches
+    ctx.strokeStyle = 'rgba(40,36,30,.55)'; ctx.lineWidth = P(V, 1.1); ctx.beginPath();
+    [[-.09, -.1, -.03, -.06], [.08, -.12, .02, -.08], [-.06, .2, -.04, .26], [.06, .14, .04, .22], [-.1, 0, .1, 0]].forEach(function (s) { ctx.moveTo(s[0], s[1]); ctx.quadraticCurveTo((s[0] + s[2]) / 2, s[1] - .01, s[2], s[3]); });
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(120,108,92,.9)'; ctx.lineWidth = .0012; ctx.setLineDash([.0035, .0025]); ctx.beginPath(); ctx.moveTo(0, -.22); ctx.lineTo(0, .05); ctx.moveTo(-.1, .03); ctx.lineTo(.1, .03); ctx.moveTo(-.055, .05); ctx.lineTo(-.06, .33); ctx.moveTo(.055, .05); ctx.lineTo(.06, .33); ctx.stroke(); ctx.setLineDash([]);
+    // the chest unit and its LEDs, blinking on the kick
+    ctx.fillStyle = '#d6d0c5'; ctx.fillRect(-.06, -.17, .12, .08); ctx.strokeStyle = '#7d766b'; ctx.lineWidth = P(V, 1); ctx.strokeRect(-.06, -.17, .12, .08);
+    for (i = 0; i < 6; i++) fillCircle(-.045 + i * .018, -.155, .004, (i + Math.floor(T * 2.4)) % 3 === 0 || PULSE > .5 ? [TQ, EM, CO][i % 3] : '#3b3a37');
+    ctx.fillStyle = '#1c1b19'; ctx.fillRect(-.05, -.135, .1, .03); ctx.save(); ctx.translate(-.046, -.116); ctx.scale(.001, .001); ctx.fillStyle = TQ; ctx.font = '12px ' + MONO; ctx.fillText('HR ' + (138 + Math.round(PULSE * 14)) + ' · O2 98', 0, 0); ctx.restore();
+    // the six mission patches on the left arm and chest: the rims tell the phases
+    [[-.09, -.08, INK], [-.065, -.035, INK], [-.04, -.08, TQ], [.04, -.06, TQ], [.065, -.02, EM], [.09, -.06, EM]].forEach(function (p, n) { fillCircle(p[0], p[1], .014, '#121212'); strokeCircle(p[0], p[1], .013, p[2], .003); if (n === 5) { strokeCircle(p[0], p[1], .013, TQ, .0015); } fillCircle(p[0], p[1], .006, '#020202'); strokeCircle(p[0], p[1], .0068, EM, .0015); });
+    // backpack and hoses
+    ctx.strokeStyle = '#8a857c'; ctx.lineWidth = .009; ctx.beginPath(); ctx.moveTo(-.1, -.2); ctx.bezierCurveTo(-.16, -.26, -.12, -.3, -.07, -.31); ctx.moveTo(.1, -.2); ctx.bezierCurveTo(.16, -.26, .12, -.3, .07, -.31); ctx.stroke();
+    // the helmet, and the visor where the next level waits
+    var hx = CHILD[3][0], hy = CHILD[3][1];
+    var hg = ctx.createRadialGradient(hx - .03, hy - .03, .005, hx, hy, .085); hg.addColorStop(0, '#ffffff'); hg.addColorStop(.5, '#dcd7ce'); hg.addColorStop(1, '#6e6a63'); ctx.fillStyle = hg; circle(hx, hy, .08); ctx.fill();
+    var vg = ctx.createRadialGradient(hx - .015, hy - .02, .002, hx, hy, .05); vg.addColorStop(0, '#6a5326'); vg.addColorStop(.6, '#2a1d0b'); vg.addColorStop(1, '#0c0803'); ctx.fillStyle = vg; circle(hx, hy, .05); ctx.fill();
+    // seen from here the visor is the iris and pupil behind it (the next level draws it exactly once it is big enough)
+    var ig = ctx.createRadialGradient(hx, hy, .018, hx, hy, .047); ig.addColorStop(0, '#9a6a2c'); ig.addColorStop(.35, '#5f8a74'); ig.addColorStop(.85, '#2d6f78'); ig.addColorStop(1, '#0b1518'); ctx.fillStyle = ig; circle(hx, hy, .047); ctx.fill();
+    fillCircle(hx, hy, .018, '#030305'); strokeCircle(hx, hy, .019, 'rgba(226,80,42,.5)', .0012);
+    ctx.fillStyle = 'rgba(120,86,24,.16)'; circle(hx, hy, .05); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.3)'; ctx.beginPath(); ctx.ellipse(hx - .025, hy - .027, .02, .0025, -.78, 0, 6.2832); ctx.fill();
+    ctx.restore();
+  }
+  function L3(V) {
+    bgFill(V, '#07060a');
+    // behind the Seeker: the floor itself, drawn again and thrown out of focus
+    var S2 = V.S * Z, ox2 = V.ox - CHILD[2][0] * S2, oy2 = V.oy - CHILD[2][1] * S2;
+    var V2 = { S: S2, S0: V.S0, px: 1 / S2, ox: ox2, oy: oy2, x0: -ox2 / S2, y0: -oy2 / S2, x1: (W - ox2) / S2, y1: (H - oy2) / S2, alpha: 1, skipOurs: true };
+    // out of focus, cheaply: draw it small, then let the browser smooth it back up
+    var df = clamp(V.S / V.S0 * 3.6, 1.5, 18), ow = Math.max(8, Math.ceil(W / df)), oh = Math.max(8, Math.ceil(H / df));
+    if (OFF.width !== ow || OFF.height !== oh) { OFF.width = ow; OFF.height = oh; }
+    var main = ctx; ctx = OCTX; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.clearRect(0, 0, ow, oh);
+    ctx.setTransform(S2 / df, 0, 0, S2 / df, ox2 / df, oy2 / df); L2(V2); ctx = main;
+    ctx.save(); ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.globalAlpha = V.alpha; ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(OFF, 0, 0, W, H); ctx.restore();
+    ctx.fillStyle = 'rgba(6,5,9,' + clamp(.1 + V.S / V.S0 * .12, .1, .45).toFixed(2) + ')'; ctx.fillRect(V.x0, V.y0, V.x1 - V.x0, V.y1 - V.y0);
+    // lights from the floor, out of focus, breathing with the kick
+    for (var i = 0; i < BOKEH.length; i++) { var b = BOKEH[i]; if (!visible(V, b[0], b[1], b[2])) continue; glow(b[3], b[0], b[1], b[2], (.05 + .14 * Math.max(0, Math.sin(T * 2 + b[4])) + PULSE * .08) * sstep(.3, 1.2, V.S / V.S0)); }
+    seekerFig(V);
+    // dust, catching the light
+    stars(V, DUST3, true);
+  }
+
+  // ================= LEVEL 4 · the visor, and the eye behind it =================
+  // L4 units: the visor is r 0.5 (it is r 0.05 in the Seeker's helmet), the helmet r 0.8.
+  // The visor is the iris: it fills the glass, the pupil at its centre is Earth's night side.
+  var EYE = { cx: 0, cy: 0, ir: .47, pr: .18 };
+  var SCR = (function () { var r = rng(909), o = []; for (var i = 0; i < 300; i++) { var a = r() * 6.28, d = Math.sqrt(r()) * .48, L = .004 + Math.pow(r(), 3) * .1, an = r() * 3.14; o.push([Math.cos(a) * d, Math.sin(a) * d, Math.cos(an) * L, Math.sin(an) * L, .03 + r() * .14]); } return o; })();
+  var DROPS = (function () { var r = rng(1010), o = []; for (var i = 0; i < 140; i++) { var a = r() * 6.28, d = Math.sqrt(r()) * .47; if (d < EYE.pr * 1.1) continue; o.push([Math.cos(a) * d, Math.sin(a) * d, .0008 + Math.pow(r(), 4) * .014]); } return o; })();
+  // radial stroma: thousands of fibres, each a wavy strand from the pupil's edge to the limbus
+  var FIBRES = (function () { var r = rng(1212), o = []; for (var i = 0; i < 3200; i++) { var a = r() * 6.2832, r0 = EYE.pr * (1.02 + r() * .3), r1 = EYE.ir * (.5 + r() * .5), w = (r() - .5) * .22; o.push([a, r0, r1, w, Math.floor(r() * 6), .18 + r() * .55, .0006 + Math.pow(r(), 2) * .0045, r() * 6.28]); } return o; })();
+  var FGROUPS = (function () { var cols = ['238,214,170', '140,210,200', '30,80,88', '216,150,70', '250,240,222', '90,140,120'], g = {}; FIBRES.forEach(function (f) { var ab = Math.min(2, Math.floor((f[5] - .18) / .19)), wb = f[6] < .0015 ? 0 : f[6] < .003 ? 1 : 2, key = f[4] + '-' + ab + '-' + wb; if (!g[key]) g[key] = { style: 'rgba(' + cols[f[4]] + ',' + (.27 + ab * .19).toFixed(2) + ')', w: [.001, .0022, .0042][wb], f: [] }; g[key].f.push(f); }); return g; })();
+  var CRYPTS = (function () { var r = rng(1313), o = []; for (var i = 0; i < 150; i++) { var a = r() * 6.2832, d = EYE.pr * 1.35 + r() * (EYE.ir - EYE.pr * 1.5); o.push([Math.cos(a) * d, Math.sin(a) * d, .006 + Math.pow(r(), 2) * .03, a, r()]); } return o; })();
+  var MOTES = (function () { var r = rng(1919), o = []; for (var i = 0; i < 70; i++) o.push([r() * 6.2832, r(), .02 + r() * .05, .001 + r() * .003, pick(r, ['#ffe6b8', '#b8fff4', '#ffd0a0', '#ffffff'])]); return o; })();
+  var PUPR = .18;
+  var FURROWS = (function () { var r = rng(1414), o = []; for (var i = 0; i < 9; i++) o.push([EYE.ir * (.72 + i * .028), r() * 6.28, .4 + r() * 1.2]); return o; })();
+  var FRECK = (function () { var r = rng(1515), o = []; for (var i = 0; i < 26; i++) { var a = r() * 6.2832, d = EYE.pr * 1.6 + r() * (EYE.ir - EYE.pr * 1.9); o.push([Math.cos(a) * d, Math.sin(a) * d, .003 + r() * .008]); } return o; })();
+  var PUPL = (function () { var r = rng(4444), o = []; for (var i = 0; i < 260; i++) { var la = r() * 6.2832, ld = Math.sqrt(r()) * EYE.pr * .9; o.push([Math.cos(la) * ld, Math.sin(la) * ld, .0008 + r() * .0016, .2 + r() * .5]); } return o; })();
+  // the iris, all of it but the pupil; drawn once into a large texture, and live only when you are closer than the texture can hold
+  function irisDetail(V) {
+    var cx = EYE.cx, cy = EYE.cy, ir = EYE.ir, pr = EYE.pr, i, a;
+    // the iris base: amber collarette, green-gold mid zone, teal and slate toward the limbus
+    var ig = ctx.createRadialGradient(cx, cy, pr * .95, cx, cy, ir); ig.addColorStop(0, '#3c2208'); ig.addColorStop(.12, '#a8692a'); ig.addColorStop(.28, '#c79343'); ig.addColorStop(.4, '#7f8a5a'); ig.addColorStop(.62, '#3f8180'); ig.addColorStop(.86, '#24606a'); ig.addColorStop(.96, '#12303a'); ig.addColorStop(1, '#070d10'); ctx.fillStyle = ig; circle(cx, cy, ir); ctx.fill();
+    // fibres, batched by colour, strength and weight: a few dozen strokes instead of thousands
+    ctx.lineCap = 'round';
+    for (var gk in FGROUPS) {
+      var G = FGROUPS[gk]; if (G.w * V.S < .18) continue;
+      ctx.strokeStyle = G.style; ctx.lineWidth = G.w; ctx.beginPath(); var any = false;
+      for (var q = 0; q < G.f.length; q++) {
+        var f = G.f[q], mr = (f[1] + f[2]) / 2, ma = f[0] + f[3] * .12 + Math.sin(f[7]) * .02, mx = cx + Math.cos(ma) * mr, my = cy + Math.sin(ma) * mr;
+        if (!visible(V, mx, my, (f[2] - f[1]) * .6)) continue;
+        ctx.moveTo(cx + Math.cos(f[0]) * f[1], cy + Math.sin(f[0]) * f[1]); ctx.quadraticCurveTo(mx, my, cx + Math.cos(f[0] + f[3] * .05) * f[2], cy + Math.sin(f[0] + f[3] * .05) * f[2]); any = true;
+      }
+      if (any) ctx.stroke();
+    }
+    // crypts: dark lacunae between the fibres, with a pale lip
+    for (i = 0; i < CRYPTS.length; i++) { var c = CRYPTS[i]; if (c[2] * V.S < .6 || !visible(V, c[0], c[1], c[2] * 2)) continue; ctx.save(); ctx.translate(cx + c[0], cy + c[1]); ctx.rotate(c[3]); ctx.scale(1.2 + c[4], .42); ctx.drawImage(sprite('8,18,20', 'crypt'), -c[2], -c[2], c[2] * 2, c[2] * 2); ctx.restore(); }
+    // contraction furrows near the edge, and a few freckles of pigment
+    ctx.strokeStyle = 'rgba(8,20,24,.35)'; for (i = 0; i < FURROWS.length; i++) { ctx.lineWidth = .0035; ctx.beginPath(); ctx.arc(cx, cy, FURROWS[i][0], FURROWS[i][1], FURROWS[i][1] + FURROWS[i][2]); ctx.stroke(); }
+    for (i = 0; i < FRECK.length; i++) { var fr = FRECK[i]; var fg = ctx.createRadialGradient(cx + fr[0], cy + fr[1], 0, cx + fr[0], cy + fr[1], fr[2]); fg.addColorStop(0, 'rgba(92,46,14,.85)'); fg.addColorStop(1, 'rgba(92,46,14,0)'); ctx.fillStyle = fg; circle(cx + fr[0], cy + fr[1], fr[2]); ctx.fill(); }
+    // the collarette: a crinkled ring a little out from the pupil
+    ctx.strokeStyle = 'rgba(244,214,150,.55)'; ctx.lineWidth = .0045; ctx.beginPath(); for (i = 0; i <= 240; i++) { a = i / 240 * 6.2832; var rr = pr * 1.42 + Math.sin(a * 23) * .006 + Math.sin(a * 7) * .005; i ? ctx.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr) : ctx.moveTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); } ctx.stroke();
+    // the limbal ring, soft and dark
+    var lr = ctx.createRadialGradient(cx, cy, ir * .9, cx, cy, ir); lr.addColorStop(0, 'rgba(4,10,12,0)'); lr.addColorStop(1, 'rgba(4,10,12,.95)'); ctx.fillStyle = lr; circle(cx, cy, ir); ctx.fill();
+  }
+  var IRIS = null, IRIS_PX = 2400;
+  function irisTex() {
+    if (IRIS) return IRIS;
+    IRIS = document.createElement('canvas'); IRIS.width = IRIS.height = IRIS_PX;
+    var k = IRIS_PX / (EYE.ir * 2), main = ctx; ctx = IRIS.getContext('2d');
+    ctx.setTransform(k, 0, 0, k, IRIS_PX / 2 - EYE.cx * k, IRIS_PX / 2 - EYE.cy * k);
+    irisDetail({ S: k, px: 1 / k, x0: -1, y0: -1, x1: 1, y1: 1, alpha: 1 });
+    ctx = main; return IRIS;
+  }
+  function L4(V) {
+    bgFill(V, '#07060a');
+    // the helmet shell: the same white as the Seeker's helmet
+    var hg = ctx.createRadialGradient(-.3, -.3, .05, 0, 0, .85); hg.addColorStop(0, '#ffffff'); hg.addColorStop(.5, '#dcd7ce'); hg.addColorStop(1, '#6e6a63'); ctx.fillStyle = hg; circle(0, 0, .8); ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,.07)'; ctx.lineWidth = P(V, .7); ctx.beginPath(); for (var k = .53; k < .8; k += .003) { ctx.moveTo(k, 0); ctx.arc(0, 0, k, 0, 6.2832); } ctx.stroke();
+    var cx = EYE.cx, cy = EYE.cy, ir = EYE.ir, pr = PUPR, i, a;
+    ctx.save(); circle(0, 0, .5); ctx.clip();
+    fillCircle(0, 0, .5, '#050608');
+    // the iris turns, very slowly, and breathes with the pupil
+    ctx.save(); ctx.translate(cx, cy); ctx.rotate(T * .012); ctx.translate(-cx, -cy);
+    if (V.S * EYE.ir * 2 <= IRIS_PX * 1.25) ctx.drawImage(irisTex(), cx - ir, cy - ir, ir * 2, ir * 2);
+    else irisDetail(V);
+    ctx.restore();
+    // a slow sheen sweeping round the iris, and the collarette glowing on the kick
+    ctx.globalCompositeOperation = 'lighter';
+    glow('255,214,150', cx + Math.cos(T * .35) * ir * .62, cy + Math.sin(T * .35) * ir * .62, ir * .55, .1 + PULSE * .08);
+    glow('120,230,220', cx + Math.cos(T * .35 + 3.1) * ir * .7, cy + Math.sin(T * .35 + 3.1) * ir * .7, ir * .45, .07);
+    ctx.globalCompositeOperation = 'source-over';
+    strokeCircle(cx, cy, EYE.pr * 1.42, 'rgba(255,200,120,' + (.08 + PULSE * .25).toFixed(2) + ')', .012);
+    // motes of light drifting in toward the pupil, as if it were pulling
+    ctx.globalCompositeOperation = 'lighter';
+    for (i = 0; i < MOTES.length; i++) { var mo = MOTES[i], ph = frac(mo[1] + T * mo[2]), mr = ir * (1 - ph) + pr * ph, ma = mo[0] + ph * 2.4; ctx.globalAlpha = V.alpha * Math.sin(ph * Math.PI) * .7; fillCircle(cx + Math.cos(ma) * mr, cy + Math.sin(ma) * mr, mo[3] * (1 - ph * .6), mo[4]); }
+    ctx.globalAlpha = V.alpha; ctx.globalCompositeOperation = 'source-over';
+    // the pupil: Earth's night side, inside the thin blue line and the ember ring
+    var pg = ctx.createRadialGradient(cx, cy, 0, cx, cy, pr); pg.addColorStop(0, '#030305'); pg.addColorStop(.85, '#040508'); pg.addColorStop(1, '#0a0b0e'); ctx.fillStyle = pg; circle(cx, cy, pr); ctx.fill();
+    // the ruff: a dark-brown frill at the pupil edge
+    ctx.strokeStyle = 'rgba(70,36,12,.9)'; ctx.lineWidth = .006; ctx.beginPath(); for (i = 0; i <= 160; i++) { a = i / 160 * 6.2832; var r2 = pr * 1.02 + Math.sin(a * 41) * .0025; i ? ctx.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2) : ctx.moveTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2); } ctx.stroke();
+    strokeCircle(cx, cy, pr * .985, 'rgba(80,227,255,.5)', .0022);
+    strokeCircle(cx, cy, pr * 1.07, 'rgba(226,80,42,.35)', .006);
+    // one glint, dead centre of the pupil: the spiral will form out of it
+    ctx.globalCompositeOperation = 'lighter'; glow('255,226,190', cx, cy, .014 * (1 + PULSE * .3), .9); glow('255,255,255', cx, cy, .004, 1); ctx.globalCompositeOperation = 'source-over';
+    ctx.globalAlpha = V.alpha;
+    ctx.restore();
+    strokeCircle(0, 0, .5, '#2a2825', .02);
+  }
+
+  // the glass over the eye, drawn after the portal so it stays on top of the pupil as it opens
+  function L4glass(V) {
+    var cx = EYE.cx, cy = EYE.cy, ir = EYE.ir, i;
+    ctx.save(); circle(0, 0, .5); ctx.clip();
+    // the cornea and the glass over it: a window-shaped catchlight, the floor's lasers, scratches, droplets
+    var clx = cx - .17 + Math.sin(T * .3) * .012, cly = cy - .17 + Math.cos(T * .23) * .008;
+    var cl = ctx.createRadialGradient(clx, cly, 0, clx, cly, .07); cl.addColorStop(0, 'rgba(255,255,255,.75)'); cl.addColorStop(.5, 'rgba(255,255,255,.18)'); cl.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = cl; ctx.beginPath(); ctx.ellipse(clx, cly, .07, .045, -.6, 0, 6.2832); ctx.fill();
+    for (i = 0; i < 7; i++) { var aa = -2.7 + i * .22 + T * .3; ctx.strokeStyle = ['rgba(80,227,255,', 'rgba(226,80,42,', 'rgba(242,166,90,'][i % 3] + (.12 + PULSE * .25).toFixed(2) + ')'; ctx.lineWidth = .003; ctx.beginPath(); ctx.arc(cx, cy, ir * (.8 + i * .025), aa, aa + .45); ctx.stroke(); }
+    ctx.fillStyle = 'rgba(120,86,24,.1)'; ctx.fillRect(-.5, -.5, 1, 1);
+    for (i = 0; i < SCR.length; i++) { var s2 = SCR[i]; if (!visible(V, s2[0], s2[1], .1)) continue; ctx.strokeStyle = 'rgba(255,245,225,' + s2[4].toFixed(2) + ')'; ctx.lineWidth = Math.max(P(V, .4), .0004); ctx.beginPath(); seg(s2[0], s2[1], s2[0] + s2[2], s2[1] + s2[3]); ctx.stroke(); }
+    for (i = 0; i < DROPS.length; i++) { var d = DROPS[i]; if (d[2] * V.S < .4 || !visible(V, d[0], d[1], d[2])) continue; var dg = ctx.createRadialGradient(d[0] - d[2] * .3, d[1] - d[2] * .35, 0, d[0], d[1], d[2]); dg.addColorStop(0, 'rgba(255,255,255,.45)'); dg.addColorStop(.25, 'rgba(255,255,255,.05)'); dg.addColorStop(.85, 'rgba(0,0,0,.15)'); dg.addColorStop(1, 'rgba(255,240,210,.25)'); ctx.fillStyle = dg; circle(d[0], d[1], d[2]); ctx.fill(); }
+    var sp = ctx.createLinearGradient(-.4, -.4, -.1, -.1); sp.addColorStop(0, 'rgba(255,255,255,0)'); sp.addColorStop(.5, 'rgba(255,255,255,.16)'); sp.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = sp; ctx.beginPath(); ctx.ellipse(-.25, -.27, .2, .025, -.78, 0, 6.2832); ctx.fill();
+    ctx.restore();
+    strokeCircle(0, 0, .5, '#2a2825', .02);
+  }
+  var OVER = [null, null, null, null, L4glass, null, null, null];
+
+  // ================= LEVELS 5–7 · the pupil opens into a spiral portal =================
+  // The tunnel is drawn in log-radius space and repeats exactly every decade, so each level is the same
+  // picture ten times smaller: handing from one to the next can never show a seam. What changes is the
+  // morph, driven by how far into the tunnel you are: spiral arms, then rings of petals, then the elves.
+  var NEBC = document.createElement('canvas'), NCTX = NEBC.getContext('2d');
+  var HUES = []; for (var hh = 0; hh < 24; hh++) HUES.push(hsl2rgb(hh * 15, 95, 66));
+  function hueRGB(h) { return HUES[((Math.floor(h / 15) % 24) + 24) % 24]; }
+  var STREAK = (function () { var r = rng(1717), o = []; for (var i = 0; i < 320; i++) o.push([r() * 6.2832, r(), .4 + r() * .9, r()]); return o; })();
+  var WM = 0; // how far through the tunnel, set each frame
+  function frac(x) { return x - Math.floor(x); }
+  function wormhole(V, li) {
+    bgFill(V, '#030305');
+    var S0 = V.S0, m = WM, i, k, d;
+    // only the first level emerges: from the pupil's dark and its city lights
+    var e = li === 5 ? sstep(S0 * .1, S0 * 1.4, V.S) : 1;
+    var Rv = li === 5 ? .25 + e * e * 30 : 1e9;
+    function rev(r) { return 1 - sstep(Rv * .5, Rv, r); }
+    var wA = 1 - sstep(1.4, 2.6, m) * .7, wB = sstep(.5, 1.5, m) * (1 - sstep(2.6, 3.4, m) * .5), wC = sstep(1.5, 2.6, m);
+    var cxs = V.ox, cys = V.oy, maxR = Math.hypot(Math.max(cxs, W - cxs), Math.max(cys, H - cys)) / V.S, minR = .6 / V.S;
+    var u0 = Math.floor(Math.log10(minR)), u1 = Math.ceil(Math.log10(maxR));
+    // the city lights of home, still in the pupil, stretching as the tunnel opens
+    if (li === 5 && e < 1) {
+      // (the pupil's city lights are gone: only the glint remains)
+      ctx.globalAlpha = V.alpha;
+    }
+    // nebula walls, soft: a quarter-size buffer, smoothed back up, added as light
+    var nd = 4, nw = Math.ceil(W / nd), nh = Math.ceil(H / nd);
+    if (NEBC.width !== nw || NEBC.height !== nh) { NEBC.width = nw; NEBC.height = nh; }
+    var main = ctx; ctx = NCTX; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, nw, nh);
+    ctx.setTransform(V.S / nd, 0, 0, V.S / nd, V.ox / nd, V.oy / nd); ctx.globalCompositeOperation = 'lighter';
+    for (d = u0; d <= u1; d++) for (k = 0; k < 14; k++) {
+      var u = d + frac(k * .3819 + T * .015), r = Math.pow(10, u), a = k * 2.399 + 6.2832 * u + T * (k % 2 ? .05 : -.035);
+      var rv = rev(r) * e; if (rv < .01) continue;
+      ctx.globalAlpha = rv; glow(hueRGB(k * 51 + m * 70 + T * 4), Math.cos(a) * r, Math.sin(a) * r, r * .75, .21 * (1 + PULSE * .5));
+    }
+    ctx.globalCompositeOperation = 'source-over'; ctx = main;
+    ctx.save(); ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.globalAlpha = V.alpha; ctx.globalCompositeOperation = 'lighter'; ctx.drawImage(NEBC, 0, 0, W, H); ctx.restore();
+    ctx.globalCompositeOperation = 'lighter';
+    // A: five logarithmic spiral arms of soft light, one full turn per decade
+    if (wA > .01) for (d = u0; d <= u1; d++) for (var arm = 0; arm < 5; arm++) for (k = 0; k < 30; k++) {
+      var ua = d + (k + frac(T * .22)) / 30, ra = Math.pow(10, ua), th = arm * 1.2566 + 6.2832 * ua + T * .06;
+      var al = rev(ra) * e * wA; if (al < .01) continue;
+      ctx.globalAlpha = V.alpha * al; glow(hueRGB(arm * 72 + frac(ua) * 360 + m * 50), Math.cos(th) * ra, Math.sin(th) * ra, ra * .13, .28);
+    }
+    // B: rings of petals, turning against each other
+    if (wB > .01) for (d = u0; d <= u1; d++) for (k = 0; k < 8; k++) {
+      var ub = d + (k + frac(T * .18)) / 8, rb = Math.pow(10, ub), alb = rev(rb) * e * wB; if (alb < .01) continue;
+      var col = hueRGB(k * 45 + m * 60 + T * 6); ctx.globalAlpha = V.alpha * alb * .5; ctx.strokeStyle = 'rgb(' + col + ')'; ctx.lineWidth = rb * .004;
+      for (var p = 0; p < 12; p++) { var pa = p * .5236 + (k % 2) * .2618 + T * (k % 2 ? .12 : -.09) + 6.2832 * ub * .5; ctx.save(); ctx.translate(Math.cos(pa) * rb, Math.sin(pa) * rb); ctx.rotate(pa); ctx.beginPath(); ctx.ellipse(0, 0, rb * .16, rb * .045, 0, 0, 6.2832); ctx.stroke(); ctx.restore(); }
+    }
+    // streaks rushing past: the tunnel's walls, coloured by where they are
+    ctx.lineCap = 'round';
+    for (d = u0; d <= u1; d++) for (i = 0; i < STREAK.length; i++) {
+      var s = STREAK[i], us = d + frac(s[1] + T * .11 * s[2]), rs = Math.pow(10, us), a2 = s[0] + 6.2832 * us;
+      var als = rev(rs) * e; if (als < .02 || rs * V.S < 2) continue;
+      var len = rs * (.04 + .14 * frac(us));
+      ctx.globalAlpha = V.alpha * als * (.25 + frac(us) * .55); ctx.strokeStyle = 'rgb(' + hueRGB(s[0] * 57 + m * 40 + d * 0) + ')'; ctx.lineWidth = rs * .006;
+      ctx.beginPath(); seg(Math.cos(a2) * rs, Math.sin(a2) * rs, Math.cos(a2) * (rs + len), Math.sin(a2) * (rs + len)); ctx.stroke();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    // C: the singers: eyes and machine elves, ringed in the walls
+    if (wC > .01) for (d = u0; d <= u1; d++) for (k = 0; k < 4; k++) {
+      var uc = d + (k + frac(T * .1)) / 4, rc = Math.pow(10, uc), alc = rev(rc) * e * wC; if (alc < .01 || rc * V.S < 20) continue;
+      for (var q = 0; q < 10; q++) {
+        var qa = q * .6283 + (k % 2) * .314 + T * .05 + 6.2832 * uc, qx = Math.cos(qa) * rc, qy = Math.sin(qa) * rc, qs = rc * .07;
+        if (!visible(V, qx, qy, qs * 2)) continue;
+        ctx.globalAlpha = V.alpha * alc * .55; ctx.save(); ctx.translate(qx, qy); ctx.rotate(qa + 1.5708);
+        if (q % 2) { ctx.fillStyle = '#f5ead2'; ctx.beginPath(); ctx.ellipse(0, 0, qs, qs * .45, 0, 0, 6.2832); ctx.fill(); fillCircle(0, 0, qs * .32, '#2d6f78'); fillCircle(0, 0, qs * .15, '#050505'); fillCircle(qs * .08, -qs * .08, qs * .05, '#fff'); }
+        else { ctx.fillStyle = '#e8e4dc'; ctx.fillRect(-qs * .3, -qs * .3, qs * .6, qs * .6); ctx.fillStyle = EM; ctx.beginPath(); ctx.moveTo(-qs * .36, -qs * .3); ctx.lineTo(0, -qs * 1.2); ctx.lineTo(qs * .36, -qs * .3); ctx.fill(); fillCircle(0, 0, qs * .1, TQ); for (var w2 = 0; w2 < 3; w2++) { ctx.strokeStyle = 'rgba(80,227,255,' + (.6 - w2 * .18) + ')'; ctx.lineWidth = qs * .05; ctx.beginPath(); ctx.arc(0, -qs * 1.4 - w2 * qs * .3, qs * (.3 + w2 * .2), 3.5, 5.9); ctx.stroke(); } }
+        ctx.restore();
+      }
+    }
+    ctx.globalAlpha = V.alpha;
+    // the vanishing point: a warm core, always the same size on screen
+    // the glint: the same light as in the eye (r 0.014 there, 0.14 here), becoming the tunnel's warm core as it opens
+    var gr2 = li === 5 ? .14 * (1 - e) + (60 / V.S) * e : 60 / V.S;
+    ctx.globalCompositeOperation = 'lighter';
+    glow('255,226,190', 0, 0, gr2 * (1 + PULSE * .3), li === 5 ? .9 - .35 * e : .55);
+    if (li === 5 && e < 1) glow('255,255,255', 0, 0, .04 * (1 - e) + (14 / V.S) * e, 1 - e * .7);
+    ctx.globalCompositeOperation = 'source-over';
+    // the eclipse, surfacing at the very end of the tunnel: the way back to the deep field
+    var er = li === 7 ? .045 : li === 6 ? .0045 : 0;
+    if (er) { var ea = sstep(3, 30, er * V.S); if (ea > 0) { ctx.globalAlpha = V.alpha * ea; ringedEarth(0, 0, er, V, true, 55); ctx.globalAlpha = V.alpha; } }
+  }
+  function L5(V) { wormhole(V, 5); }
+  function L6(V) { wormhole(V, 6); }
+  function L7(V) { wormhole(V, 7); }
+
+  var LV = [L0, L1, L2, L3, L4, L5, L6, L7];
+
+  // grain, the deeper the more of it
+  var grain = document.createElement('canvas'); grain.width = grain.height = 192; (function () { var g = grain.getContext('2d'), id = g.createImageData(192, 192), r = rng(31); for (var i = 0; i < id.data.length; i += 4) { var v = Math.floor(r() * 255); id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; } g.putImageData(id, 0, 0); })();
+  var grainPat = null;
+
+  function mkV(S, cam, alpha) { var ox = W / 2 - cam[0] * S, oy = H / 2 - cam[1] * S; return { S: S, S0: Math.min(W, H), px: 1 / S, ox: ox, oy: oy, x0: -ox / S, y0: -oy / S, x1: (W - ox) / S, y1: (H - oy) / S, alpha: alpha }; }
+  function drawLevel(li, S, cam, alpha, labA, fn, over) {
+    var V = mkV(S, cam, alpha);
+    ctx.save(); ctx.globalAlpha = alpha; ctx.setTransform(DPR * S, 0, 0, DPR * S, DPR * V.ox, DPR * V.oy);
+    (fn || LV[li])(V);
+    if (over && OVER[li]) OVER[li](V);
+    ctx.restore();
+    if (labA > 0) { ctx.save(); drawLabels(li, V, labA * (.6 + labelBoost)); ctx.restore(); }
+  }
+
+  // ---------------- control ----------------
+  var target = 0, depth = 0, dive = true, last = performance.now(), started = false;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) dive = false;
+  var lvlEl = document.getElementById('lvl'), magEl = document.getElementById('mag'), capEl = document.getElementById('cap'), loopEl = document.getElementById('loop'), cdEl = document.getElementById('cd');
+  var lastCap = -1;
+  function fmtMag(d) {
+    if (d < 6) { var v = Math.pow(10, d); return '×' + (v < 10 ? v.toFixed(1) : Math.round(v).toLocaleString('en-US')); }
+    return '×10^' + d.toFixed(2);
+  }
+  function frame(now) {
+    var dt = Math.min(.05, (now - last) / 1000); last = now; T += dt;
+    var lvNow = ((Math.floor(depth) % NL) + NL) % NL;
+    if (dive && started) target += dt * .085 * SPEED[lvNow];
+    depth += (target - depth) * Math.min(1, dt * 4);
+    // the kick
+    if (an) { an.getByteFrequencyData(fbuf); var b = 0; for (var i = 1; i < 7; i++) b += fbuf[i]; b /= 6 * 255; bassAvg = bassAvg * .96 + b * .04; var p = clamp((b - bassAvg * 1.02) * 6, 0, 1); PULSE = Math.max(p, PULSE * .86); }
+    else { var ph = (T * 145 / 60) % 1; PULSE = Math.max(0, 1 - ph * 3.2); }
+    var i0 = Math.floor(depth), t = depth - i0, li = ((i0 % NL) + NL) % NL, ci = (li + 1) % NL;
+    var S0 = Math.min(W, H) * 1.0, S = S0 * Math.pow(Z, t);
+    var cam = camAt(li, t);
+    // the Seeker's bounce: full on the floor, settling as you close in on the eye, so the hand-off never jumps
+    BOB = Math.max(0, Math.sin(T * 6.07)) * .012 * (1 + PULSE) * (li < 3 ? 1 : li === 3 ? 1 - sstep(.25, .85, t) : 0);
+    PUPR = EYE.pr * (1 + Math.sin(T * .7) * .035 + PULSE * .05);
+    WM = li >= 5 ? (li - 5) + t : 0;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.globalAlpha = 1; ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
+    labelBoost = clamp(Math.floor(depth / NL) * .15, 0, .4);
+    var cc = [CHILD[li][0], CHILD[li][1] - (li === 3 ? BOB : 0)];
+    var xf = XF[li], ca = sstep(xf[0], xf[1], t), ccam = [(cam[0] - cc[0]) * Z, (cam[1] - cc[1]) * Z];
+    var same = (li === 5 || li === 6);
+    drawLevel(li, S, cam, 1, OVER[li] ? 0 : 1 - ca, null, OVER[li] && !(PORTAL[li] && ca < 1));
+    // inside the tunnel the next level's picture is the same, but its labels are its own: fade them in
+    if (same && ca > 0) { ctx.save(); drawLabels(ci, mkV(S / Z, ccam, 1), ca * (.6 + labelBoost)); ctx.restore(); }
+    // a portal: where the next level already is, draw it exactly, so the zoom never cuts
+    if (PORTAL[li] && ca < 1) { var prr = (li === 4 ? PUPR * .985 : PORTAL[li]) * S, pra = PRAMP[li]; if (prr > pra[0]) { var ppx = W / 2 + (cc[0] - cam[0]) * S, ppy = H / 2 + (cc[1] - cam[1]) * S; if (ppx + prr > 0 && ppx - prr < W && ppy + prr > 0 && ppy - prr < H) { ctx.save(); ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.beginPath(); ctx.arc(ppx, ppy, prr, 0, 6.2832); ctx.clip(); var pa = sstep(pra[0], pra[1], prr); drawLevel(ci, S / Z, ccam, pa, pa * (1 - ca), null, true); ctx.restore(); } } }
+    // what sits over the portal: the visor's glass, and this level's own labels, so nothing drops away early
+    if (OVER[li]) { drawLevel(li, S, cam, 1 - ca, 0, OVER[li]); var Vp = mkV(S, cam, 1); ctx.save(); drawLabels(li, Vp, (1 - ca) * (.6 + labelBoost)); ctx.restore(); }
+    // inside the tunnel each level is the same picture, so only the last hand-off needs a fade
+    if (ca > 0 && !same) drawLevel(ci, S / Z, ccam, ca, ca, null, true);
+    // grain and vignette, growing with depth
+    var gr = clamp(.025 + (li + t) * .012 + Math.floor(depth / NL) * .01, 0, .12);
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    if (!grainPat) grainPat = ctx.createPattern(grain, 'repeat');
+    ctx.globalAlpha = gr; ctx.globalCompositeOperation = 'overlay'; ctx.save(); ctx.translate(Math.random() * 192, Math.random() * 192); ctx.fillStyle = grainPat; ctx.fillRect(-192, -192, W + 384, H + 384); ctx.restore();
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    var vg = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .35, W / 2, H / 2, Math.max(W, H) * .75); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,' + (.55 + PULSE * .1).toFixed(2) + ')'); ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+    // the HUD
+    var shown = t > .7 ? ci : li;
+    lvlEl.innerHTML = '<b>Level ' + (Math.floor(depth + (t > .7 ? 1 - t : 0) + .3)) + '</b> · ' + NAMES[shown];
+    magEl.textContent = fmtMag(depth);
+    loopEl.textContent = 'Loop ' + (Math.floor(depth / NL) + 1);
+    if (shown !== lastCap) { lastCap = shown; capEl.style.opacity = 0; setTimeout(function () { capEl.textContent = CAPS[shown]; capEl.style.opacity = 1; }, 300); }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // countdown to 01:23:45 UTC, 23 Jan 2045
+  function tick() { var t = Date.UTC(2045, 0, 23, 1, 23, 45) - Date.now(); if (t <= 0) { cdEl.textContent = 'now'; return; } var d = Math.floor(t / 864e5), h = Math.floor(t / 36e5) % 24, m = Math.floor(t / 6e4) % 60, s = Math.floor(t / 1e3) % 60; function p2(n) { return (n < 10 ? '0' : '') + n; } cdEl.textContent = d.toLocaleString('en-US') + ' d ' + p2(h) + ':' + p2(m) + ':' + p2(s); }
+  tick(); setInterval(tick, 1000);
+
+  // zoom by wheel, pinch, drag, keys
+  function nudge(v) { target = Math.max(0, target + v); }
+  cv.addEventListener('wheel', function (e) { e.preventDefault(); nudge(e.deltaY * (e.deltaMode ? .05 : .0016)); }, { passive: false });
+  var touches = {}, lastY = null, lastPinch = null;
+  cv.addEventListener('pointerdown', function (e) { touches[e.pointerId] = [e.clientX, e.clientY]; cv.setPointerCapture(e.pointerId); lastY = e.clientY; lastPinch = null; });
+  cv.addEventListener('pointermove', function (e) {
+    if (!touches[e.pointerId]) return; touches[e.pointerId] = [e.clientX, e.clientY];
+    var ids = Object.keys(touches);
+    if (ids.length >= 2) { var a = touches[ids[0]], b = touches[ids[1]], dd = Math.hypot(a[0] - b[0], a[1] - b[1]); if (lastPinch) nudge(Math.log(dd / lastPinch) / Math.log(Z) * 1.4); lastPinch = dd; }
+    else if (lastY !== null) { nudge((lastY - e.clientY) * .004); lastY = e.clientY; }
+  });
+  function up(e) { delete touches[e.pointerId]; lastY = null; lastPinch = null; }
+  cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+  window.addEventListener('keydown', function (e) { if (e.key === 'ArrowUp' || e.key === '+' || e.key === '=') nudge(.25); if (e.key === 'ArrowDown' || e.key === '-') nudge(-.25); if (e.key === ' ') { e.preventDefault(); setDive(!dive); } });
+  document.getElementById('in').addEventListener('click', function () { nudge(.5); });
+  document.getElementById('out').addEventListener('click', function () { nudge(-.5); });
+  var diveBtn = document.getElementById('dive');
+  function setDive(v) { dive = v; diveBtn.setAttribute('aria-pressed', v ? 'true' : 'false'); }
+  setDive(dive);
+  diveBtn.addEventListener('click', function () { setDive(!dive); });
+
+  // sound: it starts with the first touch (browsers hold sound until you interact)
+  var au = document.getElementById('au'), sndBtn = document.getElementById('snd'), gate = document.getElementById('gate');
+  function wireAudio() {
+    if (actx) return;
+    try { var AC = window.AudioContext || window.webkitAudioContext; actx = new AC(); var src = actx.createMediaElementSource(au); an = actx.createAnalyser(); an.fftSize = 256; an.smoothingTimeConstant = .5; fbuf = new Uint8Array(an.frequencyBinCount); gain = actx.createGain(); gain.gain.value = au.paused ? 0 : 1; src.connect(an); an.connect(gain); gain.connect(actx.destination); } catch (e) { an = null; }
+  }
+  // the track never starts cold: it swells in over a few seconds
+  var gain = null, fadeT = null;
+  function fadeIn(sec) {
+    clearInterval(fadeT);
+    if (gain && actx) { var n = actx.currentTime; gain.gain.cancelScheduledValues(n); gain.gain.setValueAtTime(0.0001, n); gain.gain.exponentialRampToValueAtTime(1, n + sec); au.volume = 1; return; }
+    au.volume = 0; var t0 = performance.now();
+    fadeT = setInterval(function () { var k = Math.min(1, (performance.now() - t0) / (sec * 1000)); au.volume = k * k; if (k >= 1) clearInterval(fadeT); }, 50);
+  }
+  function play() { wireAudio(); if (actx && actx.state === 'suspended') actx.resume(); fadeIn(5); var p = au.play(); if (p && p.catch) p.catch(function () { sndBtn.setAttribute('aria-pressed', 'false'); }); sndBtn.setAttribute('aria-pressed', 'true'); }
+  // the analyser joins on the first touch, so an autoplaying track is never routed through a sleeping context
+  window.addEventListener('pointerdown', function () { if (!au.paused) { wireAudio(); if (actx && actx.state === 'suspended') actx.resume(); } }, { once: true });
+  window.__em = { set: function (v) { target = depth = v; started = true; gate.hidden = true; }, dive: function (v) { setDive(v); } };
+  document.getElementById('go').addEventListener('click', function () { gate.hidden = true; started = true; play(); });
+  sndBtn.addEventListener('click', function () { if (au.paused) play(); else { au.pause(); sndBtn.setAttribute('aria-pressed', 'false'); } });
+  // try straight away; if the browser allows it, skip the gate
+  (function () { au.volume = 0; var p = au.play(); if (p && p.then) p.then(function () { fadeIn(5); gate.hidden = true; started = true; }).catch(function () {}); })();
+})();
+</script>
+</body>
+</html>
