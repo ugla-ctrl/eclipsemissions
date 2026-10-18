@@ -5300,6 +5300,777 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         }
       }
     })();
+
+    // ---------- FLY MODE (test): a flight simulator through the plate. Scroll mode stays exactly as it is ----------
+    // The plate becomes a channel you fly down: the timeline is the floor, the stations stand up on the blue line,
+    // and the sky (orbits, Apophis, the Moon) curves over your head. Fly it yourself, or let the autopilot take you.
+    (function () {
+      var src = document.getElementById('world-src'), cam0 = document.getElementById('cam');
+      if (!src || !cam0) return;
+      var css = document.createElement('style');
+      css.textContent = [
+        '.flytog{position:fixed;z-index:45;right:16px;top:calc(var(--hdr) + 10px);height:34px;box-sizing:border-box;display:flex;gap:2px;padding:3px;border:1px solid #4a463c;border-radius:999px;background:rgba(8,9,11,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}',
+        '.flytog button{font:inherit;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:none;border:0;color:var(--dim);padding:0 13px;height:100%;border-radius:999px;cursor:pointer}',
+        '.flytog button[aria-pressed=true]{background:var(--ink);color:#14110d}',
+        '.fly{position:fixed;left:0;right:0;bottom:0;top:var(--hdr);z-index:28;overflow:hidden;background:#020203;touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none;outline:none}',
+        '.fly[hidden]{display:none}',
+        '.fly canvas{position:absolute;inset:0;width:100%;height:100%;display:block}',
+        '.fl-tags{position:absolute;inset:0;pointer-events:none;z-index:1}',
+        '.fl-tag{position:absolute;left:0;top:0;display:flex;align-items:center;gap:8px;pointer-events:auto;cursor:pointer;background:none;border:0;padding:12px;margin:-8px 0 0 -8px;font:inherit;color:var(--ink);white-space:nowrap;will-change:transform}',
+        '.fl-tag i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--corona);box-shadow:0 0 14px rgba(242,166,90,.8),inset 0 0 6px rgba(242,166,90,.8);flex:none}',
+        '.fl-tag.up i{border-color:var(--turq);box-shadow:0 0 14px rgba(80,227,255,.8),inset 0 0 6px rgba(80,227,255,.8)}',
+        '.fl-tag span{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-shadow:0 0 6px #000,0 0 2px #000;opacity:.92}',
+        '.fl-tag:hover span{color:var(--corona)}','.fl-tag i{transition:transform .2s}.fl-tag:hover i{transform:scale(1.35)}',
+        '.fl-ret{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;pointer-events:none;z-index:1;opacity:.75}',
+        '.fl-hud{position:absolute;left:24px;bottom:22px;right:24px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;pointer-events:none;z-index:2}',
+        '.fl-cap{max-width:520px;display:grid;gap:8px;text-shadow:0 2px 18px #000,0 0 3px #000}',
+        '.fl-cap .eyebrow{color:rgba(238,229,208,.85)}',
+        '.fl-cap h2{margin:0;font-family:var(--f-fell);font-weight:400;font-size:clamp(28px,3.8vw,50px);line-height:1;color:var(--ink);text-wrap:balance}',
+        '.fl-cap p{margin:0;color:#e6dcc6;font-size:15px;line-height:1.45;max-width:34em}',
+        '.fl-ins{display:grid;grid-template-columns:repeat(3,auto);gap:4px 18px;font-family:var(--f-mono);color:var(--ink);text-shadow:0 0 10px #000;text-align:right}',
+        '.fl-ins span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}',
+        '.fl-ins b{font-weight:400;font-size:22px;font-variant-numeric:tabular-nums;color:var(--turq)}',
+        '.fl-ins b.c{color:var(--corona)}',
+        '.fl-bar{position:absolute;left:0;right:0;top:0;height:2px;background:rgba(238,229,208,.08);z-index:2}.fl-bar i{display:block;height:100%;background:var(--corona);transform-origin:0 0;transform:scaleX(0)}',
+        '.fl-ctl{position:absolute;right:190px;top:10px;display:flex;gap:6px;z-index:2}',
+        '.fl-ctl .sm{display:none}',
+        '.fl-ctl button{font:inherit;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:rgba(8,9,11,.72);color:var(--ink);border:1px solid #4a463c;border-radius:4px;height:34px;box-sizing:border-box;padding:0 11px;cursor:pointer;min-width:34px}',
+        '.fl-ctl button[aria-pressed=true]{border-color:var(--corona);color:var(--corona)}',
+        '.fl-keys{position:absolute;left:16px;top:56px;z-index:2;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);line-height:1.8;text-shadow:0 0 6px #000;transition:opacity 1.5s;pointer-events:none}',
+        '.fl-keys b{font-weight:400;color:var(--ink);border:1px solid #4a463c;border-radius:3px;padding:0 5px;margin-right:4px}',
+        '.fl-load{position:absolute;inset:0;display:grid;place-items:center;z-index:3;background:#020203;transition:opacity 1s}',
+        '.fl-load div{display:grid;gap:12px;justify-items:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}',
+        '.fl-load b{font-family:var(--f-fell);font-weight:400;font-style:italic;font-size:28px;letter-spacing:0;text-transform:none;color:var(--ink)}',
+        '.fl-load s{display:block;width:220px;height:2px;background:rgba(238,229,208,.12);text-decoration:none}.fl-load s i{display:block;height:100%;background:var(--corona);transform-origin:0 0;transform:scaleX(0);transition:transform .3s}',
+        '.fl-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0) 62%,rgba(0,0,0,.55));z-index:1}',
+        '.fl-pad{display:none}',
+        '@media (max-width:700px),(pointer:coarse){.fl-keys{display:none}.fl-pad{display:block;position:absolute;left:16px;bottom:118px;width:118px;height:118px;border-radius:50%;border:1px solid rgba(238,229,208,.3);background:rgba(8,9,11,.35);z-index:2;touch-action:none}.fl-pad i{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:rgba(238,229,208,.18);border:1px solid rgba(238,229,208,.5)}}',
+        '@media (max-width:700px){.flytog{right:10px}.flytog button{padding:0 9px;letter-spacing:.08em}.fl-ctl{gap:4px}.fl-ctl button{padding:0 8px;letter-spacing:.08em}.fl-ctl .lg{display:none}.fl-ctl .sm{display:inline}.fl-hud{left:16px;right:16px;bottom:14px;flex-direction:column;align-items:flex-start;gap:8px}.fl-ins{text-align:left}.fl-ins b{font-size:17px}.fl-cap p{display:none}.fl-cap h2{font-size:26px}.fl-tag span{font-size:9.5px}.fl-ret{width:90px;height:90px;margin:-45px 0 0 -45px}}'
+      ].join('\n');
+      document.head.appendChild(css);
+
+      var tog = document.createElement('div'); tog.className = 'flytog'; tog.setAttribute('role', 'group'); tog.setAttribute('aria-label', 'How to see the plan');
+      tog.innerHTML = '<button type="button" data-m="scroll" aria-pressed="true">Scroll</button><button type="button" data-m="fly" aria-pressed="false">Fly ✦</button>';
+      document.body.appendChild(tog);
+
+      var fly = document.createElement('div'); fly.className = 'fly'; fly.hidden = true; fly.tabIndex = 0; fly.setAttribute('aria-label', 'Fly mode: a flight simulator through the flight plan');
+      fly.innerHTML = '<div class="fl-tags"></div><div class="fl-vig"></div><div class="fl-bar"><i></i></div>' +
+        '<svg class="fl-ret" viewBox="-60 -60 120 120" aria-hidden="true"><g fill="none" stroke="#50e3ff" stroke-width="1.5"><circle r="9"/><path d="M -40 0 H -16 M 16 0 H 40 M 0 -9 V -22"/><path d="M -56 -20 v -8 h 8 M 56 -20 v -8 h -8 M -56 20 v 8 h 8 M 56 20 v 8 h -8" stroke="#eee5d0" opacity=".5"/></g><g class="fl-hz" stroke="#f2a65a" stroke-width="1.2" fill="none"><path d="M -54 0 H -30 M 30 0 H 54"/></g></svg>' +
+        '<div class="fl-keys"><div><b>↑↓←→</b>or <b>WASD</b> steer</div><div><b>Shift</b><b>Ctrl</b> throttle</div><div><b>Scroll</b> zoom · <b>drag</b> look</div><div><b>Space</b> autopilot · let go to hover</div></div>' +
+        '<div class="fl-pad" aria-label="Steer"><i></i></div>' +
+        '<div class="fl-ctl"><button type="button" class="fl-slow" aria-label="Slower">−</button><button type="button" class="fl-fast" aria-label="Faster">+</button><button type="button" class="fl-auto" aria-pressed="true"><span class="lg">Autopilot on</span><span class="sm">Auto on</span></button></div>' +
+        '<div class="fl-hud"><div class="fl-cap"><span class="eyebrow"></span><h2></h2><p></p></div><div class="fl-ins"><span>Speed</span><span>Heading</span><span class="k">Altitude</span><b class="spd">0</b><b class="hdg">090</b><b class="c alt">0</b></div></div>' +
+        '<div class="fl-load"><div><b>Fuelling up</b><s><i></i></s><span>Fly mode · test</span></div></div>';
+      document.body.appendChild(fly);
+      var TAGS = fly.querySelector('.fl-tags'), loadEl = fly.querySelector('.fl-load'), loadBar = fly.querySelector('.fl-load s i');
+
+      var T = null, renderer, scene, camera, starMat, streakMat;
+      var MOBILE = Math.min(innerWidth, innerHeight) < 700;
+      var GROUND = 1700;
+
+      function loadThree(cb) {
+        if (window.THREE) return cb();
+        var s = document.createElement('script'); s.src = 'js/three.min.js'; s.onload = cb;
+        s.onerror = function () { var s2 = document.createElement('script'); s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'; s2.onload = cb; document.head.appendChild(s2); };
+        document.head.appendChild(s);
+      }
+      // ---------- v4: the plate taken apart. Everything above the ground becomes a real 3D thing, and you fly the blue line ----------
+      var NS = 'http://www.w3.org/2000/svg', DEFS = '', EXc = 3600, MX = 7200, MR = 3650, MY = -3300;
+      function gY(x) { var d = x - EXc; return 1650 + d * d / 180000; }     // the ground the stations stand on (the blue line is 70 below it)
+      function Hh(x, y) { return gY(x) - y; }                                // height above that ground
+      function slopeA(x) { return Math.atan((x - EXc) / 90000); }
+      function W3(x, y, z) { return new T.Vector3(x, Hh(x, y), z || 0); }
+      var ZC = 0, ZLINE = 70, CAMZ = 70;                                       // things stand at z 0, the blue line runs at z 70, you fly between
+      var FOG0 = 2400, FOG1 = 5600;
+      function ser(n) { return new XMLSerializer().serializeToString(n); }
+      function rasterStr(x0, y0, w, h, pw, ph, body, css) {
+        var s = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="' + x0 + ' ' + y0 + ' ' + w + ' ' + h + '" width="' + pw + '" height="' + ph + '" style="--labels:inline"><style>' + (css || '') + '</style>' + DEFS + body + '</svg>';
+        return new Promise(function (res) {
+          var img = new Image(), url = URL.createObjectURL(new Blob([s], { type: 'image/svg+xml' }));
+          img.onload = function () { var c = document.createElement('canvas'); c.width = pw; c.height = ph; c.getContext('2d').drawImage(img, 0, 0); URL.revokeObjectURL(url); res(c); };
+          img.onerror = function () { URL.revokeObjectURL(url); res(null); };
+          img.src = url;
+        });
+      }
+      var NOTEXT = 'text{display:none!important}';
+
+      // ---- take the plate apart: every drawn thing, where it is, and what kind of thing it is ----
+      function rectOf(e, M) {
+        var b; try { b = e.getBBox(); } catch (x) { return null; }
+        if (!b || (!b.width && !b.height)) return null;
+        var xs = [], ys = [];
+        [[b.x, b.y], [b.x + b.width, b.y], [b.x, b.y + b.height], [b.x + b.width, b.y + b.height]].forEach(function (p) { var q = new DOMPoint(p[0], p[1]).matrixTransform(M); xs.push(q.x); ys.push(q.y); });
+        var x0 = Math.min.apply(0, xs), x1 = Math.max.apply(0, xs), y0 = Math.min.apply(0, ys), y1 = Math.max.apply(0, ys);
+        return { x0: x0, y0: y0, x1: x1, y1: y1, w: x1 - x0, h: y1 - y0, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 };
+      }
+      function ownAnim(e, tag) { for (var c = e.firstElementChild; c; c = c.nextElementSibling) if (c.tagName === tag) return c; return null; }
+      function onlyText(e) { if (e.tagName === 'text') return true; if (e.tagName !== 'g') return false; var any = false; for (var c = e.firstElementChild; c; c = c.nextElementSibling) { if (/^anim|^set$/.test(c.tagName)) continue; if (!onlyText(c)) return false; any = true; } return any; }
+      function leafStr(e, local) {
+        var c = e.cloneNode(true), a = ownAnim(c, 'animateMotion'); if (a) c.removeChild(a);
+        if (!local) for (var p = e.parentNode; p && p !== src; p = p.parentNode) { var w = p.cloneNode(false); w.appendChild(c); c = w; }
+        return ser(c);
+      }
+      function collect() {
+        src.style.setProperty('--labels', 'inline');
+        var base = src.getCTM().inverse(), L = []; MODELS = [];
+        function walk(e, depth) {
+          var tag = e.tagName; if (/^anim|^set$|^title$|^desc$|^defs$|^clipPath$/.test(tag)) return;
+          var mot = ownAnim(e, 'animateMotion'), M, r;
+          if (mot) { var tb = e.transform && e.transform.baseVal.consolidate(); M = tb ? tb.matrix : new DOMMatrix(); r = rectOf(e, M); }
+          else { M = base.multiply(e.getCTM()); r = rectOf(e, M); }
+          if (!r) return;
+          var k3 = e.getAttribute && e.getAttribute('data-3d');
+          if (k3 && !mot && r.cy < gY(r.cx) - 3) { MODELS.push({ e: e, r: r, kind: k3, M: M }); return; }
+          if (!mot && tag === 'g' && (r.w > 1300 || r.h > 1300) && r.y0 < 1630 && depth < 3) { [].forEach.call(e.children, function (k) { walk(k, depth + 1); }); return; }
+          L.push({ e: e, r: r, mot: mot, M: M });
+        }
+        [].forEach.call(src.children, function (k) {
+          var b; try { b = k.getBBox(); } catch (x) { return; }
+          var s2 = (k.getAttribute('stroke') || '').toLowerCase();
+          if (k.tagName === 'g' && s2 === '#eee5d0' && b.width > 8000 && k.children.length > 80) return;   // the ruled background
+          if (k.tagName === 'rect' && b.width > 8000 && b.height > 2000) return;                           // the frame
+          if (b.width > 7000 && b.height > 7000) return;                                                     // the Moon: it becomes a sphere
+          if (k.tagName === 'g' && k.children.length > 400 && b.y < 1200) return;                           // the painted stars: we have real ones
+          walk(k, 0);
+        });
+        src.style.removeProperty('--labels');
+        return L;
+      }
+      function classify(L) {
+        var flights = {}, out = { floor: [], solid: [], text: [], mover: [], curve: [], flight: [], band: [], pyr: [], ufo: [], sun: [] };
+        L.forEach(function (o, i) {
+          if (o.used) return;
+          var e = o.e, tag = e.tagName, r = o.r, cs = getComputedStyle(e), g0 = gY(r.cx);
+          if (o.mot) { out.mover.push(o); return; }
+          if (onlyText(e)) { out.text.push(o); return; }
+          if (r.cy >= g0 - 3) { out.floor.push(o); return; }
+          var fill = (e.getAttribute('fill') || '').toLowerCase();
+          // dimension lines (an arrowed line with its label): the line goes into space as a line, the label becomes a sign
+          var dl = tag === 'g' ? e.querySelector(':scope > line') : null;
+          if (dl && e.querySelector('text') && r.h > 150) { var bm = src.getCTM().inverse(); out.curve.push({ e: dl, r: r, M: bm.multiply(dl.getCTM()) }); [].forEach.call(e.querySelectorAll('text'), function (t) { var tr = rectOf(t, bm.multiply(t.getCTM())); if (tr) out.text.push({ e: t, r: tr }); }); return; }
+          if (tag === 'g' && e.querySelector('ellipse[rx="34"][ry="8"]')) { out.ufo.push(o); return; }
+          if (tag === 'circle' && e.getAttribute('fill') === '#08090b' && e.getAttribute('stroke-width') === '1.8' && i > 0 && L[i - 1].e.tagName === 'g') { o.rays = L[i - 1]; L[i - 1].used = true; out.sun.push(o); var k2 = out.solid.indexOf(L[i - 1]); if (k2 >= 0) out.solid.splice(k2, 1); return; }
+          var strokeOnly = (tag === 'line' || ((tag === 'path' || tag === 'polyline') && cs.fill === 'none')) && cs.stroke !== 'none';
+          if (tag === 'line' && r.w > 8000) { out.band.push(o); return; }
+          if (strokeOnly && e.getAttribute('stroke-width') === '7') { flights[e.getAttribute('d')] = 1; out.flight.push(o); return; }
+          if (strokeOnly && tag === 'path' && flights[e.getAttribute('d')]) return;
+          if (strokeOnly && Math.max(r.w, r.h) > 260) { out.curve.push(o); return; }
+          out.solid.push(o);
+        });
+        return out;
+      }
+      // things that touch become one object; ground things and sky things stay apart
+      function cluster(list, gap, maxW, keyFn) {
+        var C2 = list.map(function (o) { return { items: [o], r: Object.assign({}, o.r), k: keyFn ? keyFn(o) : 0 }; }), merged = true;
+        while (merged) {
+          merged = false;
+          for (var a = 0; a < C2.length; a++) for (var b = a + 1; b < C2.length; b++) {
+            var A = C2[a], B = C2[b]; if (A.k !== B.k) continue;
+            if (A.r.x0 - gap > B.r.x1 || B.r.x0 - gap > A.r.x1 || A.r.y0 - gap > B.r.y1 || B.r.y0 - gap > A.r.y1) continue;
+            var x0 = Math.min(A.r.x0, B.r.x0), x1 = Math.max(A.r.x1, B.r.x1); if (x1 - x0 > maxW) continue;
+            var y0 = Math.min(A.r.y0, B.r.y0), y1 = Math.max(A.r.y1, B.r.y1); if (y1 - y0 > maxW) continue;
+            A.items = A.items.concat(B.items); A.r = { x0: x0, x1: x1, y0: y0, y1: y1, w: x1 - x0, h: y1 - y0, cx: (x0 + x1) / 2, cy: (y0 + y1) / 2 };
+            C2.splice(b, 1); b--; merged = true;
+          }
+        }
+        return C2;
+      }
+
+      // ---- materials ----
+      var SLAB_V = 'attribute float aE; varying vec2 vUv; varying float vE; varying float vD; void main(){ vUv=uv; vE=aE; vec4 mv=modelViewMatrix*vec4(position,1.0); vD=-mv.z; gl_Position=projectionMatrix*mv; }';
+      var SLAB_F = 'uniform sampler2D map; varying vec2 vUv; varying float vE; varying float vD; void main(){ vec4 c=texture2D(map,vUv); if(c.a<(vE>0.5?0.32:0.55)) discard; vec3 col=c.rgb/max(c.a,0.001); ' +
+        'float lum=dot(col,vec3(0.33)); if(vE<0.5){ col=mix(vec3(0.075,0.068,0.058), col*0.62, smoothstep(0.25,0.8,lum)); } else { col=mix(vec3(0.03,0.028,0.026), col, smoothstep(0.05,0.3,lum)*0.85+0.15); } ' +
+        'float f=clamp((vD-' + FOG0.toFixed(1) + ')/' + (FOG1 - FOG0).toFixed(1) + ',0.0,1.0); gl_FragColor=vec4(mix(col,vec3(0.008,0.008,0.012),f),1.0); }';
+      var FLOOR_V = 'varying vec2 vUv; varying float vD; void main(){ vUv=uv; vec4 w=modelMatrix*vec4(position,1.0); float d=w.x-3600.0; float g=1650.0+d*d/180000.0; vec3 p=vec3(w.x,0.6,w.y-g); vec4 mv=viewMatrix*vec4(p,1.0); vD=-mv.z; gl_Position=projectionMatrix*mv; }';
+      var FLOOR_F = 'uniform sampler2D map; varying vec2 vUv; varying float vD; void main(){ vec4 c=texture2D(map,vUv); if(c.a<0.01) discard; float f=clamp((vD-' + FOG0.toFixed(1) + ')/' + (FOG1 - FOG0).toFixed(1) + ',0.0,1.0); gl_FragColor=vec4(c.rgb,c.a*(1.0-f)); }';
+      function tex(c) { var t = new T.CanvasTexture(c); t.generateMipmaps = true; t.minFilter = T.LinearMipmapLinearFilter; t.magFilter = T.LinearFilter; t.anisotropy = 8; return t; }
+      function slabGeo(x0, y0, w, h, D, K) {
+        var pos = [], uv = [], ae = [], idx = [];
+        for (var k = 0; k < K; k++) {
+          var z = -D / 2 + D * k / (K - 1), e = (k === 0 || k === K - 1) ? 1 : 0, b = pos.length / 3;
+          pos.push(x0, -y0, z, x0 + w, -y0, z, x0, -y0 - h, z, x0 + w, -y0 - h, z);
+          uv.push(0, 1, 1, 1, 0, 0, 1, 0); ae.push(e, e, e, e); idx.push(b, b + 2, b + 1, b + 1, b + 2, b + 3);
+        }
+        var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setAttribute('aE', new T.Float32BufferAttribute(ae, 1)); g.setIndex(idx);
+        return g;
+      }
+      // real side walls: trace the drawing's silhouette and extrude it, so every thing is solid from any angle
+      var WALLM = null;
+      function wallGeo(c, x0, y0, w, h, D) {
+        var cell = Math.max(1.5, Math.max(w, h) / (MOBILE ? 140 : 240)), gw = Math.ceil(w / cell), gh = Math.ceil(h / cell), occ = new Uint8Array(gw * gh);
+        var cw = c.width, ch = c.height, dat = c.getContext('2d').getImageData(0, 0, cw, ch).data, kx = gw / cw, ky = gh / ch, st = cw * ch > 400000 ? 2 : 1;
+        for (var py = 0; py < ch; py += st) { var gy = Math.min(gh - 1, Math.floor(py * ky)) * gw; for (var px = 0; px < cw; px += st) if (dat[(py * cw + px) * 4 + 3] > 120) occ[gy + Math.min(gw - 1, Math.floor(px * kx))] = 1; }
+        var P = [], Nn = [], z0 = -D / 2, z1 = D / 2;
+        function quad(ax, ay, bx, by, nx, ny) {
+          var X0 = x0 + ax * cell, Y0 = -(y0 + ay * cell), X1 = x0 + bx * cell, Y1 = -(y0 + by * cell);
+          P.push(X0, Y0, z0, X1, Y1, z0, X1, Y1, z1, X0, Y0, z0, X1, Y1, z1, X0, Y0, z1); for (var q = 0; q < 6; q++) Nn.push(nx, ny, 0);
+        }
+        var x, y, run, cur;
+        for (y = 0; y <= gh; y++) { run = -1; cur = 0; for (x = 0; x <= gw; x++) {
+          var a = x < gw && y > 0 ? occ[(y - 1) * gw + x] : 0, b = x < gw && y < gh ? occ[y * gw + x] : 0, v = a !== b ? (a ? 1 : -1) : 0;
+          if (v !== cur) { if (cur) quad(run, y, x, y, 0, cur > 0 ? -1 : 1); run = x; cur = v; }
+        } }
+        for (x = 0; x <= gw; x++) { run = -1; cur = 0; for (y = 0; y <= gh; y++) {
+          var a2 = y < gh && x > 0 ? occ[y * gw + x - 1] : 0, b2 = y < gh && x < gw ? occ[y * gw + x] : 0, v2 = a2 !== b2 ? (a2 ? 1 : -1) : 0;
+          if (v2 !== cur) { if (cur) quad(x, run, x, y, cur > 0 ? 1 : -1, 0); run = y; cur = v2; }
+        } }
+        var g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(P, 3)); g.setAttribute('normal', new T.Float32BufferAttribute(Nn, 3));
+        return g;
+      }
+      function solid(c, x0, y0, w, h, D) {
+        if (!WALLM) WALLM = new T.MeshLambertMaterial({ color: 0x4a4336, emissive: 0x0f0e0b, side: T.DoubleSide });
+        var g = new T.Group(); g.add(new T.Mesh(slabGeo(x0, y0, w, h, 3, 3), slabMat(tex(c)))); return g; // clean engraved cards that turn to face you; the stepped side walls looked rough
+      }
+      function slabMat(t) { return new T.ShaderMaterial({ uniforms: { map: { value: t } }, vertexShader: SLAB_V, fragmentShader: SLAB_F, side: T.DoubleSide }); }
+      // a thing standing at plate x, levelled on the flattened ground
+      // a thing standing at plate x, levelled on the flattened ground, turning its drawn face towards you as you pass
+      function stand(obj, cx, tilt) { var t = new T.Group(), g = new T.Group(); obj.position.set(-cx, gY(cx), 0); t.add(obj); if (tilt) t.rotation.z = slopeA(cx); g.add(t); g.position.set(cx, 0, ZC); BILL.push(g); return g; }
+
+      // ---- the real 3D models: everything the plate tagged gets built properly, lit, with engraved edges ----
+      var EDGE = null, MATS = {};
+      function mat(hex, extra) { var k = hex + (extra ? JSON.stringify(extra) : ''); if (!MATS[k]) MATS[k] = new T.MeshLambertMaterial(Object.assign({ color: hex, flatShading: true }, extra || {})); return MATS[k]; }
+      function edged(geo, hex, op, extra) {
+        if (!EDGE) EDGE = new T.LineBasicMaterial({ color: 0xeee5d0, transparent: true, opacity: .5 });
+        var g = new T.Group(), m = new T.Mesh(geo, mat(hex, extra)); g.add(m);
+        var e = new T.LineSegments(new T.EdgesGeometry(geo, 28), op != null ? new T.LineBasicMaterial({ color: 0xeee5d0, transparent: true, opacity: op }) : EDGE); g.add(e);
+        return g;
+      }
+      function hexOf(c, dflt) { if (!c || c === 'none') return dflt; if (/^#/.test(c)) { var v = parseInt(c.slice(1).length === 3 ? c.slice(1).replace(/./g, '$&$&') : c.slice(1), 16); return v === 0x08090b ? dflt : v; } var m = c.match(/\d+/g); return m ? (+m[0] << 16) + (+m[1] << 8) + (+m[2]) : dflt; }
+      // where a model stands: x along the line, its base height above the ground
+      function place(obj, x, baseY) { obj.position.set(x, Hh(x, baseY), ZC); scene.add(obj); return obj; }
+      // a drawn outline, in plate units, relative to (ox, oy) with y flipped up
+      function outline(el, ox, oy, n) {
+        var base = src.getCTM().inverse().multiply(el.getCTM()), pts = [], tag = el.tagName;
+        if (tag === 'rect') { var x = +el.getAttribute('x'), y = +el.getAttribute('y'), w = +el.getAttribute('width'), h = +el.getAttribute('height'); [[x, y], [x + w, y], [x + w, y + h], [x, y + h]].forEach(function (q) { var p = new DOMPoint(q[0], q[1]).matrixTransform(base); pts.push(new T.Vector2(p.x - ox, oy - p.y)); }); return pts; }
+        var Lt; try { Lt = el.getTotalLength(); } catch (e) { return null; }
+        for (var i = 0; i < n; i++) { var q = el.getPointAtLength(Lt * i / n), p2 = new DOMPoint(q.x, q.y).matrixTransform(base); pts.push(new T.Vector2(p2.x - ox, oy - p2.y)); }
+        return pts;
+      }
+      function extrude(pts, D) { var sh = new T.Shape(pts), g = new T.ExtrudeGeometry(sh, { depth: D, bevelEnabled: false, steps: 1 }); g.translate(0, 0, -D / 2); return g; }
+      var PEOPLE = [];
+      function buildModels() {
+        var base = src.getCTM().inverse();
+        MODELS.forEach(function (m) {
+          var e = m.e, r = m.r, k = m.kind, num = function (a) { return +e.getAttribute(a); };
+          var kids = [].slice.call(e.children).filter(function (c) { return /^(path|rect|ellipse|circle|polygon)$/.test(c.tagName); });
+          if (k === 'pyr') {
+            var cx = num('data-x'), w = num('data-w'), h = num('data-h'), b = num('data-b');
+            var geo = new T.ConeGeometry(w / Math.SQRT2, h, 4, 1); geo.rotateY(Math.PI / 4); geo.translate(0, h / 2, 0);
+            place(edged(geo, 0xb59a6a, .75), cx, b);
+          } else if (k === 'basalt') {
+            var gb = new T.Group(); kids.forEach(function (c, i) { var q = rectOf(c, base.multiply(c.getCTM())); if (!q || q.h < 20) return; var rr = q.w * .58; [0, 1].forEach(function (row) { var hh = q.h * (row ? .8 : 1), cg = new T.CylinderGeometry(rr, rr, hh, 6); cg.translate(q.cx - r.cx, hh / 2, row ? -rr * 1.7 : ((i % 2) * rr * .6)); gb.add(edged(cg, row ? 0x2f2e31 : 0x3c3b3f, .45)); }); });
+            place(gb, r.cx, r.y1);
+          } else if (k === 'land' || k === 'blocks') {
+            var gl = new T.Group(), color = e.getAttribute('data-c'), Dd = num('data-d') || 0;
+            kids.forEach(function (c) {
+              var fill = (c.getAttribute('fill') || '').toLowerCase(); if (fill === 'none' || c.tagName === 'circle') return;
+              var q = rectOf(c, base.multiply(c.getCTM())); if (!q || q.w < 6 || q.h < 4) return;
+              var pts = outline(c, r.cx, r.y1, 48); if (!pts || pts.length < 3) return;
+              var D = Dd || Math.max(24, Math.min(110, q.w * (k === 'land' ? .7 : .5)));
+              var geo = extrude(pts, D);
+              if (k === 'land') { // taper to a crest: the higher up, the narrower
+                var mode = e.getAttribute('data-m'), P = geo.attributes.position, top = q.h, cols = [], cb = new T.Color(hexOf(color, 0x7a7064)), snow = new T.Color(0xf2efe8);
+                for (var i = 0; i < P.count; i++) { var t = Math.max(0, Math.min(1, P.getY(i) / top)), f = mode === 'mound' ? Math.sqrt(Math.max(0, 1 - t * t)) * .9 + .1 : 1 - t * .9; P.setZ(i, P.getZ(i) * f); var cc = cb.clone(); if (e.getAttribute('data-snow') && t > .62) cc.lerp(snow, Math.min(1, (t - .62) * 3)); cols.push(cc.r, cc.g, cc.b); }
+                geo.setAttribute('color', new T.Float32BufferAttribute(cols, 3)); geo.computeVertexNormals();
+                gl.add(edged(geo, 0xffffff, .35, { vertexColors: true }));
+              } else gl.add(edged(geo, hexOf(color, hexOf(fill, 0x5b5448)), .5));
+            });
+            place(gl, r.cx, r.y1);
+          } else if (k === 'boab') {
+            var bx = num('data-x'), bb = num('data-b'), bh = num('data-h'), s3 = bh / 120, gB = new T.Group();
+            var prof = [[0, 0], [30, 0], [42, 16], [44, 42], [38, 72], [26, 98], [15, 116], [10, 121], [0, 121]].map(function (q) { return new T.Vector2(q[0] * s3, q[1] * s3); });
+            gB.add(edged(new T.LatheGeometry(prof, 14), 0x8f7a5e, .35));
+            for (var i2 = 0; i2 < 9; i2++) { var a = i2 / 9 * Math.PI * 2, L2 = (34 + (i2 % 3) * 12) * s3, br = new T.CylinderGeometry(1.4 * s3, 3.2 * s3, L2, 5); br.translate(0, L2 / 2, 0); var bm = edged(br, 0x7a6750, .3); bm.position.set(Math.cos(a) * 6 * s3, 118 * s3, Math.sin(a) * 6 * s3); bm.rotation.set(Math.sin(a) * .9, 0, -Math.cos(a) * .9); gB.add(bm); }
+            place(gB, bx, bb);
+          } else if (k === 'dome') {
+            var dx = num('data-x'), dy = num('data-y'), R = num('data-r'), dg = new T.SphereGeometry(R, 20, 10, 0, Math.PI * 2, 0, Math.PI / 2);
+            var gd = edged(dg, 0xd2cbbd, .4); gd.rotation.x = Math.PI; // hanging under the Moon, as on the plate
+            var door = new T.Mesh(new T.PlaneGeometry(R * .28, R * .34), new T.MeshBasicMaterial({ color: 0xf2a65a, side: T.DoubleSide })); door.position.set(0, -R * .17, R * .99); gd.add(door);
+            place(gd, dx, dy);
+          } else if (k === 'torii') {
+            var tx = num('data-x'), tb = num('data-b'), gt = new T.Group(), red = 0xc8452a;
+            [70, 150].forEach(function (ox) { var cg = new T.CylinderGeometry(3.6, 4.2, 92, 10); cg.translate(ox - 110, 46, 0); gt.add(edged(cg, red, .3)); });
+            var kas = new T.BoxGeometry(136, 6, 12); kas.translate(0, 96, 0); gt.add(edged(kas, 0x1c1a1a, .5));
+            var shim = new T.BoxGeometry(124, 5, 9); shim.translate(0, 90, 0); gt.add(edged(shim, red, .3));
+            var nuki = new T.BoxGeometry(116, 4, 7); nuki.translate(0, 74, 0); gt.add(edged(nuki, red, .3));
+            place(gt, tx + 110, tb);
+          } else if (k === 'columns') {
+            var gc = new T.Group();
+            kids.forEach(function (c) { if (c.tagName !== 'rect') return; var q = rectOf(c, base.multiply(c.getCTM())); if (!q) return; var g2; if (q.h > q.w * 3) { g2 = new T.CylinderGeometry(q.w * .5, q.w * .55, q.h, 12); } else g2 = new T.BoxGeometry(q.w, q.h, 34); g2.translate(q.cx - r.cx, r.y1 - q.cy, 0); gc.add(edged(g2, 0xb49f78, .4)); });
+            place(gc, r.cx, r.y1);
+          } else if (k === 'penguins') {
+            var gp = new T.Group();
+            kids.forEach(function (c) { if (c.tagName !== 'ellipse') return; var ry = +c.getAttribute('ry'), rx = +c.getAttribute('rx'); if (rx < 5) return; var q = rectOf(c, base.multiply(c.getCTM())); if (!q) return;
+              var body = new T.Mesh(new T.SphereGeometry(1, 12, 10), mat(0x16161a)); body.scale.set(rx, ry, rx); body.position.set(q.cx - r.cx, r.y1 - q.cy, 0); gp.add(body);
+              var belly = new T.Mesh(new T.SphereGeometry(1, 12, 10), mat(0xeeeae0)); belly.scale.set(rx * .62, ry * .8, rx * .5); belly.position.set(q.cx - r.cx, r.y1 - q.cy - ry * .05, rx * .55); gp.add(belly);
+              var head = new T.Mesh(new T.SphereGeometry(rx * .7, 10, 8), mat(0x16161a)); head.position.set(q.cx - r.cx, r.y1 - q.cy + ry * 1.05, 0); gp.add(head);
+              var beak = new T.Mesh(new T.ConeGeometry(rx * .18, rx * .5, 6), mat(0xf2a65a)); beak.rotation.x = Math.PI / 2; beak.position.set(q.cx - r.cx, r.y1 - q.cy + ry * 1.05, rx * .75); gp.add(beak);
+            });
+            place(gp, r.cx, r.y1);
+          } else if (k === 'person') {
+            PEOPLE.push([num('data-x'), num('data-y'), num('data-s')]);
+          } else if (k === 'crowd') {
+            kids.forEach(function (c) { if (c.tagName !== 'rect') return; var x = +c.getAttribute('x'), y = +c.getAttribute('y'), w = +c.getAttribute('width'), h = +c.getAttribute('height'); PEOPLE.push([x + w / 2, y + h, h / 18]); });
+          }
+        });
+        // the people: one instanced crowd of little figures, bodies and heads
+        if (PEOPLE.length) {
+          var bodyG = new T.CylinderGeometry(1.5, 1.9, 18, 7); bodyG.translate(0, 9, 0);
+          var headG = new T.SphereGeometry(2.9, 10, 8); headG.translate(0, 21.5, 0);
+          var mb = new T.InstancedMesh(bodyG, mat(0xe2d8c2), PEOPLE.length), mh = new T.InstancedMesh(headG, mat(0xefe7d4), PEOPLE.length), M4 = new T.Matrix4(), rq = rng(3);
+          PEOPLE.forEach(function (q, i) { M4.compose(new T.Vector3(q[0], Hh(q[0], q[1]), ZC + (rq() - .5) * 26), new T.Quaternion(), new T.Vector3(q[2], q[2], q[2])); mb.setMatrixAt(i, M4); mh.setMatrixAt(i, M4); });
+          scene.add(mb); scene.add(mh);
+        }
+      }
+      var HOLD = { tag: false, card: false }, MODELS = [], BILL = [], SPR = [], MOV = [], SPIN = [], ORBS = [], built = false, lightsGrp, moon;
+      function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+      function sprite(c, w, h, add) {
+        var m = new T.SpriteMaterial({ map: tex(c), transparent: true, depthWrite: false, blending: add ? T.AdditiveBlending : T.NormalBlending });
+        var s = new T.Sprite(m); s.scale.set(w, h, 1); return s;
+      }
+      // labels: drawn with the page's own fonts, always turned to face you
+      function textSprite(items, r) {
+        var sc = MOBILE ? 2.2 : 3, pad = 10, w = r.w + pad * 2, h = r.h + pad * 2, c = document.createElement('canvas');
+        c.width = Math.min(4096, Math.ceil(w * sc)); c.height = Math.min(1024, Math.ceil(h * sc));
+        var x = c.getContext('2d'); x.scale(c.width / w, c.height / h); x.textBaseline = 'alphabetic'; x.shadowColor = 'rgba(0,0,0,.9)'; x.shadowBlur = 6;
+        var base = src.getCTM().inverse();
+        items.forEach(function (o) {
+          var ts = o.e.tagName === 'text' ? [o.e] : [].slice.call(o.e.querySelectorAll('text'));
+          ts.forEach(function (t) {
+            var cs = getComputedStyle(t), M = base.multiply(t.getCTM()), p = new DOMPoint(+t.getAttribute('x') || 0, +t.getAttribute('y') || 0).matrixTransform(M);
+            x.font = (cs.fontStyle === 'italic' ? 'italic ' : '') + parseFloat(cs.fontSize) + 'px ' + cs.fontFamily;
+            try { x.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing; } catch (e2) {}
+            x.textAlign = cs.textAnchor === 'middle' ? 'center' : cs.textAnchor === 'end' ? 'right' : 'left';
+            x.globalAlpha = Math.max(.75, +cs.opacity || 1); x.fillStyle = cs.fill === 'none' ? '#eee5d0' : cs.fill;
+            x.fillText(t.textContent, p.x - r.x0 + pad, p.y - r.y0 + pad);
+          });
+        });
+        return { c: c, w: w, h: h };
+      }
+
+      function build(done) {
+        built = true;
+        renderer = new T.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, MOBILE ? 1.5 : 1.75)); renderer.setClearColor(0x020203, 1);
+        fly.insertBefore(renderer.domElement, fly.firstChild);
+        scene = new T.Scene(); scene.fog = new T.Fog(0x020203, FOG0, FOG1);
+        camera = new T.PerspectiveCamera(60, 1, 2, 90000); camera.rotation.order = 'YXZ';
+        resize();
+        var defs = cam0.querySelector('defs'); DEFS = defs ? ser(defs) : '';
+        scene.add(new T.AmbientLight(0xffffff, .42));
+        var sun = new T.DirectionalLight(0xf6dcb0, 1.05); sun.position.set(-.55, .8, .45); scene.add(sun);
+        var rim = new T.DirectionalLight(0x50e3ff, .35); rim.position.set(.3, -.2, 1); scene.add(rim);
+        var r = rng(7), i;
+        // stars all round
+        var N = MOBILE ? 3000 : 6000, pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+        for (i = 0; i < N; i++) {
+          var th = r() * Math.PI * 2, ph = Math.acos(2 * r() - 1), R = 22000 + r() * 8000;
+          pos.set([4000 + R * Math.sin(ph) * Math.cos(th), R * Math.abs(Math.cos(ph)) * (ph < Math.PI / 2 ? 1 : .25) - 400, R * Math.sin(ph) * Math.sin(th)], i * 3);
+          var c = r(), k = .45 + r() * .55; if (c > .94) col.set([.95 * k, .65 * k, .35 * k], i * 3); else if (c > .87) col.set([.31 * k, .89 * k, k], i * 3); else col.set([.93 * k, .9 * k, .82 * k], i * 3);
+        }
+        var sg = new T.BufferGeometry(); sg.setAttribute('position', new T.BufferAttribute(pos, 3)); sg.setAttribute('color', new T.BufferAttribute(col, 3));
+        starMat = new T.PointsMaterial({ size: 2, sizeAttenuation: false, vertexColors: true, transparent: true, opacity: .95, depthWrite: false, fog: false });
+        scene.add(new T.Points(sg, starMat));
+        // speed lines
+        var M2 = MOBILE ? 500 : 1000, sp = new Float32Array(M2 * 6), tail = new Float32Array(M2 * 2);
+        for (i = 0; i < M2; i++) { var X = -600 + r() * 9800, Y = 20 + r() * 1800, Z = -900 + r() * 1800; sp.set([X, Y, Z, X, Y, Z], i * 6); tail[i * 2 + 1] = 1; }
+        var lg = new T.BufferGeometry(); lg.setAttribute('position', new T.BufferAttribute(sp, 3)); lg.setAttribute('tail', new T.BufferAttribute(tail, 1));
+        streakMat = new T.ShaderMaterial({ uniforms: { uV: { value: new T.Vector3() }, uA: { value: 0 } }, transparent: true, depthWrite: false, blending: T.AdditiveBlending,
+          vertexShader: 'attribute float tail; uniform vec3 uV; varying float vT; void main(){ vT=tail; vec3 p=position-uV*tail; gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.0); }',
+          fragmentShader: 'uniform float uA; varying float vT; void main(){ gl_FragColor=vec4(0.95,0.85,0.7,(0.14+uA)*(1.0-vT*0.9)); }' });
+        scene.add(new T.LineSegments(lg, streakMat));
+        // the Earth: a dark engraved plain, contour lines running with you
+        var ec = document.createElement('canvas'); ec.width = ec.height = 512; var ex = ec.getContext('2d'); ex.fillStyle = '#060607'; ex.fillRect(0, 0, 512, 512);
+        ex.strokeStyle = 'rgba(238,229,208,.16)'; ex.lineWidth = 1.2; for (i = 0; i < 16; i++) { ex.beginPath(); for (var xx = 0; xx <= 512; xx += 8) ex.lineTo(xx, i * 32 + 16 + Math.sin(xx / 512 * Math.PI * 2 * (1 + i % 3) + i) * 5); ex.stroke(); }
+        ex.fillStyle = 'rgba(242,166,90,.5)'; for (i = 0; i < 40; i++) { ex.beginPath(); ex.arc(r() * 512, r() * 512, .8 + r() * 1.4, 0, 7); ex.fill(); }
+        var et = tex(ec); et.wrapS = et.wrapT = T.RepeatWrapping; et.repeat.set(36, 22);
+        var earth = new T.Mesh(new T.PlaneGeometry(26000, 16000), new T.MeshBasicMaterial({ map: et })); earth.rotation.x = -Math.PI / 2; earth.position.set(4150, -1, 0); scene.add(earth);
+        // the thin blue line: a lit seam the length of the flight
+        var bl = new T.Mesh(new T.BoxGeometry(11200, 2.4, 3.2), new T.MeshBasicMaterial({ color: 0x7befff })); bl.position.set(4150, 1.4, ZLINE); scene.add(bl);
+        var gc = document.createElement('canvas'); gc.width = 4; gc.height = 128; var gx = gc.getContext('2d'), gr = gx.createLinearGradient(0, 0, 0, 128);
+        gr.addColorStop(0, 'rgba(80,227,255,0)'); gr.addColorStop(.5, 'rgba(120,235,255,.9)'); gr.addColorStop(1, 'rgba(80,227,255,0)'); gx.fillStyle = gr; gx.fillRect(0, 0, 4, 128);
+        var glow = new T.Mesh(new T.PlaneGeometry(11200, 90), new T.MeshBasicMaterial({ map: tex(gc), transparent: true, opacity: .5, blending: T.AdditiveBlending, depthWrite: false }));
+        glow.rotation.x = -Math.PI / 2; glow.position.set(4150, 1.2, ZLINE); scene.add(glow);
+        // the Moon, a real sphere, hanging over the end of the flight
+        var mc = document.createElement('canvas'); mc.width = 2048; mc.height = 1024; var mx = mc.getContext('2d');
+        mx.fillStyle = '#26241f'; mx.fillRect(0, 0, 2048, 1024);
+        mx.strokeStyle = 'rgba(238,229,208,.22)'; mx.lineWidth = 1; for (i = 8; i < 1024; i += 14) { mx.beginPath(); mx.moveTo(0, i); mx.lineTo(2048, i); mx.stroke(); }
+        for (i = 0; i < 260; i++) { var crx = r() * 2048, cry = 60 + r() * 900, crr = 3 + Math.pow(r(), 3) * 60; mx.fillStyle = 'rgba(10,10,9,.55)'; mx.beginPath(); mx.ellipse(crx, cry, crr, crr * .62, 0, 0, 7); mx.fill(); mx.strokeStyle = 'rgba(238,229,208,.45)'; mx.lineWidth = 1.2; mx.stroke(); }
+        moon = new T.Mesh(new T.SphereGeometry(MR, 96, 64), new T.MeshLambertMaterial({ map: tex(mc), emissive: 0x16140f, fog: false }));
+        moon.position.set(MX, Hh(MX, MY), 0); moon.rotation.x = .35; scene.add(moon);
+
+        // the plate, taken apart
+        var L = collect(), K0 = classify(L), jobs = [], sc0 = MOBILE ? 1.3 : 2, cap = MOBILE ? 640 : 1100;
+        // floor: everything below the ground, laid flat (labels become signs)
+        var floorBody = K0.floor.map(function (o) { return leafStr(o.e); }).join('');
+        var s3 = MOBILE ? .7 : 1.05, tw = Math.floor(2048 / s3);
+        for (var fy = 1600; fy < 2650; fy += tw) for (var fx = -400; fx < 8700; fx += tw) (function (x0, y0) {
+          var w = Math.min(tw, 8700 - x0), h = Math.min(tw, 2650 - y0);
+          jobs.push({ cx: x0 + w / 2, run: function () { return rasterStr(x0, y0, w, h, Math.round(w * s3), Math.round(h * s3), floorBody, NOTEXT).then(function (c) {
+            if (!c) return; var g = new T.PlaneGeometry(w, h, Math.max(2, Math.round(w / 60)), 2), m = new T.Mesh(g, new T.ShaderMaterial({ uniforms: { map: { value: tex(c) } }, vertexShader: FLOOR_V, fragmentShader: FLOOR_F, transparent: true, depthWrite: false, side: T.DoubleSide }));
+            m.position.set(x0 + w / 2, y0 + h / 2, 0); m.scale.y = -1; m.frustumCulled = false; m.renderOrder = 1; scene.add(m);
+          }); } });
+        })(fx, fy);
+        // labels: from the sky, from the floor, and from inside the things
+        var texts = K0.text.slice();
+        K0.floor.concat(K0.solid).forEach(function (o) { if (o.e.tagName === 'g') [].forEach.call(o.e.querySelectorAll('text'), function (t) { var rr = rectOf(t, src.getCTM().inverse().multiply(t.getCTM())); if (rr) texts.push({ e: t, r: rr }); }); });
+        cluster(texts, 8, 900, function (o) { return o.r.cy >= gY(o.r.cx) - 3 ? 1 : 0; }).forEach(function (cl) {
+          var floor = cl.k === 1, tsx = textSprite(cl.items, cl.r), k = floor ? .62 : .6, s = sprite(tsx.c, tsx.w * k, tsx.h * k);
+          var cx = cl.r.cx, hgt = floor ? tsx.h * k / 2 + 3 : Hh(cx, cl.r.cy), z = floor ? cl.r.cy - gY(cx) + 20 : ZC - 260;
+          s.position.set(cx, hgt, z); s.renderOrder = 8; scene.add(s); SPR.push({ s: s, floor: floor });
+        });
+        // the solid things
+        var parts = cluster(K0.solid, 4, 700, function (o) { return o.r.y1 >= gY(o.r.cx) - 16 ? 1 : 0; });
+        window.__flyParts = parts.map(function (cl) { return { r: [Math.round(cl.r.x0), Math.round(cl.r.y0), Math.round(cl.r.w), Math.round(cl.r.h)], k: cl.k, t: cl.items.slice(0, 5).map(function (o) { return o.e.tagName + ':' + (o.e.getAttribute('fill') || '') + ':' + (o.e.getAttribute('stroke') || '') + ':' + (o.e.getAttribute('d') || '').slice(0, 30); }) }; });
+        parts.forEach(function (cl) {
+          var rr = cl.r, ground = cl.k === 1, body = cl.items.sort(function (a, b) { return L.indexOf(a) - L.indexOf(b); }).map(function (o) { return leafStr(o.e); }).join('');
+          var pad = 4, x0 = rr.x0 - pad, y0 = rr.y0 - pad, w = rr.w + pad * 2, h = rr.h + pad * 2, sc = Math.min(sc0, cap / Math.max(w, h));
+          // tiny things, long thin things and pure line drawings (aurora, lasers, wind, rays) read best as flat sprites
+          var lineOnly = cl.items.every(function (o) { var es = [o.e].concat([].slice.call(o.e.querySelectorAll('*'))); return es.every(function (q) { if (!/^(path|rect|circle|ellipse|polygon|polyline)$/.test(q.tagName)) return true; var f = getComputedStyle(q).fill; return f === 'none' || (q.getAttribute('fill') || '') === 'none'; }); });
+          var small = Math.max(rr.w, rr.h) < 36 || lineOnly || Math.max(rr.w, rr.h) / Math.max(1, Math.min(rr.w, rr.h)) > 6;
+          jobs.push({ cx: rr.cx, run: function () { return rasterStr(x0, y0, w, h, Math.max(2, Math.round(w * sc)), Math.max(2, Math.round(h * sc)), body, NOTEXT).then(function (c) {
+            if (!c) return;
+            if (small) { var s = sprite(c, w, h, lineOnly); s.position.copy(W3(rr.cx, rr.cy, ZC)); scene.add(s); SPR.push({ s: s, keep: true, cap: lineOnly ? .5 : 1 }); return; }
+            var D = ground ? Math.max(10, Math.min(60, Math.min(rr.w, rr.h) * .45)) : Math.max(6, Math.min(36, Math.min(rr.w, rr.h) * .35));
+            if (Math.max(rr.w, rr.h) / Math.max(1, Math.min(rr.w, rr.h)) > 7) D = 3;
+            var m = solid(c, x0, y0, w, h, D);
+            scene.add(stand(m, rr.cx, ground));
+          }); } });
+        });
+        // movers: the cast that travels (balloons, the space station, the comet-moth, the barque, the rocket, the Lantern...)
+        var hid = document.createElementNS(NS, 'svg'); hid.setAttribute('width', 0); hid.setAttribute('height', 0); hid.style.position = 'absolute'; document.body.appendChild(hid);
+        function trackOf(o) {
+          var a = o.mot, d = a.getAttribute('path'), p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); hid.appendChild(p);
+          var Lt = p.getTotalLength(), n = 240, pts = []; for (var q = 0; q <= n; q++) { var pt = p.getPointAtLength(Lt * q / n); pts.push([pt.x, pt.y]); }
+          var dur = parseFloat(a.getAttribute('dur')) || 30, bg = parseFloat(a.getAttribute('begin')) || 0;
+          return { pts: pts, dur: dur, begin: bg, rot: a.getAttribute('rotate') === 'auto' };
+        }
+        K0.mover.forEach(function (o) {
+          var tr = trackOf(o), rr = o.r, isBalloon = o.e.tagName === 'g' && /^M 0 -46 C 28/.test((o.e.querySelector('path') || {}).getAttribute ? o.e.querySelector('path').getAttribute('d') : '');
+          var grp = new T.Group(), inner = new T.Group(); grp.add(inner); scene.add(grp); MOV.push({ g: grp, r: inner, t: tr });
+          if (isBalloon) { balloon(grp); return; }
+          BILL.push(grp);
+          var body = leafStr(o.e, true), pad = 4, x0 = rr.x0 - pad, y0 = rr.y0 - pad, w = rr.w + pad * 2, h = rr.h + pad * 2, sc = Math.min(sc0, cap / Math.max(w, h));
+          jobs.push({ cx: tr.pts[0][0], run: function () { return rasterStr(x0, y0, w, h, Math.max(2, Math.round(w * sc)), Math.max(2, Math.round(h * sc)), body, '').then(function (c) {
+            if (!c) return; inner.add(solid(c, x0, y0, w, h, Math.max(6, Math.min(30, Math.min(rr.w, rr.h) * .4))));
+          }); } });
+        });
+        buildModels();
+        // UFOs: a saucer that spins, lights that chase, a beam
+        K0.ufo.forEach(function (o) {
+          var g = new T.Group(), prof = [[0, -7], [16, -7.5], [30, -3.5], [37, 0], [30, 3], [15, 6], [0, 6.5]].map(function (p) { return new T.Vector2(p[0], p[1]); });
+          var sgeo = new T.LatheGeometry(prof, 40), sm = new T.Mesh(sgeo, new T.MeshLambertMaterial({ color: 0x8c877a, emissive: 0x15140f, flatShading: true })); g.add(sm);
+          g.add(new T.LineSegments(new T.EdgesGeometry(sgeo, 20), new T.LineBasicMaterial({ color: 0xeee5d0, transparent: true, opacity: .55 })));
+          var dome = new T.Mesh(new T.SphereGeometry(14, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), new T.MeshLambertMaterial({ color: 0x50e3ff, emissive: 0x0e3a44, transparent: true, opacity: .75 })); dome.position.y = 5; g.add(dome);
+          var lights = []; for (var q = 0; q < 12; q++) { var a = q / 12 * Math.PI * 2, b = new T.Mesh(new T.SphereGeometry(2.2, 8, 6), new T.MeshBasicMaterial({ color: 0xf2a65a })); b.position.set(Math.cos(a) * 31, 0, Math.sin(a) * 31); g.add(b); lights.push(b); }
+          var beam = new T.Mesh(new T.ConeGeometry(42, 150, 32, 1, true), new T.MeshBasicMaterial({ color: 0x50e3ff, transparent: true, opacity: .1, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide })); beam.position.y = -82; g.add(beam);
+          g.scale.setScalar(1.25); var c0 = W3(o.r.cx, o.r.cy - 50, ZC); g.position.copy(c0); scene.add(g);
+          SPIN.push({ ufo: g, base: c0.clone(), lights: lights, beam: beam });
+        });
+        // the eclipses: a black sphere in a corona that always faces you
+        var hc = document.createElement('canvas'); hc.width = hc.height = 128; var hx = hc.getContext('2d'), hg = hx.createRadialGradient(64, 64, 10, 64, 64, 64);
+        hg.addColorStop(0, 'rgba(255,236,200,.9)'); hg.addColorStop(.3, 'rgba(242,166,90,.35)'); hg.addColorStop(1, 'rgba(242,166,90,0)'); hx.fillStyle = hg; hx.fillRect(0, 0, 128, 128);
+        K0.sun.forEach(function (o) {
+          var R = +o.e.getAttribute('r'), c0 = W3(o.r.cx, o.r.cy, ZC), g = new T.Group(); g.position.copy(c0); scene.add(g);
+          g.add(new T.Mesh(new T.SphereGeometry(R, 32, 20), new T.MeshBasicMaterial({ color: 0x000000 })));
+          var ring = new T.Mesh(new T.TorusGeometry(R * 1.02, 1.2, 8, 64), new T.MeshBasicMaterial({ color: 0xffe9c4 })); g.add(ring);
+          var halo = sprite(hc, R * 7, R * 7, true); g.add(halo);
+          var rr = o.rays.r, pad = 4, x0 = rr.x0 - pad, y0 = rr.y0 - pad, w = rr.w + pad * 2, h = rr.h + pad * 2, body = leafStr(o.rays.e);
+          SPIN.push({ sun: g, ring: ring });
+          jobs.push({ cx: rr.cx, run: function () { return rasterStr(x0, y0, w, h, Math.round(w * 2), Math.round(h * 2), body, '').then(function (c) {
+            if (!c) return; var s = sprite(c, w, h, true); s.position.set(rr.cx - o.r.cx, -(rr.cy - o.r.cy), 0); s.material.opacity = .95; g.add(s); g.userData.corona = s;
+          }); } });
+        });
+        // flights: the double rails rising from each gathering, lit
+        function track3(o, step) {
+          var e = o.e, n, pts = [];
+          if (e.tagName === 'line') { var a = new DOMPoint(+e.getAttribute('x1'), +e.getAttribute('y1')).matrixTransform(o.M), b = new DOMPoint(+e.getAttribute('x2'), +e.getAttribute('y2')).matrixTransform(o.M); n = Math.max(2, Math.round(Math.hypot(b.x - a.x, b.y - a.y) / step)); for (var q = 0; q <= n; q++) pts.push(W3(a.x + (b.x - a.x) * q / n, a.y + (b.y - a.y) * q / n, ZC)); return pts; }
+          var Lt = e.getTotalLength(); n = Math.max(8, Math.round(Lt / step));
+          for (q = 0; q <= n; q++) { var p = e.getPointAtLength(Lt * q / n), w2 = new DOMPoint(p.x, p.y).matrixTransform(o.M); pts.push(W3(w2.x, w2.y, ZC)); }
+          return pts;
+        }
+        K0.flight.forEach(function (o) {
+          var pts = track3(o, 20), color = new T.Color(getComputedStyle(o.e).stroke), curve = new T.CatmullRomCurve3(pts);
+          scene.add(new T.Mesh(new T.TubeGeometry(curve, pts.length * 2, 4, 10), new T.MeshBasicMaterial({ color: color, transparent: true, opacity: .12, blending: T.AdditiveBlending, depthWrite: false })));
+          [-5, 5].forEach(function (dz) { var c2 = new T.CatmullRomCurve3(pts.map(function (p) { return new T.Vector3(p.x, p.y, p.z + dz); })); scene.add(new T.Mesh(new T.TubeGeometry(c2, pts.length * 2, 1, 6), new T.MeshBasicMaterial({ color: color }))); });
+        });
+        // orbits, dotted trails and the timewave: lines through space
+        K0.curve.forEach(function (o) {
+          var cs = getComputedStyle(o.e), pts = track3(o, 10), g = new T.BufferGeometry().setFromPoints(pts), dash = cs.strokeDasharray && cs.strokeDasharray !== 'none';
+          var m = dash ? new T.LineDashedMaterial({ color: new T.Color(cs.stroke), dashSize: 3, gapSize: 9, transparent: true, opacity: Math.min(1, (+cs.opacity || 1) * 1.2) }) : new T.LineBasicMaterial({ color: new T.Color(cs.stroke), transparent: true, opacity: Math.min(1, (+cs.opacity || 1) * 1.1) });
+          var ln = new T.Line(g, m); if (dash) ln.computeLineDistances(); scene.add(ln);
+        });
+        // the altitude bands: layers of sky you climb through
+        var bc = document.createElement('canvas'); bc.width = bc.height = 128; var bx = bc.getContext('2d'); bx.fillStyle = 'rgba(238,229,208,.9)';
+        for (i = 0; i < 128; i += 16) for (var j = 0; j < 128; j += 16) bx.fillRect(i, j, 1.6, 1.6);
+        bx.fillRect(0, 0, 128, 1);
+        var btex = tex(bc); btex.wrapS = btex.wrapT = T.RepeatWrapping;
+        K0.band.forEach(function (o) {
+          var y = new DOMPoint(0, +o.e.getAttribute('y1')).matrixTransform(o.M).y, segs = 60, geo = new T.PlaneGeometry(9600, 1800, segs, 1); geo.rotateX(-Math.PI / 2);
+          var p = geo.attributes.position; for (var q = 0; q < p.count; q++) { var xw = p.getX(q) + 4150; p.setX(q, xw); p.setY(q, Hh(xw, y)); }
+          var t2 = btex.clone(); t2.needsUpdate = true; t2.repeat.set(9600 / 90, 1800 / 90);
+          var m = new T.Mesh(geo, new T.MeshBasicMaterial({ map: t2, transparent: true, opacity: .16, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide })); m.renderOrder = 7; scene.add(m);
+        });
+
+        // build in flight order, start once the first stretch is ready
+        jobs.sort(function (a, b) { return a.cx - b.cx; });
+        var n0 = 0, total = jobs.length, need = jobs.filter(function (j) { return j.cx < 1700; }).length || 1, started = false;
+        (function next() {
+          if (!jobs.length) { if (done && !started) { started = true; done(); } return; }
+          var batch = jobs.splice(0, 3);
+          Promise.all(batch.map(function (j) { return j.run(); })).then(function () {
+            n0 += batch.length; loadBar.style.transform = 'scaleX(' + Math.min(1, n0 / need).toFixed(3) + ')';
+            if (n0 >= need && !started) { started = true; if (done) done(); }
+            setTimeout(next, started ? 16 : 0);
+          });
+        })();
+        (window.__site && window.__site.stops || []).forEach(function (s) {
+          var up = Hh(s.x, s.y) > 60, b = document.createElement('button'); b.type = 'button'; b.className = 'fl-tag' + (up ? ' up' : '');
+          b.innerHTML = '<i></i><span>' + s.code + ' · ' + s.name + '</span>'; b.setAttribute('aria-label', s.name + ': open its mission card');
+          b.addEventListener('click', function (e) { e.stopPropagation(); if (window.__fly && window.__fly.moved()) return; HOLD.card = true; window.__site.open(s.card); });
+          // hovering a stop slows the autopilot to a stop, so it is easy to click
+          b.addEventListener('pointerenter', function () { HOLD.tag = true; }); b.addEventListener('pointerleave', function () { HOLD.tag = false; });
+          TAGS.appendChild(b); ORBS.push({ el: b, card: s.card, v: W3(s.x, s.y, ZC).add(new T.Vector3(0, up ? 24 : 34, 0)) });
+        });
+      }
+      function balloon(g) {
+        var prof = [[0, -20], [3, -19], [7, -14], [16, -2], [24, 12], [27, 26], [24, 38], [15, 45], [0, 47]].map(function (p) { return new T.Vector2(p[0] * 1.15, p[1] * 1.15); });
+        var bc = document.createElement('canvas'); bc.width = 256; bc.height = 64; var x = bc.getContext('2d'); x.fillStyle = '#d9cfb8'; x.fillRect(0, 0, 256, 64);
+        for (var i = 0; i < 256; i += 32) { x.fillStyle = 'rgba(226,80,42,.85)'; x.fillRect(i, 0, 14, 64); }
+        var env = new T.Mesh(new T.LatheGeometry(prof, 32), new T.MeshLambertMaterial({ map: tex(bc), emissive: 0x1a1208 })); g.add(env);
+        var basket = new T.Mesh(new T.BoxGeometry(12, 9, 12), new T.MeshLambertMaterial({ color: 0x6b5236 })); basket.position.y = -48; g.add(basket);
+        var rp = []; [[-5, -5], [5, -5], [-5, 5], [5, 5]].forEach(function (c) { rp.push(new T.Vector3(c[0], -44, c[1]), new T.Vector3(c[0] * 1.6, -22, c[1] * 1.6)); });
+        g.add(new T.LineSegments(new T.BufferGeometry().setFromPoints(rp), new T.LineBasicMaterial({ color: 0xeee5d0 })));
+        var fl = new T.Mesh(new T.SphereGeometry(3, 8, 6), new T.MeshBasicMaterial({ color: 0xf2a65a })); fl.position.y = -30; g.add(fl);
+        g.userData.balloon = true;
+      }
+      function resize() { if (!renderer) return; var w = fly.clientWidth, h = fly.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+      addEventListener('resize', resize);
+      function animateCast(now) {
+        var t = now / 1000, i, j, cp = camera.position;
+        for (i = 0; i < BILL.length; i++) { var bg = BILL[i], dx = cp.x - bg.position.x, dz = cp.z - bg.position.z, a = Math.atan2(dx, dz); bg.rotation.y = Math.max(-1.3, Math.min(1.3, a)); }
+        for (i = 0; i < MOV.length; i++) {
+          var m = MOV[i], tr = m.t, f = (((t + 3000 - tr.begin) / tr.dur) % 1 + 1) % 1, n = tr.pts.length - 1, k = Math.min(n - 1, Math.floor(f * n)), u = f * n - k;
+          var a = tr.pts[k], b = tr.pts[k + 1], x = a[0] + (b[0] - a[0]) * u, y = a[1] + (b[1] - a[1]) * u;
+          m.g.position.set(x, Hh(x, y), ZC);
+          if (m.g.userData.balloon) { m.g.rotation.y = t * .2; continue; }
+          if (tr.rot) m.r.rotation.z = Math.atan2(Hh(b[0], b[1]) - Hh(a[0], a[1]), b[0] - a[0]);
+        }
+        for (i = 0; i < SPIN.length; i++) {
+          var s = SPIN[i];
+          if (s.ufo) { s.ufo.rotation.y = t * 1.3; s.ufo.position.y = s.base.y + Math.sin(t * .9) * 8; s.ufo.position.x = s.base.x + Math.sin(t * .45) * 10; for (j = 0; j < s.lights.length; j++) s.lights[j].visible = ((j + Math.floor(t * 8)) % 4) !== 0; s.beam.material.opacity = .06 + .06 * (.5 + .5 * Math.sin(t * 1.1)); }
+          if (s.sun && s.sun.userData.corona) s.sun.userData.corona.material.rotation = Math.sin(t * .15 + i) * .25;
+        }
+      }
+      // ---- the flight ----
+      var KF = (window.__site && window.__site.K || []).slice(1, 10);
+      var CAPS = KF.map(function (k, i) { var a = document.querySelector('.fc[data-step="' + (i + 1) + '"]'); return a ? { e: (a.querySelector('.eyebrow') || {}).textContent || '', h: (a.querySelector('h2') || {}).textContent || '', p: (a.querySelector('p') || {}).textContent || '' } : { e: '', h: '', p: '' }; });
+      var X0 = -300, X1 = 8300;
+      // where to look at each stop: the station on the wall, or the thing on the ceiling
+      function stopFocus(k) { return W3(k.cx, k.cy, ZC); }
+      // the autopilot's line: over the blue line, climbing gently towards the ceiling as the story leaves the ground
+      function altOf(k) { var i = KF.indexOf(k); if (i === 0) return 38; if (i === 1) return 130; return Math.max(i === 2 ? 220 : 380, Math.min(1500, Hh(k.cx, k.cy) + 110)); }
+      function ss(a, b, v) { var k = Math.max(0, Math.min(1, (v - a) / (b - a))); return k * k * (3 - 2 * k); }
+      function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+      var AUTO_SPD = 85, CRUISE = 140, RAIL = null, RSTEP = 20;
+      function railY(x) {
+        if (!RAIL) { // the story's altitudes, blurred into one long smooth swell
+          var n = Math.ceil((X1 - X0 + 800) / RSTEP) + 1, a = [], i, k, pass; for (i = 0; i < n; i++) a.push(autoAt(X0 + i * RSTEP).y);
+          for (pass = 0; pass < 5; pass++) { var b = a.slice(); for (i = 0; i < n; i++) { var sum = 0, c = 0; for (k = -10; k <= 10; k++) { var j = Math.max(0, Math.min(n - 1, i + k)); sum += b[j]; c++; } a[i] = sum / c; } }
+          RAIL = a;
+        }
+        var u = (x - X0) / RSTEP, i0 = Math.max(0, Math.min(RAIL.length - 2, Math.floor(u))), f = Math.max(0, Math.min(1, u - i0));
+        return RAIL[i0] + (RAIL[i0 + 1] - RAIL[i0]) * f;
+      }
+      function autoAt(x) {
+        var a = KF[0], b = KF[KF.length - 1], i;
+        for (i = 0; i < KF.length - 1; i++) if (x >= KF[i].cx && x <= KF[i + 1].cx) { a = KF[i]; b = KF[i + 1]; break; }
+        if (x > KF[KF.length - 1].cx) { a = b = KF[KF.length - 1]; }
+        var t = b.cx > a.cx ? (x - a.cx) / (b.cx - a.cx) : 0; t = t * t * (3 - 2 * t);
+        var ha = altOf(a), hb = altOf(b);
+        return { y: ha + (hb - ha) * t, z: CAMZ, a: a, b: b, t: t };
+      }
+      var ship = { p: null, yaw: 0, pitch: 0, roll: 0, spd: 85, vy: 0, vz: 0 }, head = { yaw: 0, pitch: 0, ty: 0, tp: 0 }, fov = 74, fovT = 74;
+      var lookT = -1e9, wasPaused = false, tiltS = 0, auto = true, keys = {}, pad = { x: 0, y: 0, on: false }, raf = 0, on = false, lastT = 0, ready = false, capI = -1, idle = 0;
+      var eyeEl = fly.querySelector('.fl-cap .eyebrow'), hEl = fly.querySelector('.fl-cap h2'), pEl = fly.querySelector('.fl-cap p'), bar = fly.querySelector('.fl-bar i'), keysEl = fly.querySelector('.fl-keys');
+      var spdEl = fly.querySelector('.fl-ins .spd'), hdgEl = fly.querySelector('.fl-ins .hdg'), altEl = fly.querySelector('.fl-ins .alt'), altK = fly.querySelector('.fl-ins .k'), hz = fly.querySelector('.fl-hz');
+      function lerpAng(a, b, k) { var d = b - a; while (d > Math.PI) d -= 2 * Math.PI; while (d < -Math.PI) d += 2 * Math.PI; return a + d * k; }
+      function frame(now) {
+        raf = 0; if (!on || !ready) return;
+        var dt = Math.min(.05, (now - (lastT || now)) / 1000); lastT = now;
+        // looking around (drag, zoom, pinch) pauses the flight; it carries on 4 seconds after you stop
+        var looking = dragging || pinch || (now - lookT < 4000);
+        // holds clear themselves: a card counts only while it is actually open, a label only while the pointer is really on it
+        var sh = document.getElementById('sheet'); HOLD.card = !!(sh && !sh.hidden);
+        HOLD.tag = !!TAGS.querySelector('.fl-tag:hover');
+        if (!ship.p) ship.p = new T.Vector3(X0, railY(X0), CAMZ);
+        var p = ship.p;
+        // controls
+        var turn = (keys.ArrowLeft || keys.a ? 1 : 0) - (keys.ArrowRight || keys.d ? 1 : 0) + (pad.on ? -pad.x : 0);
+        var climb = (keys.ArrowUp || keys.w ? 1 : 0) - (keys.ArrowDown || keys.s ? 1 : 0) + (pad.on ? -pad.y : 0);
+        var thr = (keys.Shift ? 1 : 0) - (keys.Control ? 1 : 0);
+        if (turn || climb) { if (auto) setAuto(false); idle = 0; } else idle += dt;
+        if (thr) CRUISE = clamp(CRUISE + thr * 200 * dt, 20, 900);
+        // flying yourself: you only move while you steer; let go and you ease to a hover, so you can look around and click things
+        if (!auto) { var go = turn || climb || pad.on || thr > 0; ship.spd += ((go ? CRUISE : 0) - ship.spd) * Math.min(1, dt * (go ? 1.5 : 2.2)); }
+        if (auto) {
+          // the autopilot rides a smoothed rail over the line: steady speed, gentle climbs, no lurching
+          var held = HOLD.tag || HOLD.card || looking; ship.spd += ((held ? 0 : AUTO_SPD) - ship.spd) * Math.min(1, dt * (held ? 3 : .5));
+          var ry = railY(p.x), ry2 = railY(p.x + 160);
+          p.x += ship.spd * dt; p.y += (ry - p.y) * Math.min(1, dt * 1.1); p.z += (CAMZ - p.z) * Math.min(1, dt * .7);
+          ship.yaw = lerpAng(ship.yaw, 0, Math.min(1, dt * .9));
+          ship.pitch += (Math.atan2(ry2 - ry, 160) * .6 - ship.pitch) * Math.min(1, dt * .9);
+          ship.roll += (0 - ship.roll) * Math.min(1, dt * 2); ship.vy = 0; ship.yr = 0;
+          if (p.x > X1) { p.set(X0, railY(X0), CAMZ); }
+          var fwd = new T.Vector3(1, 0, 0);
+        } else {
+          // easy flying: left and right turn you, up and down climb or dive, the nose stays level
+          ship.yr = (ship.yr || 0) + (turn * .75 - (ship.yr || 0)) * Math.min(1, dt * 4); ship.yaw += ship.yr * dt;
+          ship.vy = (ship.vy || 0) + (climb * 260 - (ship.vy || 0)) * Math.min(1, dt * 3);
+          ship.pitch += (climb * .18 - ship.pitch) * Math.min(1, dt * 2);
+          ship.roll += (-ship.yr * .3 - ship.roll) * Math.min(1, dt * 3);
+          var fwd = new T.Vector3(Math.cos(ship.yaw), 0, -Math.sin(ship.yaw));
+          p.addScaledVector(fwd, ship.spd * dt); p.y += ship.vy * dt;
+        }
+        // stay inside the channel, softly
+        if (p.y < 22) { p.y = 22; if (ship.pitch < 0) ship.pitch *= .5; }
+        if (p.y > 7000) { p.y = 7000; if (ship.pitch > 0) ship.pitch *= .5; }
+        if (p.z < -2400) p.z = -2400; if (p.z > 2400) p.z = 2400;
+        if (moon) { var mv = p.clone().sub(moon.position), md = mv.length(); if (md < MR + 30) { p.copy(moon.position).addScaledVector(mv.normalize(), MR + 30); } }
+        if (p.x < -1200) p.x = -1200; if (p.x > 9400) p.x = 9400;
+        // the camera rides the ship; the head looks around on top, and drifts back when you let go
+        // the view only drifts back to straight ahead once you've stopped looking around and the flight has picked up again
+        if (!dragging && !looking && !HOLD.tag && !HOLD.card) { head.ty *= Math.pow(.5, dt); head.tp *= Math.pow(.5, dt); }
+        var pausedNow = auto && (looking || HOLD.tag || HOLD.card); if (pausedNow !== wasPaused) { wasPaused = pausedNow; autoB.innerHTML = pausedNow ? '<span class="lg">Paused \u00b7 tap to go</span><span class="sm">Paused</span>' : '<span class="lg">Autopilot on</span><span class="sm">Auto on</span>'; }
+        // on autopilot, glance at what the story is about
+        var ap2 = autoAt(p.x), gaze = 0, gazeP = 0;
+        // the autopilot looks straight down the line; it only tips its gaze gently up or down towards what's ahead, blended smoothly between stops
+        if (auto) { var fa = stopFocus(ap2.a), fb = stopFocus(ap2.b), fy = fa.y + (fb.y - fa.y) * ss(0, 1, ap2.t), ahead = Math.max(400, Math.abs(fb.x - p.x)); gazeP = clamp((Math.atan2(fy - p.y, ahead) - ship.pitch - tiltS) * .18, -.12, .15); }
+        var hk = dragging ? 3 : 1.1; head.yaw += (head.ty + gaze - head.yaw) * Math.min(1, dt * hk); head.pitch += (head.tp + gazeP - head.pitch) * Math.min(1, dt * hk);
+        camera.position.copy(p);
+        var tilt = -.3 * Math.max(0, Math.min(1, (1100 - p.y) / 700)) * Math.max(.15, Math.min(1, (p.y - 20) / 260)); tiltS += (tilt - tiltS) * Math.min(1, dt * 1.5);
+        camera.rotation.set(ship.pitch + head.pitch + tiltS, ship.yaw - Math.PI / 2 + head.yaw, ship.roll);
+        animateCast(now);
+        for (var si = 0; si < SPR.length; si++) { var sd = SPR[si].s.position.distanceTo(p); SPR[si].s.material.opacity = Math.max(0, Math.min(SPR[si].cap || 1, (3400 - sd) / 1200, SPR[si].keep ? (sd - 120) / 260 : (sd - 70) / 220)); }
+        fov += (fovT - fov) * Math.min(1, dt * 5); camera.fov = Math.min(100, fov + Math.min(8, ship.spd / 90)); camera.updateProjectionMatrix();
+        streakMat.uniforms.uV.value.copy(fwd).multiplyScalar(ship.spd * .09); streakMat.uniforms.uA.value = Math.min(.7, ship.spd / 900);
+        renderer.render(scene, camera);
+        // labels
+        var w = fly.clientWidth, h = fly.clientHeight, tmp = new T.Vector3();
+        for (var i = 0; i < ORBS.length; i++) {
+          var o = ORBS[i]; tmp.copy(o.v); var d = tmp.distanceTo(p); tmp.project(camera);
+          if (!(tmp.z < 1 && tmp.x > -1 && tmp.x < .95 && tmp.y > -1 && tmp.y < 1 && d < 1700)) { o.el.style.visibility = 'hidden'; continue; }
+          o.el.style.visibility = ''; o.el.style.opacity = Math.max(0, Math.min(1, (1700 - d) / 600)).toFixed(2);
+          o.el.style.transform = 'translate(' + ((tmp.x + 1) / 2 * w - 11).toFixed(1) + 'px,' + ((1 - tmp.y) / 2 * h - 11).toFixed(1) + 'px)';
+        }
+        // instruments
+        var ci = 0, bd = 1e9; for (i = 0; i < KF.length; i++) { var dd = Math.abs(KF[i].cx - p.x); if (dd < bd) { bd = dd; ci = i; } }
+        if (ci !== capI) { capI = ci; var cp = CAPS[ci] || {}; eyeEl.textContent = cp.e; hEl.textContent = cp.h; pEl.textContent = cp.p; altK.textContent = KF[ci].k || 'Altitude'; altEl.textContent = (KF[ci].v || '') + (KF[ci].u ? ' ' + KF[ci].u : ''); }
+        spdEl.textContent = Math.round(ship.spd * 12) + ' kn';
+        var hd = Math.round((90 - ship.yaw * 180 / Math.PI) % 360); hdgEl.textContent = ('00' + ((hd + 360) % 360)).slice(-3);
+        hz.setAttribute('transform', 'rotate(' + (-ship.roll * 57).toFixed(1) + ') translate(0 ' + (ship.pitch * 40).toFixed(1) + ')');
+        bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, (p.x - X0) / (X1 - X0))).toFixed(4) + ')';
+        raf = requestAnimationFrame(frame);
+      }
+      function kick() { if (!raf && on && ready) { lastT = 0; raf = requestAnimationFrame(frame); } }
+      function hideKeys() { keysEl.style.opacity = 0; }
+      // keyboard
+      var KMAP = { ArrowLeft: 1, ArrowRight: 1, ArrowUp: 1, ArrowDown: 1, a: 1, d: 1, w: 1, s: 1, Shift: 1, Control: 1 };
+      document.addEventListener('keydown', function (e) {
+        if (!on) return; HOLD.card = false; var k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+        if (KMAP[k]) { keys[k] = true; e.preventDefault(); setTimeout(hideKeys, 2500); }
+        if (k === ' ') { e.preventDefault(); setAuto(!auto); }
+        if (k === '+' || k === '=') faster(1);
+        if (k === '-' || k === '_') faster(-1);
+      });
+      document.addEventListener('keyup', function (e) { var k = e.key.length === 1 ? e.key.toLowerCase() : e.key; keys[k] = false; });
+      addEventListener('blur', function () { keys = {}; });
+      // zoom: wheel or pinch
+      fly.addEventListener('wheel', function (e) { e.preventDefault(); lookT = performance.now(); fovT = Math.max(18, Math.min(95, fovT + e.deltaY * .03)); }, { passive: false });
+      // look around: drag (mouse), or steer: drag (touch, when not on the pad)
+      var movedFar = false, dragging = false, dr = null, pinch = null, pts = {};
+      // a tap (not a drag) on the view opens the nearest stop: its marker, or whatever 3D thing you tapped
+      var tapD = null, ray = null;
+      function pickAt(cx, cy) {
+        var best = null, bd = 90 * 90;
+        ORBS.forEach(function (o) { if (o.el.style.visibility === 'hidden') return; var r = o.el.querySelector('i').getBoundingClientRect(), dx = r.left + r.width / 2 - cx, dy = r.top + r.height / 2 - cy, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = o; } });
+        if (!best && renderer) {
+          var rc = renderer.domElement.getBoundingClientRect(); if (!ray) ray = new T.Raycaster();
+          ray.setFromCamera(new T.Vector2((cx - rc.left) / rc.width * 2 - 1, -((cy - rc.top) / rc.height) * 2 + 1), camera);
+          var hit = ray.intersectObjects(scene.children, true).filter(function (h) { return h.object.type === 'Mesh' && h.distance < 4000 && h.object !== moon; })[0];
+          if (hit) { var md = 600; ORBS.forEach(function (o) { var d = Math.abs(o.v.x - hit.point.x) + Math.abs(o.v.y - hit.point.y) * .5; if (d < md) { md = d; best = o; } }); }
+        }
+        if (best) { HOLD.card = true; window.__site.open(best.card); }
+      }
+      fly.addEventListener('pointerup', function (e) { if (e.target.closest('.fl-tag')) { tapD = null; return; } if (tapD && Math.hypot(e.clientX - tapD.x, e.clientY - tapD.y) < 7 && performance.now() - tapD.t < 400) pickAt(e.clientX, e.clientY); tapD = null; });
+      fly.addEventListener('pointerdown', function (e) {
+        if (e.target.closest('.fl-ctl') || e.target.closest('.fl-pad') || e.target.closest('.flytog')) return; // stop labels don't block a drag
+        HOLD.card = false; movedFar = false; tapD = { x: e.clientX, y: e.clientY, t: performance.now() };
+        pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var ids = Object.keys(pts);
+        if (ids.length === 2) { var a = pts[ids[0]], b = pts[ids[1]]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), f: fovT }; dragging = false; return; }
+        dragging = true; dr = { x: e.clientX, y: e.clientY, y0: head.ty, p0: head.tp }; try { fly.setPointerCapture(e.pointerId); } catch (x) {}
+      });
+      fly.addEventListener('pointermove', function (e) {
+        if (pts[e.pointerId]) pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+        if (pinch) { lookT = performance.now(); var ids = Object.keys(pts); if (ids.length === 2) { var a = pts[ids[0]], b = pts[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y); fovT = Math.max(18, Math.min(95, pinch.f * pinch.d / Math.max(20, d))); } return; }
+        if (!dragging) return;
+        if (dr && Math.hypot(e.clientX - dr.x, e.clientY - dr.y) > 7) movedFar = true;
+        lookT = performance.now(); head.ty = Math.max(-2.6, Math.min(2.6, dr.y0 + (e.clientX - dr.x) * .005)); head.tp = Math.max(-1.4, Math.min(1.4, dr.p0 + (e.clientY - dr.y) * .005));
+        hideKeys();
+      });
+      function up(e) { if (dragging) lookT = performance.now(); delete pts[e.pointerId]; if (Object.keys(pts).length < 2) pinch = null; dragging = false; }
+      fly.addEventListener('pointerup', up); fly.addEventListener('pointercancel', up);
+      fly.addEventListener('dblclick', function () { fovT = 74; head.ty = head.tp = 0; });
+      // the touch stick
+      var padEl = fly.querySelector('.fl-pad'), knob = padEl.querySelector('i');
+      padEl.addEventListener('pointerdown', function (e) { pad.on = true; try { padEl.setPointerCapture(e.pointerId); } catch (x) {} movePad(e); });
+      padEl.addEventListener('pointermove', function (e) { if (pad.on) movePad(e); });
+      function movePad(e) { var r = padEl.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 2 - 1, y = (e.clientY - r.top) / r.height * 2 - 1, m = Math.hypot(x, y); if (m > 1) { x /= m; y /= m; } pad.x = x; pad.y = y; knob.style.transform = 'translate(' + (x * 37).toFixed(0) + 'px,' + (y * 37).toFixed(0) + 'px)'; }
+      function padUp() { pad.on = false; pad.x = pad.y = 0; knob.style.transform = ''; }
+      padEl.addEventListener('pointerup', padUp); padEl.addEventListener('pointercancel', padUp);
+      var autoB = fly.querySelector('.fl-auto');
+      function setAuto(v) { auto = v; idle = 0; autoB.setAttribute('aria-pressed', v ? 'true' : 'false'); wasPaused = false; autoB.innerHTML = v ? '<span class="lg">Autopilot on</span><span class="sm">Auto on</span>' : '<span class="lg">Autopilot off</span><span class="sm">Auto off</span>'; }
+      // the autopilot button: if the flight is only paused, it carries on; otherwise it switches autopilot on or off
+      autoB.addEventListener('click', function () { if (auto && wasPaused) { lookT = -1e9; head.ty = head.tp = 0; dragging = false; return; } setAuto(!auto); });
+      function faster(k) { if (auto) AUTO_SPD = clamp(AUTO_SPD + k * 30, 25, 400); else CRUISE = clamp(CRUISE + k * 40, 20, 900); }
+      fly.querySelector('.fl-fast').addEventListener('click', function () { faster(1); });
+      fly.querySelector('.fl-slow').addEventListener('click', function () { faster(-1); });
+      var ctlEl = fly.querySelector('.fl-ctl');
+      // the Scroll/Fly switch sits at the top right, just under the site header; in Fly mode the speed and autopilot buttons line up to its left
+      function placeCtl() {
+        var hd = document.querySelector('header.top') || document.querySelector('header'), top = hd ? Math.max(0, hd.getBoundingClientRect().bottom) : 60;
+        if (on) { fly.style.top = top + 'px'; tog.style.top = Math.max(8, top + 10) + 'px'; tog.style.bottom = 'auto'; tog.style.left = 'auto'; tog.style.right = ''; }
+        else { // while scrolling: in line with the zoom + button, just to its left (and left of the "Look closer" hint while it shows)
+          var zin = document.getElementById('z-in'), zb = document.getElementById('zbar'), zl = zb && zb.querySelector('.zlbl');
+          if (zin) {
+            var zr = zin.getBoundingClientRect(), lr = zl && zb.classList.contains('hint') && getComputedStyle(zl).opacity !== '0' ? zl.getBoundingClientRect() : null;
+            var edge = lr && lr.width && innerWidth > 700 ? lr.left : zr.left;
+            if (lr && innerWidth <= 700) zl.style.visibility = 'hidden'; else if (zl) zl.style.visibility = '';
+            tog.style.bottom = 'auto'; tog.style.left = 'auto';
+            tog.style.top = (zr.top + (zr.height - tog.offsetHeight) / 2) + 'px'; tog.style.right = (innerWidth - edge + 10) + 'px';
+          }
+        }
+        ctlEl.style.right = (innerWidth - tog.getBoundingClientRect().left + 6) + 'px';
+      }
+      addEventListener('resize', placeCtl); addEventListener('scroll', function () { if (!on) placeCtl(); }, { passive: true }); setInterval(function () { if (!on) placeCtl(); }, 600); setTimeout(placeCtl, 300);
+      var planEl = cam0.closest('section') || cam0, planIn = true;
+      tog.style.transition = 'opacity .4s'; 
+      function togVis() { tog.style.opacity = on || planIn ? 1 : 0; tog.style.pointerEvents = on || planIn ? '' : 'none'; }
+      if (window.IntersectionObserver) new IntersectionObserver(function (es) { planIn = es[0].isIntersecting; togVis(); }, { threshold: 0 }).observe(planEl);
+      function setMode(m) {
+        on = m === 'fly';
+        tog.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.m === m ? 'true' : 'false'); });
+        if (on) {
+          fly.hidden = false; document.documentElement.style.overflow = 'hidden'; placeCtl(); fly.focus({ preventScroll: true });
+          if (!built) loadThree(function () { T = window.THREE; build(function () { ready = true; resize(); loadEl.style.opacity = 0; setTimeout(function () { loadEl.hidden = true; }, 1000); kick(); }); });
+          else { resize(); kick(); }
+        } else { fly.hidden = true; document.documentElement.style.overflow = ''; keys = {}; }
+        placeCtl(); togVis();
+      }
+      tog.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setMode(b.dataset.m); });
+      window.__fly = { set: setMode, ready: function () { return ready; }, at: function (x) { if (ship.p) { ship.p.x = x; ship.p.y = railY(x); ship.p.z = CAMZ; } }, three: function () { return { scene: scene, camera: camera, renderer: renderer }; }, moved: function () { return movedFar; }, dbg: function () { return { dragging: dragging, lookT: lookT, auto: auto, hold: HOLD }; }, look: function (y, p) { head.ty = y; head.tp = p; }, auto: setAuto, ship: ship };
+    })();
 })();
 
 </script>
