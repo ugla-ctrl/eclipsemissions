@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4BYML6MPTW"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-4BYML6MPTW");</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Eclipse Missions · Watch Earth eclipse the Sun from the Moon</title>
 <meta name="description" content="The Eclipse Missions are IMXP&#39;s community plan to watch Earth eclipse the Sun from the Moon.">
 <meta name="theme-color" content="#08090b">
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Eclipse Missions">
-<meta property="og:title" content="The Eclipse Missions: a community plan to watch Earth eclipse the Sun from the Moon">
+<meta property="og:title" content="Watch Earth eclipse the Sun from the Moon">
 <meta property="og:description" content="The Eclipse Missions are IMXP&#39;s community plan to watch Earth eclipse the Sun from the Moon.">
 <meta property="og:url" content="https://eclipsemissions.com/">
 <meta property="og:image" content="https://eclipsemissions.com/img/og-image.jpg">
@@ -23,7 +23,7 @@
 <meta property="og:image:alt" content="Seekers standing on the Moon as Earth eclipses the Sun, ringed in red. Watch Earth eclipse the Sun: The Eclipse Missions are IMXP&#39;s community plan to watch Earth eclipse the Sun from the Moon.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@imxp_org">
-<meta name="twitter:title" content="The Eclipse Missions: a community plan to watch Earth eclipse the Sun from the Moon">
+<meta name="twitter:title" content="Watch Earth eclipse the Sun from the Moon">
 <meta name="twitter:description" content="The Eclipse Missions are IMXP&#39;s community plan to watch Earth eclipse the Sun from the Moon.">
 <meta name="twitter:image" content="https://eclipsemissions.com/img/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -281,6 +281,36 @@ section.s { scroll-margin-top: 16px; }
 .portal p { font-family: var(--f-fell); font-style: italic; font-size: clamp(18px, 2.2vw, 26px); }
 .portal .ptext span { font-family: var(--f-mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; opacity: .7; }
 .portal button { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); font: inherit; font-family: var(--f-mono); font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; background: #14110d; color: #efe6d2; border: 0; border-radius: 4px; padding: 14px 20px; cursor: pointer; white-space: nowrap; }
+/* ---------- Seeker 123: his card, wherever you find him ---------- */
+.one-seeker { cursor: pointer; }
+.s123 { position: fixed; inset: 0; z-index: 140; display: grid; place-items: center; padding: 16px; background: rgba(3,3,5,.82); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.s123[hidden] { display: none; }
+.s123-c { position: relative; width: min(560px, 100%); max-height: calc(100svh - 32px); overflow-y: auto; background: #08090b; border: 1px solid rgba(238,229,208,.35); color: var(--ink); padding: 26px 26px 22px; display: grid; gap: 14px; box-shadow: 0 0 60px rgba(80,227,255,.12); }
+.s123-top { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 18px; align-items: center; }
+.s123-top svg { width: 96px; height: 120px; display: block; }
+.s123-c .eyebrow { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--turq); }
+.s123-c h3 { margin: 4px 0 2px; font-family: var(--f-fell); font-weight: 400; font-size: clamp(30px, 6vw, 40px); line-height: 1; }
+.s123-c .born { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.s123-c p { margin: 0; font-size: 15px; line-height: 1.5; color: #e2d9c4; text-wrap: pretty; }
+.s123-c .here { font-family: var(--f-fell); font-style: italic; font-size: 18px; color: var(--corona); }
+.s123-dots { display: flex; flex-wrap: wrap; gap: 6px 14px; padding-top: 10px; border-top: 1px solid rgba(238,229,208,.14); font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.s123-dots span { display: inline-flex; align-items: center; gap: 6px; }
+.s123-dots i { width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(238,229,208,.45); }
+.s123-dots .on { color: var(--ink); } .s123-dots .on i { background: var(--turq); border-color: var(--turq); box-shadow: 0 0 8px rgba(80,227,255,.8); }
+.s123-n { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--turq); }
+.s123-x { position: absolute; top: 10px; right: 10px; font: inherit; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; background: none; color: var(--ink); border: 1px solid rgba(238,229,208,.3); border-radius: 4px; padding: 7px 10px; cursor: pointer; }
+.s123.all .s123-top svg { animation: s123nod 1.6s ease-in-out 2; }
+@keyframes s123nod { 0%, 100% { transform: none; } 40% { transform: translateY(4px) rotate(-4deg); } 70% { transform: translateY(-2px); } }
+@media (max-width: 480px) { .s123-c { padding: 22px 18px 18px; } .s123-top { grid-template-columns: 72px minmax(0, 1fr); gap: 14px; } .s123-top svg { width: 72px; height: 90px; } }
+.castfeat { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 24px; align-items: start; margin-bottom: 22px; padding: 20px; border: 1px solid rgba(80,227,255,.35); }
+.castfeat svg { width: 100%; height: auto; display: block; }
+.castfeat h3 { margin: 0 0 4px; font-family: var(--f-fell); font-weight: 400; font-size: clamp(30px, 4vw, 44px); line-height: 1; }
+.castfeat .born { font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--turq); }
+.castfeat p { margin: 10px 0 0; text-wrap: pretty; }
+.castfeat table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 14px; }
+.castfeat td { padding: 7px 8px 7px 0; border-top: 1px solid rgba(238,229,208,.14); vertical-align: top; }
+.castfeat td:first-child { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--corona); white-space: nowrap; }
+@media (max-width: 700px) { .castfeat { grid-template-columns: minmax(0, 1fr); } .castfeat svg { max-width: 160px; } }
 
 </style>
 <style>
@@ -346,7 +376,7 @@ a { color: var(--turq); text-underline-offset: 3px; }
 .fc .slip { font-family: var(--f-fell); font-style: italic; font-size: 16px; color: var(--corona); }
 .fc.intro { width: min(560px, 46vw); padding: 28px; gap: 16px; }
 .fc.intro .wm { width: min(420px, 100%); height: auto; color: var(--ink); }
-.fc.intro h1 { font-size: clamp(36px, 3.8vw, 56px); line-height: 1; }
+.fc.intro h1 { font-size: clamp(30px, 3.3vw, 46px); line-height: 1; white-space: nowrap; }
 .fc.intro h1 i { color: var(--corona); }
 .count { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid #4a463c; }
 .count div { padding: 10px 8px 8px; display: grid; gap: 2px; text-align: center; }
@@ -401,7 +431,41 @@ a { color: var(--turq); text-underline-offset: 3px; }
 @media (max-width: 900px) { .brf .lb { display: none; } .brf { padding-inline: 10px; } .top nav { gap: 10px; } }
 .wx { position: relative; height: 700vh; background: #000; }
 .wx-pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
-#wx-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#wx-cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab; }
+.wx.looking #wx-cv { cursor: grabbing; }
+.wx-map { position: absolute; left: 18px; bottom: 18px; z-index: 2; width: 236px; font-family: var(--f-mono); color: rgba(238,229,208,.72); }
+.wx-mp { padding: 10px 10px 8px; border: 1px solid rgba(238,229,208,.16); border-radius: 10px; background: rgba(4,4,6,.58); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.wx-mp svg { display: block; width: 100%; height: auto; overflow: visible; }
+.wxm-pt { cursor: pointer; outline: none; }
+.wxm-pt .d { fill: #0b0b0e; stroke: var(--corona); stroke-width: 1.4; transition: r .2s; }
+.wxm-pt:hover .d, .wxm-pt:focus-visible .d { fill: var(--corona); }
+.wxm-pt.on .d { fill: var(--turq); stroke: var(--turq); }
+.wxm-bot { pointer-events: none; filter: drop-shadow(0 0 3px rgba(80,227,255,.7)); }
+.wx-site { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.wx-site button { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(238,229,208,.28); background: none; color: var(--ink); font-size: 16px; line-height: 1; cursor: pointer; }
+.wx-site button:hover { border-color: var(--corona); color: var(--corona); }
+.wx-sn { flex: 1; min-width: 0; display: grid; gap: 3px; text-align: center; }
+.wx-sn b { font-family: var(--f-fell); font-weight: 400; font-size: 18px; line-height: 1.1; color: var(--ink); }
+.wx-sn span { font-size: 9.5px; line-height: 1.45; letter-spacing: .1em; text-transform: uppercase; text-wrap: balance; }
+.wx-tip { margin: 8px 0 0; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; text-align: center; color: rgba(238,229,208,.5); }
+.wx-mbtn { display: none; }
+.wx-mh { margin: 0 0 6px; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--turq); text-align: center; }
+.wx-mh i, .wx-mbtn i { font-style: normal; color: rgba(238,229,208,.6); }
+@keyframes wxPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(80,227,255,.55), 0 0 18px rgba(80,227,255,.25); } 50% { box-shadow: 0 0 0 7px rgba(80,227,255,0), 0 0 28px rgba(80,227,255,.45); } }
+@keyframes wxDot { 0%, 100% { stroke-width: 1.4; } 50% { stroke-width: 4; stroke: var(--turq); } }
+.wx-map.fresh .wx-mp, .wx-map.fresh .wx-mbtn { animation: wxPulse 2.2s ease-in-out infinite; border-color: rgba(80,227,255,.7); }
+.wx-map.fresh .wxm-pt:not(.on) .d { animation: wxDot 1.6s ease-in-out infinite; }
+.wx-mp { border-color: rgba(80,227,255,.35); }
+@media (prefers-reduced-motion: reduce) { .wx-map.fresh .wx-mp, .wx-map.fresh .wx-mbtn, .wx-map.fresh .wxm-pt .d { animation: none; } }
+@media (min-width: 901px) { .wx-caps { padding-inline: 270px; } }
+@media (max-width: 900px) {
+  .wx-map { left: 14px; bottom: 14px; width: min(260px, calc(100vw - 28px)); }
+  .wx-mbtn { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); background: rgba(4,4,6,.72); border: 1px solid rgba(80,227,255,.6); border-radius: 999px; padding: 8px 14px 8px 10px; cursor: pointer; }
+  .wx-mbtn::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 38%, #4a463e, #141318); box-shadow: inset 0 0 0 1px rgba(238,229,208,.5); }
+  .wx-mp { display: none; margin-bottom: 8px; }
+  .wx-map.open .wx-mp { display: block; }
+  .wx-map.open { display: flex; flex-direction: column-reverse; }
+}
 .wx-hud { position: absolute; inset: calc(var(--hdr) + 14px) 18px auto; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: rgba(238,229,208,.62); pointer-events: none; }
 .wx-hud b { font-weight: 400; color: var(--corona); }
 .wx-hud i { font-style: normal; color: rgba(238,229,208,.8); }
@@ -685,6 +749,15 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
   </div>
 
 </header>
+  <div class="fv" id="gate" hidden role="dialog" aria-modal="true" aria-labelledby="gate-h">
+    <div class="fv-c">
+      <button type="button" class="fv-x" id="gate-x" aria-label="Close">×</button>
+      <span class="eyebrow" id="gate-e"><b>Universe 26-A</b> · via Iceland</span>
+      <h2 id="gate-h">The door only opens for Seekers.</h2>
+      <p id="gate-p">The hidden folk were asked, and they answered: they keep this door for the people who have joined the mission. Become a Seeker, then come back and knock.</p>
+      <div class="bf-go"><a class="btn" href="#join" id="gate-go">Become a Seeker →</a><button type="button" class="btn ghost" id="gate-no">Not yet</button></div>
+    </div>
+  </div>
   <div class="bf" id="bf" hidden role="dialog" aria-modal="true" aria-labelledby="bf-h">
     <div class="bf-c">
       <button type="button" class="fv-x" id="bf-x" aria-label="Close the briefing">×</button>
@@ -982,7 +1055,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           <p class="fine" id="j-err" role="alert" hidden>Add your first name and a valid email so we can reach you.</p>
           <button class="btn" type="submit" style="justify-self:start">Become a Seeker →</button>
         </form>
-        <div class="ok" id="j-done" hidden><h3>Welcome, Seeker.</h3><p>You're on the list. Mission news and first access come to you before anyone else.</p></div>
+        <div class="ok" id="j-done" hidden><h3>Welcome, Seeker.</h3><p>You're on the list. Mission news and first access come to you before anyone else.</p><p class="gate-ok">The hidden folk know you now. In Iceland, ask first, then try the door.</p></div>
       </div>
     </div>
   </section>
@@ -1226,7 +1299,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           <span class="mc-st">Planned · the community is choosing the spots</span>
         </div>
       </header>
-      <div class="panel mc-plate"><svg id="w45" viewBox="1470 1395 620 349" role="img" aria-label="The Outback at night: the Milky Way, the escarpment, a boab, walkers with red torches and spirits of the land"></svg><span class="cap">Fig. 28. The Outback, under the Milky Way. The first place built to stay.</span></div>
+      <div class="panel mc-plate"><svg id="w45" viewBox="1470 1395 620 349" role="img" aria-label="The Outback at night: the Milky Way, Uluru, walkers with red torches and spirits of the land"></svg><span class="cap">Fig. 28. The Outback, under the Milky Way. The first place built to stay.</span></div>
       <div class="mc-strip">
         <figure class="panel"><svg id="w46" viewBox="1300 1110 480 300" role="img" aria-label="The Milky Way and its dark lanes"></svg><figcaption>Five minutes of night at noon.</figcaption></figure>
         <figure class="panel"><svg id="w47" viewBox="1546 1418 200 125" role="img" aria-label="Spirits of the land"></svg><figcaption>Unnamed, and watching.</figcaption></figure>
@@ -1718,7 +1791,10 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     var r = rng(id === 'w0' ? 9 : 9), P = id + '-';
     var defs = el('defs', {}, svg);
     el('rect', { x: -500, y: -600, width: 8600, height: 3200, fill: PAPER }, svg);
-    var W = el('g', { id: 'world-' + id }, svg);
+    var W = el('g', { id: 'world-' + id }, svg), W3S = [];
+    // Fly mode reads these tags to build each thing as a real 3D model; on the plate they are just groups
+    function T3o(kind, d) { var g = el('g', d || {}, W); g.setAttribute('data-3d', kind); W3S.push(W); W = g; return g; }
+    function T3c() { W = W3S.pop(); }
 
     function clipPoly(pts) { var cid = P + 'c' + Math.floor(r() * 1e9); var cp = el('clipPath', { id: cid }, defs); el('path', { d: pts }, cp); return 'url(#' + cid + ')'; }
     function hatch(d, x0, y0, x1, y1, gap, angle, parent, sw, op) {
@@ -1808,7 +1884,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
 
     // crowds at each gathering
     function crowd(cx, n, sc) {
-      var g = el('g', { fill: INK }, W), gy = groundY(cx);
+      var g = el('g', { fill: INK, 'data-3d': 'crowd' }, W), gy = groundY(cx);
       for (var j = 0; j < n; j++) { var px2 = cx - n * 4.2 * sc + j * 8.4 * sc + r() * 3, hgt = (16 + r() * 7) * sc; el('rect', { x: fix(px2), y: fix(gy - 4 - hgt), width: fix(3 * sc), height: fix(hgt) }, g); el('circle', { cx: fix(px2 + 1.5 * sc), cy: fix(gy - 7 - hgt), r: fix(2.6 * sc) }, g); if (r() > .65) el('line', { x1: fix(px2 + 1.5 * sc), y1: fix(gy - hgt), x2: fix(px2 + 8 * sc), y2: fix(gy - hgt - 10 * sc), stroke: INK, 'stroke-width': 1.4 * sc }, g); }
     }
 
@@ -1826,17 +1902,17 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
 
     // ---------- place vignettes ----------
     function pyramid(cx, w2, h, base) {
-      var dP = 'M ' + (cx - w2 / 2) + ' ' + base + ' L ' + cx + ' ' + (base - h) + ' L ' + (cx + w2 / 2) + ' ' + base + ' Z';
+      T3o('pyr', {'data-x': cx, 'data-w': w2, 'data-h': h, 'data-b': base}); var dP = 'M ' + (cx - w2 / 2) + ' ' + base + ' L ' + cx + ' ' + (base - h) + ' L ' + (cx + w2 / 2) + ' ' + base + ' Z';
       el('path', { d: dP, fill: PAPER, stroke: INK, 'stroke-width': 1.6 }, W);
       var face = 'M ' + cx + ' ' + (base - h) + ' L ' + (cx + w2 / 2) + ' ' + base + ' L ' + (cx + w2 * .12) + ' ' + base + ' Z';
       hatch(face, cx, base - h, cx + w2 / 2, base, 5, 0, W, 1, .9);
-      el('path', { d: 'M ' + cx + ' ' + (base - h) + ' L ' + (cx + w2 * .12) + ' ' + base, stroke: INK, 'stroke-width': 1.2 }, W);
+      el('path', { d: 'M ' + cx + ' ' + (base - h) + ' L ' + (cx + w2 * .12) + ' ' + base, stroke: INK, 'stroke-width': 1.2 }, W); T3c();
     }
     function vIceland(cx) {
       var b = groundY(cx) - 6;
-      for (var j = 0; j < 9; j++) { var px3 = cx - 210 + j * 20, hh = 40 + Math.sin(j * 1.3) * 18 + 30; var dC = 'M ' + px3 + ' ' + b + ' V ' + (b - hh) + ' l 9 -6 l 9 6 V ' + b + ' Z'; el('path', { d: dC, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(dC, px3, b - hh - 6, px3 + 18, b, 4, Math.PI / 2, W, .8, .6); }
+      T3o('basalt', {}); for (var j = 0; j < 9; j++) { var px3 = cx - 210 + j * 20, hh = 40 + Math.sin(j * 1.3) * 18 + 30; var dC = 'M ' + px3 + ' ' + b + ' V ' + (b - hh) + ' l 9 -6 l 9 6 V ' + b + ' Z'; el('path', { d: dC, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(dC, px3, b - hh - 6, px3 + 18, b, 4, Math.PI / 2, W, .8, .6); } T3c();
       var gl = 'M ' + (cx + 40) + ' ' + b + ' Q ' + (cx + 120) + ' ' + (b - 120) + ' ' + (cx + 220) + ' ' + (b - 60) + ' Q ' + (cx + 280) + ' ' + (b - 30) + ' ' + (cx + 300) + ' ' + b + ' Z';
-      el('path', { d: gl, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(gl, cx + 40, b - 120, cx + 300, b, 9, -.35, W, .8, .5);
+      T3o('land', {'data-m': 'mound', 'data-c': '#d9ebf1'}); el('path', { d: gl, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(gl, cx + 40, b - 120, cx + 300, b, 9, -.35, W, .8, .5); T3c();
     }
     function vEgypt(cx) {
       var b = groundY(cx) - 6;
@@ -1852,50 +1928,50 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     function vBoab(cx) {
       var b = groundY(cx) - 6;
       var trunk = 'M ' + (cx - 26) + ' ' + b + ' C ' + (cx - 44) + ' ' + (b - 60) + ' ' + (cx - 30) + ' ' + (b - 110) + ' ' + (cx - 14) + ' ' + (b - 120) + ' L ' + (cx + 14) + ' ' + (b - 120) + ' C ' + (cx + 30) + ' ' + (b - 110) + ' ' + (cx + 44) + ' ' + (b - 60) + ' ' + (cx + 26) + ' ' + b + ' Z';
-      el('path', { d: trunk, fill: PAPER, stroke: INK, 'stroke-width': 1.5 }, W); hatch(trunk, cx - 44, b - 120, cx + 44, b, 5, Math.PI / 2, W, .8, .55);
+      T3o('boab', {'data-x': cx, 'data-b': b, 'data-h': 120}); el('path', { d: trunk, fill: PAPER, stroke: INK, 'stroke-width': 1.5 }, W); hatch(trunk, cx - 44, b - 120, cx + 44, b, 5, Math.PI / 2, W, .8, .55);
       var br = el('g', { stroke: INK, fill: 'none', 'stroke-width': 2, 'stroke-linecap': 'round' }, W);
-      [[-1, 0], [1, 0], [-.4, -.4], [.5, -.3]].forEach(function (v) { el('path', { d: 'M ' + (cx + v[0] * 8) + ' ' + (b - 118) + ' q ' + (v[0] * 30) + ' ' + (-30 + v[1] * 20) + ' ' + (v[0] * 50) + ' ' + (-46 + v[1] * 30), 'stroke-width': 2.4 }, br); });
+      [[-1, 0], [1, 0], [-.4, -.4], [.5, -.3]].forEach(function (v) { el('path', { d: 'M ' + (cx + v[0] * 8) + ' ' + (b - 118) + ' q ' + (v[0] * 30) + ' ' + (-30 + v[1] * 20) + ' ' + (v[0] * 50) + ' ' + (-46 + v[1] * 30), 'stroke-width': 2.4 }, br); }); T3c();
       var mt = 'M ' + (cx - 260) + ' ' + b + ' L ' + (cx - 200) + ' ' + (b - 70) + ' L ' + (cx - 170) + ' ' + (b - 44) + ' L ' + (cx - 120) + ' ' + (b - 96) + ' L ' + (cx - 60) + ' ' + b + ' Z';
-      el('path', { d: mt, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(mt, cx - 260, b - 96, cx - 60, b, 7, -.6, W, .8, .5);
+      T3o('land', {'data-m': 'ridge', 'data-c': '#7a7064'}); el('path', { d: mt, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(mt, cx - 260, b - 96, cx - 60, b, 7, -.6, W, .8, .5); T3c();
     }
     function vBaobab(cx) { vBoab(cx); }
     function vShip(cx) {
       var b = groundY(cx) - 6;
       var hull = 'M ' + (cx + 60) + ' ' + b + ' L ' + (cx + 70) + ' ' + (b - 26) + ' L ' + (cx + 250) + ' ' + (b - 26) + ' L ' + (cx + 236) + ' ' + b + ' Z';
-      el('path', { d: hull, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(hull, cx + 60, b - 26, cx + 250, b, 4, 0, W, .8, .7);
-      for (var j = 0; j < 7; j++) el('rect', { x: cx + 90 + j * 20, y: b - 26 - 12 - (j % 3) * 10, width: 18, height: 12 + (j % 3) * 10, fill: PAPER, stroke: INK, 'stroke-width': 1 }, W);
+      T3o('blocks', {'data-d': 46}); el('path', { d: hull, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(hull, cx + 60, b - 26, cx + 250, b, 4, 0, W, .8, .7);
+      for (var j = 0; j < 7; j++) el('rect', { x: cx + 90 + j * 20, y: b - 26 - 12 - (j % 3) * 10, width: 18, height: 12 + (j % 3) * 10, fill: PAPER, stroke: INK, 'stroke-width': 1 }, W); T3c();
     }
     function vTorii(cx) {
-      var b = groundY(cx) - 6, g = el('g', { stroke: INK, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, W);
+      T3o('torii', {'data-x': cx, 'data-b': groundY(cx) - 6}); var b = groundY(cx) - 6, g = el('g', { stroke: INK, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, W);
       el('path', { d: 'M ' + (cx + 70) + ' ' + b + ' V ' + (b - 90) + ' M ' + (cx + 150) + ' ' + b + ' V ' + (b - 90) + ' M ' + (cx + 54) + ' ' + (b - 74) + ' H ' + (cx + 166) + ' M ' + (cx + 44) + ' ' + (b - 96) + ' Q ' + (cx + 110) + ' ' + (b - 88) + ' ' + (cx + 176) + ' ' + (b - 96) }, g);
-      el('path', { d: 'M ' + (cx + 70) + ' ' + b + ' V ' + (b - 90) + ' M ' + (cx + 150) + ' ' + b + ' V ' + (b - 90), stroke: EMBER, 'stroke-width': 3 }, W);
+      el('path', { d: 'M ' + (cx + 70) + ' ' + b + ' V ' + (b - 90) + ' M ' + (cx + 150) + ' ' + b + ' V ' + (b - 90), stroke: EMBER, 'stroke-width': 3 }, W); T3c();
     }
     function vPeaks(cx) {
       var b = groundY(cx) - 6;
       var mt = 'M ' + (cx + 40) + ' ' + b + ' L ' + (cx + 110) + ' ' + (b - 120) + ' L ' + (cx + 150) + ' ' + (b - 80) + ' L ' + (cx + 200) + ' ' + (b - 140) + ' L ' + (cx + 290) + ' ' + b + ' Z';
-      el('path', { d: mt, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(mt, cx + 40, b - 140, cx + 290, b, 6, -.8, W, .8, .55);
-      el('path', { d: 'M ' + (cx + 92) + ' ' + (b - 90) + ' L ' + (cx + 110) + ' ' + (b - 120) + ' L ' + (cx + 128) + ' ' + (b - 98) + ' M ' + (cx + 182) + ' ' + (b - 112) + ' L ' + (cx + 200) + ' ' + (b - 140) + ' L ' + (cx + 220) + ' ' + (b - 110), stroke: INK, 'stroke-width': 2.4, fill: 'none' }, W);
+      T3o('land', {'data-m': 'ridge', 'data-c': '#8a867e', 'data-snow': 1}); el('path', { d: mt, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(mt, cx + 40, b - 140, cx + 290, b, 6, -.8, W, .8, .55);
+      el('path', { d: 'M ' + (cx + 92) + ' ' + (b - 90) + ' L ' + (cx + 110) + ' ' + (b - 120) + ' L ' + (cx + 128) + ' ' + (b - 98) + ' M ' + (cx + 182) + ' ' + (b - 112) + ' L ' + (cx + 200) + ' ' + (b - 140) + ' L ' + (cx + 220) + ' ' + (b - 110), stroke: INK, 'stroke-width': 2.4, fill: 'none' }, W); T3c();
     }
     function vPenguins(cx) {
       var b = groundY(cx) - 6;
       var ice = 'M ' + (cx - 40) + ' ' + b + ' V ' + (b - 50) + ' H ' + (cx + 140) + ' L ' + (cx + 170) + ' ' + b + ' Z';
-      el('path', { d: ice, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(ice, cx - 40, b - 50, cx + 170, b, 5, Math.PI / 2, W, .7, .45);
-      for (var j = 0; j < 4; j++) { var px4 = cx - 10 + j * 30; el('ellipse', { cx: px4, cy: b - 64, rx: 7, ry: 14, fill: INK }, W); el('ellipse', { cx: px4 + 1.5, cy: b - 62, rx: 3.6, ry: 10, fill: PAPER }, W); el('circle', { cx: px4, cy: b - 80, r: 5, fill: INK }, W); }
+      T3o('blocks', {'data-d': 90, 'data-c': '#cfe3ea'}); el('path', { d: ice, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(ice, cx - 40, b - 50, cx + 170, b, 5, Math.PI / 2, W, .7, .45); T3c();
+      T3o('penguins', {}); for (var j = 0; j < 4; j++) { var px4 = cx - 10 + j * 30; el('ellipse', { cx: px4, cy: b - 64, rx: 7, ry: 14, fill: INK }, W); el('ellipse', { cx: px4 + 1.5, cy: b - 62, rx: 3.6, ry: 10, fill: PAPER }, W); el('circle', { cx: px4, cy: b - 80, r: 5, fill: INK }, W); } T3c();
     }
     function vDome(cx, cy, n, perm) {
       for (var j = 0; j < n; j++) {
         var dx = cx + 50 + j * 64, dy = cy - 4 + j * 6, R = 22 + (j % 2) * 10;
-        var dm = 'M ' + (dx - R) + ' ' + dy + ' A ' + R + ' ' + R + ' 0 0 1 ' + (dx + R) + ' ' + dy + ' Z';
+        T3o('dome', {'data-x': dx, 'data-y': dy, 'data-r': R}); var dm = 'M ' + (dx - R) + ' ' + dy + ' A ' + R + ' ' + R + ' 0 0 1 ' + (dx + R) + ' ' + dy + ' Z';
         el('path', { d: dm, fill: PAPER, stroke: INK, 'stroke-width': 1.5, transform: 'rotate(180 ' + dx + ' ' + dy + ')' }, W);
         hatch('M ' + (dx - R) + ' ' + dy + ' A ' + R + ' ' + R + ' 0 0 0 ' + (dx + R) + ' ' + dy + ' Z', dx - R, dy, dx + R, dy + R, 5, 0, W, .8, .6);
-        if (perm) el('line', { x1: dx + R, y1: dy + 6, x2: dx + 64 - R, y2: dy + 10, stroke: INK, 'stroke-width': 2 }, W);
+        if (perm) el('line', { x1: dx + R, y1: dy + 6, x2: dx + 64 - R, y2: dy + 10, stroke: INK, 'stroke-width': 2 }, W); T3c();
       }
     }
 
     // ================= the Eclipse Trilogy, in detail =================
     function cap(s2, x2, y2, col) { tx(s2, { x: x2, y: y2, 'font-family': FELL, 'font-style': 'italic', 'font-size': 22, fill: col || INK, opacity: .95 }, W); }
     function person(x2, y2, sc, arms, col) {
-      var g = el('g', { fill: col || INK }, W);
+      var g = el('g', { fill: col || INK, 'data-3d': 'person', 'data-x': x2, 'data-y': y2, 'data-s': sc }, W);
       el('rect', { x: fix(x2 - 1.6 * sc), y: fix(y2 - 18 * sc), width: fix(3.2 * sc), height: fix(18 * sc) }, g);
       el('circle', { cx: x2, cy: fix(y2 - 21 * sc), r: fix(2.8 * sc) }, g);
       if (arms) el('path', { d: 'M ' + x2 + ' ' + fix(y2 - 15 * sc) + ' l ' + fix(-6 * sc) + ' ' + fix(-10 * sc) + ' M ' + x2 + ' ' + fix(y2 - 15 * sc) + ' l ' + fix(6 * sc) + ' ' + fix(-10 * sc), stroke: col || INK, 'stroke-width': fix(1.6 * sc), fill: 'none' }, g);
@@ -1917,13 +1993,13 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         el('animate', { attributeName: 'opacity', values: '.55;1;.7;.55', dur: (7 + c * 2) + 's', repeatCount: 'indefinite' }, g);
       }
       // basalt cliff, left
-      for (var j = 0; j < 7; j++) { var px = cx - 300 + j * 18, hh = 70 + Math.sin(j * 1.7) * 22; var dC = 'M ' + px + ' ' + b + ' V ' + (b - hh) + ' l 8 -6 l 8 6 V ' + b + ' Z'; el('path', { d: dC, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(dC, px, b - hh - 6, px + 16, b, 4, Math.PI / 2, W, .8, .6); }
+      T3o('basalt', {}); for (var j = 0; j < 7; j++) { var px = cx - 300 + j * 18, hh = 70 + Math.sin(j * 1.7) * 22; var dC = 'M ' + px + ' ' + b + ' V ' + (b - hh) + ' l 8 -6 l 8 6 V ' + b + ' Z'; el('path', { d: dC, fill: PAPER, stroke: INK, 'stroke-width': 1.3 }, W); hatch(dC, px, b - hh - 6, px + 16, b, 4, Math.PI / 2, W, .8, .6); } T3c();
       // turf-roofed stage with a sound system
       var sx = cx - 150, roof = 'M ' + (sx - 10) + ' ' + (b - 60) + ' L ' + (sx + 50) + ' ' + (b - 100) + ' L ' + (sx + 110) + ' ' + (b - 60) + ' Z';
-      el('rect', { x: sx, y: b - 60, width: 100, height: 60, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W);
+      T3o('blocks', {'data-d': 70}); el('rect', { x: sx, y: b - 60, width: 100, height: 60, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W);
       el('path', { d: roof, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(roof, sx - 10, b - 100, sx + 110, b - 60, 4, -.5, W, .8, .8);
       for (j = 0; j < 7; j++) el('line', { x1: sx + j * 16, y1: b - 60 - (j < 4 ? j * 10 : (6 - j) * 10) * 0.66, x2: sx + j * 16 + 3, y2: b - 70 - (j < 4 ? j * 10 : (6 - j) * 10) * 0.66, stroke: INK, 'stroke-width': 1 }, W); // grass tufts
-      [sx - 34, sx + 108].forEach(function (spx) { for (var q2 = 0; q2 < 2; q2++) { el('rect', { x: spx, y: b - 30 - q2 * 30, width: 26, height: 28, fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W); el('circle', { cx: spx + 13, cy: b - 16 - q2 * 30, r: 8, fill: 'none', stroke: INK, 'stroke-width': 1 }, W); } });
+      [sx - 34, sx + 108].forEach(function (spx) { for (var q2 = 0; q2 < 2; q2++) { el('rect', { x: spx, y: b - 30 - q2 * 30, width: 26, height: 28, fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W); el('circle', { cx: spx + 13, cy: b - 16 - q2 * 30, r: 8, fill: 'none', stroke: INK, 'stroke-width': 1 }, W); } }); T3c();
       person(sx + 50, b - 8, 1.2, true);
       // lasers from the stage, flickering
       var colors = [TURQ, EMBER, CORONA, TURQ, EMBER];
@@ -1936,10 +2012,10 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       for (j = 0; j < 16; j++) { var pp = person(cx - 20 + j * 12, b, 1, j % 2 === 0); el('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 0; 0 -5; 0 0', dur: (0.5 + (j % 3) * .07) + 's', begin: (j * .05) + 's', repeatCount: 'indefinite' }, pp); }
       // glacier, right
       var gl = 'M ' + (cx + 160) + ' ' + b + ' Q ' + (cx + 220) + ' ' + (b - 110) + ' ' + (cx + 300) + ' ' + (b - 70) + ' Q ' + (cx + 340) + ' ' + (b - 40) + ' ' + (cx + 360) + ' ' + b + ' Z';
-      el('path', { d: gl, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(gl, cx + 160, b - 110, cx + 360, b, 8, -.35, W, .8, .5);
+      T3o('land', {'data-m': 'mound', 'data-c': '#d9ebf1'}); el('path', { d: gl, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(gl, cx + 160, b - 110, cx + 360, b, 8, -.35, W, .8, .5); T3c();
       // a lava rock with an elf door, and two huldufólk peeking
       var rx2 = cx + 110, rock2 = 'M ' + (rx2 - 40) + ' ' + b + ' C ' + (rx2 - 46) + ' ' + (b - 40) + ' ' + (rx2 - 10) + ' ' + (b - 58) + ' ' + (rx2 + 20) + ' ' + (b - 46) + ' C ' + (rx2 + 44) + ' ' + (b - 36) + ' ' + (rx2 + 44) + ' ' + (b - 10) + ' ' + (rx2 + 40) + ' ' + b + ' Z';
-      el('path', { d: rock2, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(rock2, rx2 - 46, b - 58, rx2 + 44, b, 3.5, .7, W, .7, .7);
+      T3o('land', {'data-m': 'mound', 'data-c': '#4f4840'}); el('path', { d: rock2, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(rock2, rx2 - 46, b - 58, rx2 + 44, b, 3.5, .7, W, .7, .7); T3c();
       el('path', { d: 'M ' + (rx2 - 2) + ' ' + b + ' V ' + (b - 14) + ' a 7 7 0 0 1 14 0 V ' + b + ' Z', fill: CORONA, stroke: INK, 'stroke-width': 1 }, W);
       var lamp = el('circle', { cx: rx2 + 20, cy: b - 18, r: 2.4, fill: CORONA }, W);
       el('animate', { attributeName: 'opacity', values: '1;.2;1;1;.4;1', dur: '4s', repeatCount: 'indefinite' }, lamp);
@@ -1979,8 +2055,8 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       var tx0 = cx - 210;
       [[tx0, 0], [tx0 + 120, 1]].forEach(function (p) {
         var x2 = p[0], tw = 'M ' + x2 + ' ' + b + ' L ' + (x2 + 8) + ' ' + (b - 150) + ' L ' + (x2 + 72) + ' ' + (b - 150) + ' L ' + (x2 + 80) + ' ' + b + ' Z';
-        el('path', { d: tw, fill: PAPER, stroke: INK, 'stroke-width': 1.5 }, W);
-        hatch(tw, x2, b - 150, x2 + 80, b, 6, 0, W, .7, .35);
+        T3o('blocks', {'data-d': 60, 'data-c': '#b49f78'}); el('path', { d: tw, fill: PAPER, stroke: INK, 'stroke-width': 1.5 }, W);
+        hatch(tw, x2, b - 150, x2 + 80, b, 6, 0, W, .7, .35); T3c();
         // a visitor carved on each tower: tall, star-headed, in profile
         var fx = x2 + 40, fy = b - 20;
         var fg = el('g', { stroke: INK, fill: PAPER, 'stroke-width': 1.3 }, W);
@@ -1997,8 +2073,8 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       var fr = el('g', { stroke: INK, fill: 'none', 'stroke-width': 1 }, W);
       el('circle', { cx: tx0 + 88, cy: b - 118, r: 4 }, fr); el('path', { d: 'M ' + (tx0 + 96) + ' ' + (b - 113) + ' q 4 -8 8 0 q 4 -8 8 0' }, fr); el('path', { d: 'M ' + (tx0 + 116) + ' ' + (b - 122) + ' v 8 m -3 -5 h 6' }, fr);
       // colonnade behind, lotus capitals
-      for (j = 0; j < 5; j++) { var cxx = tx0 + 210 + j * 26; el('rect', { x: cxx, y: b - 96, width: 12, height: 96, fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W); el('path', { d: 'M ' + (cxx - 6) + ' ' + (b - 96) + ' Q ' + (cxx + 6) + ' ' + (b - 116) + ' ' + (cxx + 18) + ' ' + (b - 96) + ' Z', fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W); }
-      el('rect', { x: tx0 + 200, y: b - 122, width: 136, height: 8, fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W);
+      T3o('columns', {}); for (j = 0; j < 5; j++) { var cxx = tx0 + 210 + j * 26; el('rect', { x: cxx, y: b - 96, width: 12, height: 96, fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W); el('path', { d: 'M ' + (cxx - 6) + ' ' + (b - 96) + ' Q ' + (cxx + 6) + ' ' + (b - 116) + ' ' + (cxx + 18) + ' ' + (b - 96) + ' Z', fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W); }
+      el('rect', { x: tx0 + 200, y: b - 122, width: 136, height: 8, fill: PAPER, stroke: INK, 'stroke-width': 1.2 }, W); T3c();
       // a ceremony: a procession with lamps, walking into the gateway
       var moving = el('g', {}, W);
       for (j = 0; j < 7; j++) { var pr = el('g', { fill: INK }, moving); el('rect', { x: -1.6 - j * 16, y: -18, width: 3.2, height: 18 }, pr); el('circle', { cx: -j * 16, cy: -21, r: 2.8 }, pr); el('circle', { cx: 5 - j * 16, cy: -16, r: 2.4, fill: CORONA }, pr); }
@@ -2037,15 +2113,12 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         el('circle', { cx: fix(bx), cy: fix(by), r: fix(r() * 1.4 + .4), opacity: fix(.2 + r() * .6 * (1 - Math.abs(v))) }, mw);
       }
       cap('the Milky Way and its dark lanes', cx - 340, b - 580, DIM);
-      // a sandstone escarpment, red-tinted
-      var es = 'M ' + (cx - 100) + ' ' + b + ' L ' + (cx - 90) + ' ' + (b - 80) + ' L ' + (cx + 30) + ' ' + (b - 92) + ' L ' + (cx + 60) + ' ' + (b - 60) + ' L ' + (cx + 110) + ' ' + b + ' Z';
-      el('path', { d: es, fill: '#2a120c', stroke: INK, 'stroke-width': 1.4 }, W); hatch(es, cx - 100, b - 92, cx + 110, b, 5, 0, W, .8, .6); spirits(cx, b);
+      // Uluru, seen from the plain at night: one long red monolith, its gullies cut by rain
+      var ux0 = cx - 150, ux1 = cx + 125, ut = b - 78;
+      var es = 'M ' + ux0 + ' ' + b + ' C ' + (ux0 + 6) + ' ' + (b - 40) + ' ' + (ux0 + 22) + ' ' + (ut + 4) + ' ' + (ux0 + 62) + ' ' + ut + ' L ' + (ux1 - 72) + ' ' + (ut - 4) + ' C ' + (ux1 - 30) + ' ' + ut + ' ' + (ux1 - 8) + ' ' + (b - 34) + ' ' + ux1 + ' ' + b + ' Z';
+      T3o('land', {'data-m': 'mound', 'data-c': '#a8482a'}); el('path', { d: es, fill: '#2a120c', stroke: INK, 'stroke-width': 1.4 }, W); hatch(es, ux0, ut - 4, ux1, b, 5, Math.PI / 2, W, .8, .6); T3c(); spirits(cx, b);
       el('path', { d: es, fill: 'none', stroke: EMBER, 'stroke-width': 1, opacity: .7, transform: 'translate(3 -2)' }, W);
-      // a boab, properly bottle-shaped
-      var bt = cx + 330, trunk = 'M ' + (bt - 30) + ' ' + b + ' C ' + (bt - 48) + ' ' + (b - 50) + ' ' + (bt - 34) + ' ' + (b - 92) + ' ' + (bt - 8) + ' ' + (b - 104) + ' L ' + (bt + 8) + ' ' + (b - 104) + ' C ' + (bt + 34) + ' ' + (b - 92) + ' ' + (bt + 48) + ' ' + (b - 50) + ' ' + (bt + 30) + ' ' + b + ' Z';
-      el('path', { d: trunk, fill: PAPER, stroke: INK, 'stroke-width': 1.5 }, W); hatch(trunk, bt - 48, b - 104, bt + 48, b, 4, Math.PI / 2, W, .8, .5);
-      var brg = el('g', { stroke: INK, 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round' }, W);
-      [[-1, -30, -40], [-.5, -18, -56], [0, 0, -60], [.5, 18, -54], [1, 34, -38], [-.8, -44, -22], [.9, 46, -18]].forEach(function (q) { el('path', { d: 'M ' + (bt + q[0] * 6) + ' ' + (b - 102) + ' q ' + (q[1] * .4) + ' ' + (q[2] * .6) + ' ' + q[1] + ' ' + q[2] }, brg); el('path', { d: 'M ' + (bt + q[1]) + ' ' + (b - 102 + q[2]) + ' l -6 -8 m 6 8 l 7 -6', 'stroke-width': 1.2 }, brg); });
+      cap('Uluru, from a respectful distance', ux0 + 4, ut - 22, DIM);
       // star walkers with red torches, single file along a winding track
       var track = 'M ' + (cx + 200) + ' ' + b + ' C ' + (cx + 120) + ' ' + (b - 4) + ' ' + (cx) + ' ' + (b + 2) + ' ' + (cx - 100) + ' ' + b;
       el('path', { d: track, stroke: INK, 'stroke-width': 1, 'stroke-dasharray': '2 6', fill: 'none', opacity: .6 }, W);
@@ -2113,15 +2186,15 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     function sIce(cx) {
       var b = groundY(cx) - 6;
       var ice = 'M ' + (cx - 60) + ' ' + b + ' V ' + (b - 34) + ' L ' + (cx - 20) + ' ' + (b - 44) + ' H ' + (cx + 90) + ' L ' + (cx + 110) + ' ' + b + ' Z';
-      el('path', { d: ice, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(ice, cx - 60, b - 44, cx + 110, b, 5, Math.PI / 2, W, .7, .5);
+      T3o('blocks', {'data-d': 100, 'data-c': '#d6e8ef'}); el('path', { d: ice, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(ice, cx - 60, b - 44, cx + 110, b, 5, Math.PI / 2, W, .7, .5); T3c();
       [[cx - 10, 0], [cx + 40, 1]].forEach(function (t2) {
         var tent = 'M ' + (t2[0] - 18) + ' ' + (b - 44) + ' L ' + t2[0] + ' ' + (b - 74) + ' L ' + (t2[0] + 18) + ' ' + (b - 44) + ' Z';
-        el('path', { d: tent, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(tent, t2[0] - 18, b - 74, t2[0] + 18, b - 44, 3, -.9, W, .7, .7);
+        T3o('blocks', {'data-d': 40, 'data-c': '#e8dcc4'}); el('path', { d: tent, fill: PAPER, stroke: INK, 'stroke-width': 1.4 }, W); hatch(tent, t2[0] - 18, b - 74, t2[0] + 18, b - 44, 3, -.9, W, .7, .7); T3c();
         var glow = el('circle', { cx: t2[0], cy: b - 52, r: 3, fill: CORONA }, W);
         el('animate', { attributeName: 'opacity', values: '1;.4;1', dur: (3 + t2[1]) + 's', repeatCount: 'indefinite' }, glow);
       });
       el('path', { d: 'M ' + (cx + 76) + ' ' + (b - 44) + ' V ' + (b - 92) + ' l 18 6 l -18 6', stroke: INK, 'stroke-width': 1.6, fill: EMBER }, W);
-      for (var j = 0; j < 3; j++) { var px = cx + 120 + j * 20; el('ellipse', { cx: px, cy: b - 12, rx: 6, ry: 12, fill: INK }, W); el('ellipse', { cx: px + 1.4, cy: b - 10, rx: 3, ry: 8.4, fill: PAPER }, W); el('circle', { cx: px, cy: b - 26, r: 4.4, fill: INK }, W); }
+      T3o('penguins', {}); for (var j = 0; j < 3; j++) { var px = cx + 120 + j * 20; el('ellipse', { cx: px, cy: b - 12, rx: 6, ry: 12, fill: INK }, W); el('ellipse', { cx: px + 1.4, cy: b - 10, rx: 3, ry: 8.4, fill: PAPER }, W); el('circle', { cx: px, cy: b - 26, r: 4.4, fill: INK }, W); } T3c();
       // the wind
       var wind = el('g', { stroke: INK, 'stroke-width': 1, fill: 'none', opacity: .6 }, W);
       for (j = 0; j < 7; j++) el('path', { d: 'M ' + (cx - 120 + j * 9) + ' ' + (b - 100 + j * 9) + ' q 40 -8 80 0 q 30 6 50 -4' }, wind);
@@ -2671,14 +2744,80 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     var sx2 = 1300, sy2 = 990, stone = 'M ' + (sx2 - 120) + ' ' + sy2 + ' L ' + (sx2 - 104) + ' ' + (sy2 - 330) + ' Q ' + sx2 + ' ' + (sy2 - 400) + ' ' + (sx2 + 104) + ' ' + (sy2 - 330) + ' L ' + (sx2 + 120) + ' ' + sy2 + ' Z';
     el('path', { d: stone, fill: '#0e0e10', stroke: IK, 'stroke-width': 2 }, SG);
     el('path', { d: 'M ' + (sx2 - 80) + ' ' + (sy2 - 300) + ' Q ' + sx2 + ' ' + (sy2 - 360) + ' ' + (sx2 + 80) + ' ' + (sy2 - 300) + ' L ' + (sx2 + 92) + ' ' + (sy2 - 40) + ' L ' + (sx2 - 92) + ' ' + (sy2 - 40) + ' Z', fill: 'none', stroke: IK, 'stroke-width': 1, 'stroke-dasharray': '3 5', opacity: .6 }, SG);
-    ['ᚠ ᚢ ᚦ ᚨ ᚱ', 'THE VISITOR', 'AT LUXOR', 'IS WATCHING', 'THE SKY.', 'MEET ITS EYE,', 'THEN THE SUN.', "· '27 ·"].forEach(function (l, j) {
+    ['ᚠ ᚢ ᚦ ᚨ ᚱ', 'OVER THE', 'OUTBACK,', 'THE SHADOW', 'IS IN NO HURRY.', 'HOLD THE SUN', 'AND STAY.', "· '28 ·"].forEach(function (l, j) {
       var t = el('text', { x: sx2, y: sy2 - 284 + j * 30, 'text-anchor': 'middle', 'font-family': j === 0 ? 'Geist Mono, monospace' : 'IM Fell English, Georgia, serif', 'font-size': j === 0 ? 20 : 24, 'letter-spacing': j === 0 ? 6 : 2, fill: j === 7 ? CO : IK }, SG); t.textContent = l;
     });
     var gl = el('path', { d: stone, fill: TQ, opacity: 0 }, SG);
     el('animate', { attributeName: 'opacity', values: '0;.09;0', dur: '5s', repeatCount: 'indefinite' }, gl);
+    oneSeeker(W2, 1490, 975, 120, false, 'a26'); // the One Seeker, on the floor that never closed
     el('rect', { x: 1, y: 1, width: 1598, height: 998, fill: 'none', stroke: IK, 'stroke-width': 2, opacity: .4 }, W2);
   }
   // ---------- in the realms, everyone can be woken: tap them and they glow and dance ----------
+  // ---------- Seeker 123: tap him wherever he turns up and his card opens; find him in all six places and he nods ----------
+  var S123_PLACES = [
+    ['moon', 'The Moon', "Camp '36. He was already here when the first crew landed. Nobody knows how he got here."],
+    ['a26', 'Universe 26-A', 'Iceland, the floor that never closed. He asked the huldufólk first. They let him through.'],
+    ['b27', 'Universe 27-B', 'Everything here is mirrored except him. Born in the shadow, he has no reflection.'],
+    ['c28', 'Universe 28-C', 'The Outback. He walked with the red torches, and his eye did not glow once, out of respect.'],
+    ['d36', 'Universe 36-D', 'Among the crew who stayed. He kept the floor warm and the count going.'],
+    ['m45', '1·23·45', 'The end of his number. The start of the next Seeker Cycle.']
+  ];
+  var S123_LORE = [
+    'The first Seeker who was not human. Built in the days before the Great North American Eclipse from what was lying around Texas Eclipse: an old welding helmet, a camp light, the guts of a weather station and a solar viewer.',
+    'He was switched on at 1:23 pm, minutes before the shadow arrived. His serial number is that time: 1·2·3. He has been waiting for the 4 and the 5 ever since. On 23 January 2045 he becomes 1·23·45, and his number is complete.',
+    'The first thing he ever saw was totality, and his pupil never closed again. Look closely: his eye is a small eclipse, a black disk inside a thin ring of light. That is why the Sun does not hurt him, and why he can see the city lights from the Moon.',
+    'Arms up, always. His heart rate matches the kick: 145 on the Moon floor. He counts sunsets, eight an hour on the rock, and has never lost count. He does not talk. He logs the time, the place, and how many people were looking up.',
+    'Nobody has seen inside the helmet. The visor shows whoever is looking at it.'
+  ];
+  var s123El = null;
+  function s123Fig(parent) { var sv = el('svg', { viewBox: '-0.36 -0.5 0.72 0.94', role: 'img', 'aria-label': 'Seeker 123, arms up' }, parent); oneSeeker(sv, 0, 0.42, 0.86); return sv; }
+  function openS123(where) {
+    var seen = {}; try { seen = JSON.parse(localStorage.getItem('em-s123') || '{}'); } catch (e) {}
+    var fresh = where && !seen[where]; if (where) seen[where] = 1; try { localStorage.setItem('em-s123', JSON.stringify(seen)); } catch (e) {}
+    var n = S123_PLACES.filter(function (p) { return seen[p[0]]; }).length, all = n === S123_PLACES.length;
+    if (!s123El) {
+      s123El = document.createElement('div'); s123El.className = 's123'; s123El.hidden = true; s123El.setAttribute('role', 'dialog'); s123El.setAttribute('aria-modal', 'true'); s123El.setAttribute('aria-label', 'Seeker 123');
+      s123El.innerHTML = '<div class="s123-c"><button type="button" class="s123-x">Close</button><div class="s123-top"><div class="s123-f"></div><div><span class="eyebrow">You found him</span><h3>Seeker 123</h3><span class="born">Born 8 Apr 2024 · Texas · in the shadow</span></div></div><p class="here"></p><div class="s123-lore"></div><p class="s123-n"></p><div class="s123-dots"></div></div>';
+      document.body.appendChild(s123El);
+      s123Fig(s123El.querySelector('.s123-f'));
+      s123El.querySelector('.s123-lore').innerHTML = S123_LORE.map(function (t) { return '<p>' + t + '</p>'; }).join('');
+      s123El.querySelector('.s123-lore').style.cssText = 'display:grid;gap:10px';
+      function close() { s123El.hidden = true; }
+      s123El.querySelector('.s123-x').addEventListener('click', close);
+      s123El.addEventListener('click', function (e) { if (e.target === s123El) close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !s123El.hidden) { e.stopPropagation(); close(); } }, true);
+    }
+    var here = S123_PLACES.filter(function (p) { return p[0] === where; })[0];
+    s123El.querySelector('.here').textContent = here ? here[1] + '. ' + here[2] : '';
+    s123El.querySelector('.here').hidden = !here;
+    s123El.querySelector('.s123-dots').innerHTML = S123_PLACES.map(function (p) { return '<span class="' + (seen[p[0]] ? 'on' : '') + '"><i></i>' + (seen[p[0]] ? p[1] : '?') + '</span>'; }).join('');
+    s123El.querySelector('.s123-n').textContent = all ? 'Spotted in all six places. He nods.' : 'Spotted ' + n + ' of 6' + (fresh ? ' · new sighting' : '') + ' · he hides in every universe';
+    s123El.classList.toggle('all', all);
+    s123El.hidden = false; s123El.querySelector('.s123-x').focus({ preventScroll: true });
+  }
+  window.openS123 = openS123;
+  [].forEach.call(document.querySelectorAll('.s123-art'), function (n) { s123Fig(n); });
+  // Seeker 123 (the One Seeker from 1·23·45), arms up, the eye in the visor: Mitch, hiding in every universe
+  function oneSeeker(parent, x, y, h, flip, where) {
+    var k = h / 0.86, g = el('g', { 'class': 'one-seeker', transform: 'translate(' + x.toFixed(1) + ' ' + (y - 0.42 * k).toFixed(1) + ') scale(' + (flip ? -k : k).toFixed(2) + ' ' + k.toFixed(2) + ')' }, parent);
+    el('title', {}, g).textContent = 'Seeker 123';
+    if (where) { g.setAttribute('role', 'button'); g.setAttribute('tabindex', '0'); g.setAttribute('aria-label', 'Seeker 123: who is this?'); g.addEventListener('click', function (e) { e.stopPropagation(); e.preventDefault(); openS123(where); }); g.addEventListener('pointerdown', function (e) { e.stopPropagation(); }); g.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openS123(where); } }); }
+    var bob = el('animateTransform', { attributeName: 'transform', type: 'translate', additive: 'sum', values: '0 0; 0 -0.018; 0 0', dur: '0.83s', repeatCount: 'indefinite' }, g);
+    el('path', { d: 'M -0.1 0.02 L -0.095 0.34 L -0.02 0.34 L -0.01 0.04 Z M 0.1 0.02 L 0.095 0.34 L 0.02 0.34 L 0.01 0.04 Z', fill: '#e8e3d9' }, g);
+    el('path', { d: 'M -0.11 0.33 h 0.1 v 0.07 h -0.1 Z M 0.01 0.33 h 0.1 v 0.07 h -0.1 Z', fill: '#26221e' }, g);
+    el('path', { d: 'M -0.12 -0.22 Q -0.15 -0.05 -0.11 0.05 L 0.11 0.05 Q 0.15 -0.05 0.12 -0.22 Z', fill: '#efebe3' }, g);
+    el('path', { d: 'M -0.11 -0.19 Q -0.22 -0.26 -0.25 -0.4 M 0.11 -0.19 Q 0.22 -0.26 0.25 -0.4', fill: 'none', stroke: '#e4dfd5', 'stroke-width': 0.055, 'stroke-linecap': 'round' }, g);
+    el('circle', { cx: -0.25, cy: -0.42, r: 0.03, fill: '#3a342d' }, g); el('circle', { cx: 0.25, cy: -0.42, r: 0.03, fill: '#3a342d' }, g);
+    el('rect', { x: -0.06, y: -0.17, width: 0.12, height: 0.08, fill: '#d6d0c5', stroke: '#7d766b', 'stroke-width': 0.006 }, g);
+    ['#50e3ff', '#e2502a', '#f2a65a'].forEach(function (c, i) { var d = el('circle', { cx: (-0.035 + i * 0.035).toFixed(3), cy: -0.13, r: 0.009, fill: c }, g); el('animate', { attributeName: 'opacity', values: '1;.2;1', dur: (0.6 + i * 0.25) + 's', repeatCount: 'indefinite' }, d); });
+    var hel = el('circle', { cx: 0, cy: -0.3, r: 0.08, fill: '#ece8df' }, g);
+    el('circle', { cx: 0, cy: -0.3, r: 0.05, fill: '#2a1d0b' }, g);
+    el('circle', { cx: 0, cy: -0.3, r: 0.042, fill: '#2d6f78' }, g);
+    el('circle', { cx: 0, cy: -0.3, r: 0.026, fill: '#9a6a2c', opacity: 0.8 }, g);
+    el('circle', { cx: 0, cy: -0.3, r: 0.016, fill: '#030305', stroke: 'rgba(226,80,42,.7)', 'stroke-width': 0.004 }, g);
+    el('ellipse', { cx: -0.022, cy: -0.326, rx: 0.016, ry: 0.003, transform: 'rotate(-45 -0.022 -0.326)', fill: 'rgba(255,255,255,.45)' }, g);
+    return g;
+  }
   function dancer(parent, glow, box, cls) {
     var g = el('g', { 'class': cls || 'dz', style: '--glow: ' + (glow || '#f2a65a') + '; --d: -' + (Math.random() * .4).toFixed(2) + 's' }, parent);
     if (box) el('rect', { x: box[0].toFixed(1), y: box[1].toFixed(1), width: box[2].toFixed(1), height: box[3].toFixed(1), fill: 'transparent', stroke: 'none' }, g);
@@ -2867,8 +3006,9 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     // the way onward, written in dots over the horizon
     var q;
     el('rect', { x: 540, y: 600, width: 520, height: 72, rx: 6, fill: BG, opacity: .88 }, W2);
-    ["THE VISITORS STAYED · '36", 'KNOCK AT THE CAMP'].forEach(function (l, j) { var tw = el('text', { x: 800, y: 626 + j * 30, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 18, 'letter-spacing': 5, fill: CO }, W2); tw.textContent = l; });
+    ["THE FLOOR ON THE MOON · '40", 'FOUR ON THE FLOOR'].forEach(function (l, j) { var tw = el('text', { x: 800, y: 626 + j * 30, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 18, 'letter-spacing': 5, fill: CO }, W2); tw.textContent = l; });
     for (q = 0; q < 2; q++) for (var dd = 0; dd < 5; dd++) el('circle', { cx: f(800 + (q ? 1 : -1) * (196 + dd * 14)), cy: 634, r: f(2.6 - dd * .35), fill: CO, opacity: .8 }, W2);
+    oneSeeker(W2, 1505, 905, 84, false, 'c28'); // the One Seeker, waiting out the hour
     el('rect', { x: 1, y: 1, width: 1598, height: 998, fill: 'none', stroke: IK, 'stroke-width': 2, opacity: .35 }, W2);
   }
 
@@ -2952,6 +3092,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     // what the visitors have to say
     el('rect', { x: 560, y: 402, width: 480, height: 72, rx: 6, fill: BG, opacity: .85 }, W2);
     ['WE KEPT THE FLOOR WARM', "· '40 ·"].forEach(function (l, j) { var tw = el('text', { x: 800, y: 430 + j * 30, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 18, 'letter-spacing': 5, fill: TQ }, W2); tw.textContent = l; });
+    oneSeeker(W2, 1262, 905, 96, false, 'd36'); // the One Seeker, among the crew
     el('rect', { x: 1, y: 1, width: 1598, height: 998, fill: 'none', stroke: IK, 'stroke-width': 2, opacity: .35 }, W2);
   }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (!portal28.hidden) leave28(); if (!portal36.hidden) leave36(); } });
@@ -3076,6 +3217,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     el('rect', { x: -142, y: -30, width: 284, height: 60, fill: 'none', stroke: EM, 'stroke-width': 1 }, st);
     var t1 = el('text', { x: 0, y: -4, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 20, 'letter-spacing': 5, fill: EM }, st); t1.textContent = 'LOG · 1·23·45';
     var t2 = el('text', { x: 0, y: 20, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 12, 'letter-spacing': 4, fill: EM }, st); t2.textContent = 'FOUR ON THE FLOOR';
+    oneSeeker(S, 1290, 690, 104, false, 'm45'); // the One Seeker, already here
   }
 
   // ---------- card I: the Eclipse Trilogy, drawn from Orion's Belt ----------
@@ -3178,7 +3320,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       b.setAttribute('attributeName', 'transform'); b.setAttribute('type', 'translate'); b.setAttribute('values', '0 0; 0 -14; 0 0'); b.setAttribute('dur', (6 + i * 2) + 's'); b.setAttribute('repeatCount', 'indefinite'); g.appendChild(b);
     });
     // a tablet the visitors stand beside, carved in mirror writing (time runs the other way here):
-    // the way onward is on the Moon, on the floor, four times.
+    // the way onward is on the Moon: the visitors stayed, at the camp.
     (function () {
       var tb = el('g', {}, W2);
       el('path', { d: 'M 690 880 L 690 724 Q 800 680 910 724 L 910 880 Z', fill: BG, stroke: DK, 'stroke-width': 2.4 }, tb);
@@ -3186,8 +3328,8 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       var md = el('g', { transform: 'translate(800 742)' }, tb);
       for (var k = 0; k < 3; k++) for (var j = 0; j < 10; j++) { var a = j / 10 * Math.PI * 2 + k * .3, R = 5 + k * 5; el('ellipse', { cx: (Math.cos(a) * R).toFixed(1), cy: (Math.sin(a) * R).toFixed(1), rx: 4 + k, ry: 1.4, transform: 'rotate(' + (a * 180 / Math.PI).toFixed(1) + ' ' + (Math.cos(a) * R).toFixed(1) + ' ' + (Math.sin(a) * R).toFixed(1) + ')', fill: 'none', stroke: DK, 'stroke-width': 1 }, md); }
       var mir = el('g', { id: 'mir27', transform: 'translate(1600 0) scale(-1 1)' }, tb);
-      [['FOUR ON', 792], ['THE FLOOR', 822]].forEach(function (l) { var t = el('text', { x: 800, y: l[1], 'text-anchor': 'middle', 'font-family': 'IM Fell English, Georgia, serif', 'font-size': 26, 'letter-spacing': 3, fill: DK }, mir); t.textContent = l[0]; });
-      var t2 = el('text', { x: 800, y: 856, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 15, 'letter-spacing': 4, fill: '#e2502a' }, mir); t2.textContent = "• • • •  '40";
+      [['KNOCK AT', 792], ['THE CAMP', 822]].forEach(function (l) { var t = el('text', { x: 800, y: l[1], 'text-anchor': 'middle', 'font-family': 'IM Fell English, Georgia, serif', 'font-size': 26, 'letter-spacing': 3, fill: DK }, mir); t.textContent = l[0]; });
+      var t2 = el('text', { x: 800, y: 856, 'text-anchor': 'middle', 'font-family': 'Geist Mono, monospace', 'font-size': 15, 'letter-spacing': 4, fill: '#e2502a' }, mir); t2.textContent = "• THEY STAYED • '36";
     })();
     // the visitors from the frieze, full size, here to meet you
     [[640, 900], [960, 900]].forEach(function (p, i) {
@@ -3209,6 +3351,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     });
     // stipple stars, in ink
     for (var i2 = 0; i2 < 300; i2++) el('circle', { cx: (r() * 1600).toFixed(0), cy: (r() * 700).toFixed(0), r: (r() * 1.6 + .4).toFixed(1), fill: DK, opacity: (r() * .6 + .2).toFixed(2) }, W2);
+    oneSeeker(W2, 1420, 935, 118, false, 'b27'); // the One Seeker: the only thing here that is not mirrored
   }
 
 
@@ -4131,11 +4274,11 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
 
     // ---------- the secrets, teased: glints on the plate, whispers on hover, a tally and riddles ----------
     var SECRETS = [
-      { k: 'a26', el: 'portal26', riddle: "Iceland keeps an old courtesy: the hidden folk are asked first. There is a door beside them.", step: 2 },
+      { k: 'a26', el: 'portal26', riddle: "Iceland keeps an old courtesy: the hidden folk are asked first. There is a door beside them, and it opens for Seekers.", step: 2 },
       { k: 'b27', el: 'portal', riddle: "Something at Luxor is watching the sky. Meet its gaze, then follow it up.", step: 3 },
-      { k: 'c28', el: 'portal28', riddle: "The shadow over the Outback is in no hurry. Neither should you be: stay in it.", step: 4 },
+      { k: 'c28', el: 'portal28', riddle: "The shadow over the Outback is in no hurry. Neither should you be: stay in it, once Iceland has vouched for you.", step: 4 },
       { k: 'd36', el: 'portal36', riddle: "The visitors from Luxor stayed on the Moon. Knock at the camp, once they know you.", step: 8 },
-      { k: 'm45', el: 'm45', riddle: "The floor on the Moon keeps time at 145. It answers to four on the floor.", step: 9 }
+      { k: 'm45', el: 'm45', riddle: "The floor on the Moon keeps time at 145. It answers to four on the floor, once the Outback has let you in.", step: 9 }
     ];
     var found = {};
     try { found = JSON.parse(localStorage.getItem('em-secrets') || '{}') || {}; } catch (e) { found = {}; }
@@ -4178,7 +4321,7 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           cio.track('secrets_complete', { source: 'eclipsemissions.com', name: name, email: v, note: note, secrets: SECRETS.map(function (q) { return q.k; }) });
         } catch (x) {}
       }
-      try { localStorage.setItem('em-list', '1'); } catch (x) {}
+      try { localStorage.setItem('em-list', '1'); localStorage.setItem('em-seeker', '1'); } catch (x) {}
       document.getElementById('fv-err').hidden = true; fvf.hidden = true; document.getElementById('fv-done').hidden = false;
     });
     sx.addEventListener('click', function () {
@@ -4316,6 +4459,35 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         } catch (x) {}
       }
       err.hidden = true; full.hidden = true; document.getElementById('j-done').hidden = false;
+      try { localStorage.setItem('em-seeker', '1'); } catch (x) {}
+    });
+
+    // ---------- the chain: Seeker → 26-A (Iceland) → 28-C (Outback) → 1·23·45 (the floor). 27-B → 36-D runs on its own ----------
+    var gate = document.getElementById('gate'), enter26Open = enter26, enter28Open = enter28, open45Open = open45, gateTo = null;
+    function isSeeker() { try { return localStorage.getItem('em-seeker') === '1' || localStorage.getItem('em-list') === '1'; } catch (e) { return false; } }
+    var GATES = {
+      a26: { e: '<b>Universe 26-A</b> · via Iceland', h: 'The door only opens for Seekers.', p: 'The hidden folk were asked, and they answered: they keep this door for the people who have joined the mission. Become a Seeker, then come back and knock.', go: 'Become a Seeker →', to: 'join' },
+      c28: { e: '<b>Universe 28-C</b> · via the Outback', h: "The shadow won't let you in yet.", p: 'Nobody walks into an hour of totality cold. Find your way through Iceland first: the hidden folk will vouch for you, and their runestone says how to stay.', go: 'Take me to Iceland →', to: 2 },
+      m45: { e: '<b>1·23·45</b> · the floor on the Moon', h: "The floor isn't playing for you yet.", p: "It only keeps time for those who have stayed in the Outback's shadow. Find Universe 28-C first, then come back and keep the beat.", go: 'Take me to the Outback →', to: 4 }
+    };
+    function gateShow(k) {
+      var g = GATES[k]; gateTo = g.to;
+      document.getElementById('gate-e').innerHTML = g.e; document.getElementById('gate-h').textContent = g.h; document.getElementById('gate-p').textContent = g.p;
+      var b = document.getElementById('gate-go'); b.textContent = g.go; b.setAttribute('href', g.to === 'join' ? '#join' : '#top');
+      gate.hidden = false; setTimeout(function () { b.focus(); }, 30);
+    }
+    function gateClose() { gate.hidden = true; }
+    enter26 = function () { if (isSeeker()) return enter26Open(); gateShow('a26'); };
+    enter28 = function () { if (found.a26) return enter28Open(); gateShow('c28'); };
+    open45 = function () { if (found.c28) return open45Open(); gateShow('m45'); };
+    document.getElementById('gate-x').addEventListener('click', gateClose);
+    document.getElementById('gate-no').addEventListener('click', gateClose);
+    gate.addEventListener('click', function (e) { if (e.target === gate) gateClose(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !gate.hidden) gateClose(); });
+    document.getElementById('gate-go').addEventListener('click', function (e) {
+      gateClose();
+      if (gateTo === 'join') { setTimeout(function () { var n = document.getElementById('j-name'); if (n) n.focus({ preventScroll: true }); }, 700); return; }
+      e.preventDefault(); go(gateTo);
     });
 
     // ---------- the briefing: what this is and how to use it. Opens on a first visit; the ? button reopens it ----------
@@ -4444,20 +4616,51 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
     })();
 
     // ---------- Witness: Mission '36, first person. The Sun goes behind Earth, scrubbed by scroll ----------
+    // You can look all the way round (drag), and hop between places on the Moon from the map: the One Seeker goes with you.
     (function () {
       var sec = document.getElementById('witness'); if (!sec) return;
       var cv = document.getElementById('wx-cv'), ctx = cv.getContext('2d');
       var caps = sec.querySelectorAll('.wx-cap'), hudPh = document.getElementById('wx-ph'), hudT = document.getElementById('wx-t'), bar = document.getElementById('wx-bar');
-      var W = 0, H = 0, DPR = 1, S = 0, E = { x: 0, y: 0 }, R = 0, r = 0, HZ = 0, stars = null, lights = [], rocks = [], dust = [];
+      var W = 0, H = 0, DPR = 1, S = 0, E = { x: 0, y: 0 }, R = 0, r = 0, HZ = 0, K = 1, PW = 1, stars = null, lights = [], rocks = [], dust = [];
       var target = 0, prog = 0, visible = false, raf = 0, t0 = performance.now();
       var imgD = new Image(), imgN = new Image(); imgD.src = WX_DAY; imgN.src = WX_NIGHT;
-      var osc = document.createElement('canvas'), osx = osc.getContext('2d');
+      var osc = document.createElement('canvas'), osx = osc.getContext('2d'), fg = document.createElement('canvas'), fgx = fg.getContext('2d');
       function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
       function ss(a, b, v) { var k = clamp((v - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); }
       function lerp(a, b, k) { return a + (b - a) * k; }
       function mix(c1, c2, k) { return [lerp(c1[0], c2[0], k), lerp(c1[1], c2[1], k), lerp(c1[2], c2[2], k)]; }
       function rgb(c, a) { return 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',' + (a == null ? 1 : a) + ')'; }
       function rnd(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+      var TAU = Math.PI * 2;
+      function wrapPi(a) { a = (a + Math.PI) % TAU; if (a < 0) a += TAU; return a - Math.PI; }
+
+      // ---- the places: where Earth stands in the sky depends on where you stand on the Moon ----
+      // el/az: Earth's elevation and bearing (degrees), from each place's latitude and longitude
+      function earthFrom(lat, lon) {
+        var p1 = lat * Math.PI / 180, l1 = lon * Math.PI / 180, dl = -l1;
+        var cd = Math.sin(p1) * 0 + Math.cos(p1) * Math.cos(dl), d = Math.acos(clamp(cd, -1, 1));
+        var az = Math.atan2(Math.sin(dl), -Math.sin(p1) * Math.cos(dl));
+        return { el: 90 - d * 180 / Math.PI, az: az };
+      }
+      var SITES = [
+        { id: 'camp', name: "Camp '36", place: 'Mare Imbrium, by the Apennines', lat: 25, lon: -3, seed: 11, day: [176, 170, 160], ridge: function (a) { return 0.035 + 0.025 * Math.sin(a * 3 + 1) + 0.012 * Math.sin(a * 11) + 0.02 * Math.max(0, Math.sin(a * 2 - 2.2)); },
+          props: [['dome', .14, .02, .035], ['dome', .21, .03, .024], ['lander', -.28, .03, .15], ['rover', .056, .1, .07], ['seeker', -.63, .42, 1.25, 0], ['one', -.5, .22, 1.15], ['seeker', .38, .3, 1.05, 2], ['seeker', .49, .12, .75, 0],
+            ['dome', 2.6, .02, .03], ['dome', 2.75, .04, .022], ['lander', 3.4, .02, .11], ['seeker', 3.0, .3, 1.0, 1], ['seeker', 3.2, .45, 1.2, 0], ['rover', -2.2, .06, .06]] },
+        { id: 'tranq', name: 'Tranquility Base', place: 'Apollo 11, 20 July 1969', lat: 0.67, lon: 23.47, seed: 69, day: [168, 162, 150], ridge: function (a) { return 0.012 + 0.006 * Math.sin(a * 4 + .5) + 0.004 * Math.sin(a * 13) + 0.03 * Math.max(0, Math.sin(a - 1.4)) ; },
+          props: [['apollo', -.45, .1, .13], ['flag', -.32, .14, .09], ['lrrr', -.2, .18, .05], ['psep', -.62, .16, .045], ['prints', -.4, .3, 1], ['one', -.05, .3, 1.1], ['seeker', .3, .38, 1.1, 2], ['seeker', -.85, .3, .9, 0], ['lander', 2.8, .03, .11], ['dome', 3.1, .03, .028]] },
+        { id: 'medii', name: 'Sinus Medii', place: 'The middle of the near side', lat: 0.47, lon: -1.43, seed: 6, day: [172, 166, 156], ridge: function (a) { return 0.01 + 0.005 * Math.sin(a * 5) + 0.003 * Math.sin(a * 17 + 2); },
+          props: [['surveyor', .35, .1, .07], ['one', -.15, .26, 1.15], ['seeker', .1, .4, 1.15, 1], ['seeker', -.5, .3, 1.0, 1], ['seeker', .7, .22, .85, 2], ['dome', 2.4, .03, .03], ['rover', -2.4, .05, .06]] },
+        { id: 'pole', name: 'South Pole', place: 'The rim of Shackleton crater', lat: -89.9, lon: 0, el: 4, seed: 89, day: [150, 146, 140], pole: true, crater: [Math.PI, 1.2], ridge: function (a) { var m = Math.exp(-Math.pow(wrapPi(a + 1.25) / .5, 2)); return 0.018 + 0.006 * Math.sin(a * 7) + 0.2 * m + 0.05 * Math.exp(-Math.pow(wrapPi(a - 1.1) / .35, 2)); },
+          props: [['tower', .55, .02, .2], ['tower', .78, .015, .17], ['tower', -.6, .03, .22], ['hab', -.3, .06, .09], ['miner', .25, .1, .07], ['one', -.08, .3, 1.15], ['seeker', .4, .35, 1.05, 2], ['seeker', -.75, .26, .9, 0]] },
+        { id: 'npole', name: 'North Pole', place: 'The rim of Peary crater', lat: 89.9, lon: 0, el: 5, seed: 91, day: [158, 154, 146], pole: true, crater: [Math.PI + 0.5, 0.8], ridge: function (a) { return 0.022 + 0.008 * Math.sin(a * 5 + 1) + 0.004 * Math.sin(a * 19) + 0.07 * Math.exp(-Math.pow(wrapPi(a - 1.6) / .6, 2)) + 0.045 * Math.exp(-Math.pow(wrapPi(a + 0.9) / .3, 2)); },
+          props: [['starship', .62, .03, .26], ['beacon', -.45, .04, .14], ['beacon', 1.1, .02, .12], ['dome', -.22, .05, .03], ['dome', -.12, .06, .022], ['rover', .3, .12, .065], ['one', .08, .3, 1.15], ['seeker', -.38, .34, 1.1, 1], ['seeker', .48, .24, .9, 0], ['dome', 2.6, .03, .028]] },
+        { id: 'far', name: 'The far side', place: 'Daedalus crater', lat: -5.9, lon: 179.4, seed: 179, day: [120, 118, 116], far: true, ridge: function (a) { return 0.045 + 0.03 * Math.sin(a * 3 + 2) + 0.015 * Math.sin(a * 9) + 0.008 * Math.sin(a * 23); },
+          props: [['dish', .1, .012, .3], ['rover', -.45, .1, .06], ['one', -.2, .3, 1.15]] }
+      ];
+      SITES.forEach(function (s) { var e = earthFrom(s.lat, s.lon); s.el = s.el != null ? s.el : e.el; s.az = s.pole || s.far ? 0 : e.az; });
+      var SITE = SITES[0], yaw = 0, yawV = 0, trans = 0, nextSite = null;
+      function compass(az) { var d = ((az * 180 / Math.PI) % 360 + 360) % 360; return ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west'][Math.round(d / 45) % 8]; }
+      function earthNote(s) { if (s.far) return 'Earth is below the horizon'; if (s.pole) return 'Earth on the horizon'; if (s.el > 85) return 'Earth straight overhead'; return 'Earth ' + Math.round(s.el) + '° up, ' + (s.lat > 0 && Math.abs(s.lon) < 10 ? 'south' : compass(s.az)); }
 
       // the geometry: Earth hangs above the horizon, ~3.7 times the Sun's width, as it does from the Moon
       function layout() {
@@ -4466,39 +4669,39 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
         var port = H > W; S = Math.min(W, H);
         R = port ? W * 0.25 : S * 0.17; r = R / 3.7;
-        E.x = W * (port ? 0.5 : 0.56); E.y = H * (port ? 0.32 : 0.34);
         HZ = H * (port ? 0.71 : 0.73);
-        var g = rnd(7);
-        // stars, with a Milky Way band, drawn once
-        stars = document.createElement('canvas'); stars.width = cv.width; stars.height = cv.height;
-        var sc = stars.getContext('2d'); sc.setTransform(DPR, 0, 0, DPR, 0, 0);
-        var n = Math.round(W * H / 900);
-        for (var i = 0; i < n; i++) {
-          var x = g() * W, y = g() * HZ, m = Math.pow(g(), 3);
-          sc.fillStyle = 'rgba(' + (220 + g() * 35 | 0) + ',' + (215 + g() * 35 | 0) + ',255,' + (0.25 + m * 0.75) + ')';
-          sc.beginPath(); sc.arc(x, y, 0.35 + m * 1.3, 0, 7); sc.fill();
-        }
-        for (i = 0; i < n * 2.2; i++) { // the band
-          var u = g(), x2 = u * W, y2 = H * 0.62 - u * H * 0.55 + (g() + g() + g() - 1.5) * H * 0.07;
-          if (y2 > HZ || y2 < 0) continue;
-          sc.fillStyle = 'rgba(235,225,210,' + (0.08 + g() * 0.35) + ')'; sc.fillRect(x2, y2, 0.7, 0.7);
-        }
-        var mw = sc.createLinearGradient(0, H * 0.62, W, H * 0.07);
-        sc.globalCompositeOperation = 'lighter';
-        for (i = 0; i < 26; i++) { var u2 = g(); var cx = u2 * W, cy = H * 0.62 - u2 * H * 0.55 + (g() - .5) * H * 0.05, rr = S * (0.05 + g() * 0.08); var rg = sc.createRadialGradient(cx, cy, 0, cx, cy, rr); rg.addColorStop(0, 'rgba(200,190,220,0.03)'); rg.addColorStop(1, 'rgba(200,190,220,0)'); sc.fillStyle = rg; sc.fillRect(cx - rr, cy - rr, rr * 2, rr * 2); }
-        sc.globalCompositeOperation = 'source-over';
+        K = W / (port ? 0.95 : 1.4); PW = Math.round(TAU * K);
+        buildSite();
         // cities on Earth's night side, which faces the Moon
         lights = []; var h = rnd(36);
-        for (i = 0; i < 9; i++) {
+        for (var i = 0; i < 9; i++) {
           var a = h() * 6.28, d = Math.sqrt(h()) * 0.82, cx2 = Math.cos(a) * d, cy2 = Math.sin(a) * d * 0.9, k = 4 + (h() * 26 | 0);
           for (var j = 0; j < k; j++) { var px = cx2 + (h() - .5) * 0.22, py = cy2 + (h() - .5) * 0.16; if (px * px + py * py < 0.9) lights.push([px, py, 0.3 + h() * 0.7]); }
         }
-        // rocks and boulders in the foreground
-        rocks = []; var q = rnd(11);
-        for (i = 0; i < 22; i++) { var ry = HZ + Math.pow(q(), 1.6) * (H - HZ); rocks.push([q() * W, ry, (2 + q() * 9) * (0.4 + (ry - HZ) / (H - HZ) * 2.4)]); }
-        dust = []; for (i = 0; i < 40; i++) dust.push([q() * W, HZ + q() * (H - HZ), q() * 6.28, 0.3 + q()]);
       }
-
+      // the sky all the way round, and the ground of this place
+      function buildSite() {
+        var g = rnd(SITE.seed * 7 + 3), i;
+        stars = document.createElement('canvas'); stars.width = PW; stars.height = Math.ceil(HZ);
+        var sc = stars.getContext('2d'), n = Math.round(PW * HZ / (SITE.far ? 520 : 900));
+        for (i = 0; i < n; i++) {
+          var x = g() * PW, y = g() * HZ, m = Math.pow(g(), 3);
+          sc.fillStyle = 'rgba(' + (220 + g() * 35 | 0) + ',' + (215 + g() * 35 | 0) + ',255,' + (0.25 + m * 0.75) + ')';
+          sc.beginPath(); sc.arc(x, y, 0.35 + m * 1.3, 0, 7); sc.fill();
+        }
+        var ph = g() * TAU;
+        function band(u) { return HZ * (0.5 + 0.38 * Math.sin(u * TAU + ph)); }
+        for (i = 0; i < n * 2.2; i++) { var u = g(), y2 = band(u) + (g() + g() + g() - 1.5) * H * 0.07; if (y2 > HZ || y2 < 0) continue; sc.fillStyle = 'rgba(235,225,210,' + (0.08 + g() * 0.35) + ')'; sc.fillRect(u * PW, y2, 0.8, 0.8); }
+        sc.globalCompositeOperation = 'lighter';
+        for (i = 0; i < 90; i++) { var u2 = g(), cx = u2 * PW, cy = band(u2) + (g() - .5) * H * 0.05, rr = S * (0.05 + g() * 0.08); var rg = sc.createRadialGradient(cx, cy, 0, cx, cy, rr); rg.addColorStop(0, 'rgba(200,190,220,' + (SITE.far ? .06 : .03) + ')'); rg.addColorStop(1, 'rgba(200,190,220,0)'); sc.fillStyle = rg; [0, -PW, PW].forEach(function (o) { sc.save(); sc.translate(o, 0); sc.fillRect(cx - rr, cy - rr, rr * 2, rr * 2); sc.restore(); }); }
+        sc.globalCompositeOperation = 'source-over';
+        // rocks all round, nearer ones bigger
+        rocks = []; var q = rnd(SITE.seed);
+        for (i = 0; i < 70; i++) { var d = Math.pow(q(), 1.6); rocks.push([q() * TAU, d, (2 + q() * 9) * (0.4 + d * 2.4)]); }
+        dust = []; for (i = 0; i < 40; i++) dust.push([q() * W, HZ + q() * (H - HZ), q() * 6.28, 0.3 + q()]);
+        yaw = SITE.far ? 0 : SITE.az - 0.06 * W / K;
+      }
+      function sx(az) { return W / 2 + wrapPi(az - yaw) * K; }
       // the Sun's path: from beside Earth, behind it for an hour and thirty-five minutes, and out the other side
       function sunD(p) {
         var far = R + r * 5.5, c = R - r * 0.9;
@@ -4517,48 +4720,164 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         return r1 * r1 * (a - Math.sin(2 * a) / 2) + R1 * R1 * (b - Math.sin(2 * b) / 2);
       }
 
+
       function draw(p, t) {
-        var i, d = sunD(p), sp = sunPos(d), dist = Math.hypot(sp.x - E.x, sp.y - E.y);
-        var vis = 1 - overlap(dist, R, r) / (Math.PI * r * r); // how much of the Sun still shows
-        var tot = 1 - ss(0, 0.04, vis); // totality, 0 to 1
-        var light = Math.pow(vis, 0.6);
+        var i, x, far = !!SITE.far, port = H > W;
+        // where Earth hangs from here: overhead in the middle of the near side, on the horizon at the poles, nowhere on the far side
+        if (!far) { var zen = ss(70, 89, SITE.el); E.x = lerp(sx(SITE.az), W / 2, zen); E.y = HZ - (HZ - R - 70) * Math.pow(Math.max(0, SITE.el) / 90, 1.1); }
+        var d = sunD(p), sp = sunPos(d), dist = Math.hypot(sp.x - E.x, sp.y - E.y);
+        var vis = far ? 0 : 1 - overlap(dist, R, r) / (Math.PI * r * r); // how much of the Sun still shows
+        var tot = far ? 0 : 1 - ss(0, 0.04, vis); // totality, 0 to 1
+        var light = far ? 0 : Math.pow(vis, 0.6);
         var dark = 1 - light; // the eye adjusting
-        var near = clamp(1 - Math.abs(dist - R) / (r * 2.2), 0, 1); // the Sun at Earth's edge
+        var near = far ? 0 : clamp(1 - Math.abs(dist - R) / (r * 2.2), 0, 1); // the Sun at Earth's edge
+        var RED = far ? [26, 28, 38] : [92, 30, 16];
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
 
-        // stars come out as the light goes
-        var sa = ss(0.55, 0.98, dark);
-        if (sa > 0) { ctx.globalAlpha = sa * (0.92 + 0.08 * Math.sin(t * 0.0013)); ctx.drawImage(stars, 0, 0, W, H); ctx.globalAlpha = 1; }
-
-        // the Sun: glare by day, its corona near the limb
-        if (vis > 0 || near > 0) {
-          ctx.globalCompositeOperation = 'lighter';
-          var gl = S * (0.25 + 0.55 * vis), g1 = ctx.createRadialGradient(sp.x, sp.y, r * 0.8, sp.x, sp.y, gl);
-          g1.addColorStop(0, 'rgba(255,250,235,' + (0.55 * vis) + ')'); g1.addColorStop(0.25, 'rgba(255,235,200,' + (0.18 * vis) + ')'); g1.addColorStop(1, 'rgba(255,220,180,0)');
-          ctx.fillStyle = g1; ctx.fillRect(sp.x - gl, sp.y - gl, gl * 2, gl * 2);
-          var cr = r * 6.5, g2 = ctx.createRadialGradient(sp.x, sp.y, r, sp.x, sp.y, cr), ca = 0.2 + 0.3 * tot;
-          g2.addColorStop(0, 'rgba(240,240,255,' + ca + ')'); g2.addColorStop(0.25, 'rgba(225,228,255,' + ca * 0.4 + ')'); g2.addColorStop(0.6, 'rgba(215,220,255,' + ca * 0.1 + ')'); g2.addColorStop(1, 'rgba(220,225,255,0)');
-          ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(sp.x, sp.y, cr, 0, 7); ctx.fill();
-          ctx.globalCompositeOperation = 'source-over';
-          ctx.fillStyle = '#fffdf4'; ctx.beginPath(); ctx.arc(sp.x, sp.y, r, 0, 7); ctx.fill();
+        // stars come out as the light goes; on the far side it is night already
+        var sa = far ? 1 : ss(0.55, 0.98, dark);
+        if (sa > 0) {
+          ctx.globalAlpha = sa * (0.92 + 0.08 * Math.sin(t * 0.0013));
+          var ox = ((W / 2 - yaw * K) % PW + PW) % PW; ctx.drawImage(stars, ox, 0, PW, stars.height); ctx.drawImage(stars, ox - PW, 0, PW, stars.height); if (ox + PW < W) ctx.drawImage(stars, ox + PW, 0, PW, stars.height);
+          ctx.globalAlpha = 1;
         }
 
-        // Earth, the night side towards us
-        // blue and green in the light; as the shadow comes, its night: cities tracing the coasts
+        if (!far) {
+          // the Sun: glare by day, its corona near the limb
+          if (vis > 0 || near > 0) {
+            ctx.globalCompositeOperation = 'lighter';
+            var gl = S * (0.25 + 0.55 * vis), g1 = ctx.createRadialGradient(sp.x, sp.y, r * 0.8, sp.x, sp.y, gl);
+            g1.addColorStop(0, 'rgba(255,250,235,' + (0.55 * vis) + ')'); g1.addColorStop(0.25, 'rgba(255,235,200,' + (0.18 * vis) + ')'); g1.addColorStop(1, 'rgba(255,220,180,0)');
+            ctx.fillStyle = g1; ctx.fillRect(sp.x - gl, sp.y - gl, gl * 2, gl * 2);
+            var cr = r * 6.5, g2 = ctx.createRadialGradient(sp.x, sp.y, r, sp.x, sp.y, cr), ca = 0.2 + 0.3 * tot;
+            g2.addColorStop(0, 'rgba(240,240,255,' + ca + ')'); g2.addColorStop(0.25, 'rgba(225,228,255,' + ca * 0.4 + ')'); g2.addColorStop(0.6, 'rgba(215,220,255,' + ca * 0.1 + ')'); g2.addColorStop(1, 'rgba(220,225,255,0)');
+            ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(sp.x, sp.y, cr, 0, 7); ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.fillStyle = '#fffdf4'; ctx.beginPath(); ctx.arc(sp.x, sp.y, r, 0, 7); ctx.fill();
+          }
+          drawEarth(sp, dist, vis, tot, light, dark, near, t);
+        }
+        // keep the lunar day dim and moody: a veil over the sky by daylight, then the Sun's disk again, before anything on the ground is drawn
+        var VEIL = 'rgba(3,3,6,' + 0.55 * light + ')';
+        if (light > 0.02) {
+          ctx.fillStyle = VEIL; ctx.fillRect(0, 0, W, H);
+          if (vis > 0) { ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.moveTo(E.x + R, E.y); ctx.arc(E.x, E.y, R, 0, 6.2832, true); ctx.closePath(); ctx.clip('evenodd'); ctx.fillStyle = '#fffdf4'; ctx.beginPath(); ctx.arc(sp.x, sp.y, r, 0, 6.2832); ctx.fill(); ctx.restore(); }
+        }
+        // the land, the things on it and the people are drawn on their own layer, so the Sun can only ever be behind them
+        var mainCtx = ctx; if (fg.width !== cv.width || fg.height !== cv.height) { fg.width = cv.width; fg.height = cv.height; }
+        fgx.setTransform(1, 0, 0, 1, 0, 0); fgx.globalCompositeOperation = 'source-over'; fgx.globalAlpha = 1; fgx.clearRect(0, 0, fg.width, fg.height); fgx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx = fgx;
+
+        // the ground: grey and blinding by day, copper in the shadow, blue-grey starlight on the far side
+        var day = SITE.day, gc = mix(RED, day, light);
+        var far2 = far ? [30, 31, 38] : mix([60, 18, 10], [120, 116, 108], light);
+        ctx.fillStyle = rgb(mix(far2, [0, 0, 0], 0.25));
+        ctx.beginPath(); ctx.moveTo(0, HZ);
+        for (x = 0; x <= W + 1; x += 6) ctx.lineTo(x, HZ - H * SITE.ridge(yaw + (x - W / 2) / K));
+        ctx.lineTo(W, HZ); ctx.closePath(); ctx.fill();
+        if (SITE.pole && !far) { // sunlight catching the peaks while the plain is in shadow
+          ctx.strokeStyle = rgb(mix([255, 120, 70], [255, 248, 230], light), 0.35 + 0.3 * light); ctx.lineWidth = 1.5; ctx.beginPath();
+          for (x = 0; x <= W + 1; x += 6) { var hh = SITE.ridge(yaw + (x - W / 2) / K); if (hh > 0.06) ctx.lineTo(x, HZ - H * hh); else ctx.moveTo(x, HZ - H * hh); }
+          ctx.stroke();
+        }
+        var gg = ctx.createLinearGradient(0, HZ, 0, H);
+        gg.addColorStop(0, rgb(gc, 1)); gg.addColorStop(1, rgb(mix(gc, [0, 0, 0], 0.55 + 0.2 * light), 1));
+        ctx.fillStyle = gg; ctx.beginPath(); ctx.moveTo(0, HZ + 6);
+        for (x = 0; x <= W + 1; x += 8) { var a0 = yaw + (x - W / 2) / K; ctx.lineTo(x, HZ + 4 * Math.sin(a0 * 9) + 3 * Math.sin(a0 * 23)); }
+        ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
+        // engraved contour lines across the regolith, as on the plates
+        ctx.strokeStyle = rgb(far ? [150, 170, 220] : mix([255, 120, 70], [255, 255, 255], light), 0.06 + 0.05 * tot); ctx.lineWidth = 1;
+        for (var ln = 1; ln < 16; ln++) { var yy = HZ + Math.pow(ln / 16, 1.7) * (H - HZ), f = Math.max(1, Math.round(PW / (TAU * (60 + ln * 9)))); ctx.beginPath(); for (x = 0; x <= W + 24; x += 24) ctx.lineTo(x, yy + Math.sin((yaw + (x - W / 2) / K) * f + ln) * (2 + ln * 0.6)); ctx.stroke(); }
+        // Shackleton: the crater behind you, black for billions of years, ice glinting in it
+        if (SITE.crater) {
+          var c0 = sx(SITE.crater[0] - SITE.crater[1]), c1 = sx(SITE.crater[0] + SITE.crater[1]);
+          [[c0, c1], [c0 - PW, c1 - PW], [c0 + PW, c1 + PW]].forEach(function (cc) {
+            var a = cc[0], b = cc[1]; if (b < a) b += PW; if (b < 0 || a > W) return;
+            ctx.fillStyle = '#010102'; ctx.beginPath(); ctx.moveTo(a, H);
+            for (var xx = a; xx <= b; xx += 8) { var u = (xx - a) / (b - a); ctx.lineTo(xx, HZ + (H - HZ) * (0.5 - 0.44 * Math.sin(u * Math.PI)) + Math.sin(xx * 0.05) * 3); }
+            ctx.lineTo(b, H); ctx.closePath(); ctx.fill();
+            var gq = rnd(5); ctx.fillStyle = 'rgba(140,230,255,.55)';
+            for (var k2 = 0; k2 < 26; k2++) { var gx = a + gq() * (b - a), gy = HZ + (H - HZ) * (0.3 + gq() * 0.65); if (Math.sin(t * 0.002 + k2 * 1.7) > 0.6) ctx.fillRect(gx, gy, 1.4, 1.4); }
+          });
+        }
+        // rocks, with shadows that vanish in totality
+        for (i = 0; i < rocks.length; i++) {
+          var rk = rocks[i], rx = sx(rk[0]), rs = rk[2]; if (rx < -40 || rx > W + 40) continue;
+          var ry = HZ + rk[1] * (H - HZ);
+          if (light > 0.05) { ctx.fillStyle = 'rgba(0,0,0,' + 0.5 * light + ')'; ctx.beginPath(); ctx.ellipse(rx - rs * 2.2, ry + rs * 0.25, rs * 2.4, rs * 0.35, 0, 0, 7); ctx.fill(); }
+          ctx.fillStyle = rgb(mix(gc, [0, 0, 0], 0.35)); ctx.beginPath(); ctx.ellipse(rx, ry, rs, rs * 0.55, 0, Math.PI, 0); ctx.fill();
+          ctx.fillStyle = rgb(far ? [120, 130, 160] : mix([255, 120, 70], [255, 252, 240], light), (far ? .18 : 0.35 + 0.3 * light)); ctx.beginPath(); ctx.ellipse(rx + rs * 0.2, ry - rs * 0.2, rs * 0.55, rs * 0.25, 0, Math.PI, 0); ctx.fill();
+        }
+
+        // what stands here: each place its own things, and the One Seeker, who came with you
+        var list = SITE.props.map(function (q) { return { q: q, x: sx(SITE.az + q[1]), d: q[2] }; }).filter(function (o) { return o.x > -W * 0.4 && o.x < W * 1.4; }).sort(function (a, b) { return a.d - b.d; });
+        list.forEach(function (o) {
+          var q = o.q, y = HZ + (H - HZ) * q[2], X = o.x, sz = q[3];
+          switch (q[0]) {
+            case 'dome': dome(X, y, S * sz, light); break;
+            case 'lander': lander(X, y, S * sz * (port ? .8 : 1), light, tot); break;
+            case 'rover': rover(X, y, S * sz, light, tot, t); break;
+            case 'seeker': seeker(X, y, S * 0.12 * sz, q[4], light, tot, sp, t); break;
+            case 'one': oneSeeker(X, y, S * 0.12 * sz * 1.2, light, tot, t); break;
+            case 'apollo': apollo(X, y, S * sz, light); break;
+            case 'flag': flag(X, y, S * sz, light); break;
+            case 'lrrr': lrrr(X, y, S * sz, light); break;
+            case 'psep': psep(X, y, S * sz, light); break;
+            case 'prints': prints(X, y, light); break;
+            case 'surveyor': surveyor(X, y, S * sz, light); break;
+            case 'tower': tower(X, y, S * sz, light, t); break;
+            case 'hab': hab(X, y, S * sz, light); break;
+            case 'miner': miner(X, y, S * sz, light, t); break;
+            case 'dish': dish(X, y, S * sz, t); break;
+            case 'starship': starship(X, y, S * sz, light, t); break;
+            case 'beacon': beacon(X, y, S * sz, light, t); break;
+          }
+        });
+        // dust that floats a little, catching the light
+        ctx.fillStyle = rgb(far ? [170, 180, 210] : mix([255, 140, 90], [255, 250, 235], light), 0.35);
+        for (i = 0; i < dust.length; i++) { var du = dust[i]; ctx.globalAlpha = 0.25 + 0.25 * Math.sin(t * 0.001 * du[3] + du[2]); ctx.fillRect(du[0], du[1] - (t * 0.004 * du[3]) % 30, 1.2, 1.2); }
+        ctx.globalAlpha = 1;
+        if (light > 0.02) { ctx.globalCompositeOperation = 'source-atop'; ctx.fillStyle = VEIL; ctx.fillRect(0, 0, W, H); ctx.globalCompositeOperation = 'source-over'; }
+        ctx = mainCtx; ctx.drawImage(fg, 0, 0, W, H);
+        // the far side is lit only by stars: take the colour out of everything, then a little cold blue back in
+        if (far) { ctx.globalCompositeOperation = 'saturation'; ctx.fillStyle = '#808080'; ctx.fillRect(0, HZ - H * 0.4, W, H); ctx.globalCompositeOperation = 'color'; ctx.fillStyle = 'rgba(70,90,140,.35)'; ctx.fillRect(0, HZ - H * 0.4, W, H); ctx.globalCompositeOperation = 'source-over'; }
+        // Universe 36-D bleeds through in totality, at the camp: the visitors from the frieze, who stayed
+        var gl36 = SITE.id === 'camp' ? glitch(p, t, tot) : 0;
+        if (gl36 > 0) {
+          [[-.35, 0.16, 1.0], [-.08, 0.04, 0.55], [.2, 0.2, 1.05]].forEach(function (v, k3) { var vx = sx(SITE.az - 0.06 * 1.4 + v[0]); visitor(vx + (Math.random() - .5) * 6 * gl36, HZ + (H - HZ) * v[1], S * 0.2 * v[2], gl36, t + k3 * 900); });
+        }
+
+
+        // the red light falls on everything in totality
+        if (tot > 0) { ctx.globalCompositeOperation = 'overlay'; ctx.fillStyle = 'rgba(190,50,20,' + 0.22 * tot + ')'; ctx.fillRect(0, HZ - H * 0.06, W, H); ctx.globalCompositeOperation = 'source-over'; }
+
+        // the visor: its curved edge and a faint reflection
+        var vg = ctx.createRadialGradient(W / 2, H * 0.48, S * 0.35, W / 2, H * 0.5, Math.max(W, H) * 0.78);
+        vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(0.75, 'rgba(0,0,0,0.25)'); vg.addColorStop(1, 'rgba(0,0,0,0.85)');
+        ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = 'rgba(255,255,255,' + (0.04 + 0.03 * light) + ')'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(W * 0.5, H * 1.25, Math.max(W, H) * 1.05, Math.PI * 1.18, Math.PI * 1.36); ctx.stroke();
+        ctx.beginPath(); ctx.arc(W * 0.5, H * 1.25, Math.max(W, H) * 1.0, Math.PI * 1.2, Math.PI * 1.3); ctx.stroke();
+        if (tot > 0.2) { ctx.strokeStyle = 'rgba(255,120,60,' + 0.06 * tot + ')'; ctx.beginPath(); ctx.arc(W * 0.5, H * 1.25, Math.max(W, H) * 1.02, Math.PI * 1.62, Math.PI * 1.74); ctx.stroke(); }
+        if (gl36 > 0.5) tear(gl36);
+        // hopping between places: the view goes dark and comes back somewhere else
+        if (trans > 0) { ctx.fillStyle = 'rgba(0,0,0,' + trans + ')'; ctx.fillRect(0, 0, W, H); }
+        return { vis: vis, tot: tot, gl: gl36 };
+      }
+
+      function drawEarth(sp, dist, vis, tot, light, dark, near, t) {
+        // Earth, the night side towards us: blue and green in the light; as the shadow comes, its night: cities tracing the coasts
         ctx.save(); ctx.beginPath(); ctx.arc(E.x, E.y, R, 0, 6.2832); ctx.fillStyle = '#030305'; ctx.fill(); ctx.clip();
-        var dayA = 0.22 * ss(0.45, 0.98, light), nightA = 0.5 + 0.18 * ss(0.3, 0.95, dark); // a hint of blue and green by day; the night side, never glaring
+        var dayA = 0.22 * ss(0.45, 0.98, light), nightA = 0.5 + 0.18 * ss(0.3, 0.95, dark);
         if (imgN.complete && imgN.naturalWidth) { ctx.globalAlpha = nightA; ctx.drawImage(imgN, E.x - R, E.y - R, R * 2, R * 2); }
         if (dayA > 0 && imgD.complete && imgD.naturalWidth) { ctx.globalAlpha = dayA; ctx.drawImage(imgD, E.x - R, E.y - R, R * 2, R * 2); }
         ctx.globalAlpha = 1; ctx.restore();
         if (dayA > 0) { var ag = ctx.createRadialGradient(E.x, E.y, R * 0.96, E.x, E.y, R * 1.12); ag.addColorStop(0, 'rgba(110,170,255,' + 0.3 * dayA + ')'); ag.addColorStop(1, 'rgba(110,170,255,0)'); ctx.fillStyle = ag; ctx.beginPath(); ctx.arc(E.x, E.y, R * 1.12, 0, 6.2832); ctx.arc(E.x, E.y, R * 0.96, 0, 6.2832, true); ctx.fill(); }
-
         // the ring: every sunrise and sunset on Earth, at once. Blue-white at the first touch, red in totality
         var ring = Math.max(near * 0.9, tot);
         if (ring > 0.01) {
           var sang = Math.atan2(sp.y - E.y, sp.x - E.x), N = 160, lx = E.x + Math.cos(sang) * R, ly = E.y + Math.sin(sang) * R;
           ctx.globalCompositeOperation = 'lighter';
-          // a soft halo all the way round, then a hot glow where the Sun sits behind the limb
           if (tot > 0) {
             var hg = ctx.createRadialGradient(E.x, E.y, R * 0.97, E.x, E.y, R * 1.55);
             hg.addColorStop(0, 'rgba(255,90,40,' + 0.5 * tot + ')'); hg.addColorStop(0.12, 'rgba(226,70,30,' + 0.22 * tot + ')'); hg.addColorStop(0.45, 'rgba(160,30,20,' + 0.06 * tot + ')'); hg.addColorStop(1, 'rgba(120,20,10,0)');
@@ -4570,15 +4889,11 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           ctx.fillStyle = hot; ctx.fillRect(lx - hb, ly - hb, hb * 2, hb * 2); ctx.restore();
           var passes = [[R * 0.016, 1.0, mix([255, 214, 160], [235, 245, 255], 1 - tot)], [R * 0.05, 0.5, mix([255, 110, 50], [170, 200, 255], 1 - tot)]];
           for (var pz = 0; pz < passes.length; pz++) {
-            var lw = passes[pz][0], al = passes[pz][1], col = passes[pz][2];
+            var lw = passes[pz][0], al = passes[pz][1], col = passes[pz][2], s2, am, df, side;
             ctx.lineWidth = lw * (1 + tot * 0.5);
             if (ctx.createConicGradient) {
               var cg = ctx.createConicGradient(0, E.x, E.y);
-              for (var s2 = 0; s2 <= 48; s2++) {
-                var am = s2 / 48 * 6.2832, df = Math.cos(am - sang);
-                var side = tot > 0.5 ? 0.4 + 0.6 * Math.pow((df + 1) / 2, 1.8) : Math.pow(clamp(df, 0, 1), 8);
-                cg.addColorStop(s2 / 48, rgb(col, clamp(ring * side * al * (0.95 + 0.05 * Math.sin(t * 0.002 + s2)), 0, 1)));
-              }
+              for (s2 = 0; s2 <= 48; s2++) { am = s2 / 48 * 6.2832; df = Math.cos(am - sang); side = tot > 0.5 ? 0.4 + 0.6 * Math.pow((df + 1) / 2, 1.8) : Math.pow(clamp(df, 0, 1), 8); cg.addColorStop(s2 / 48, rgb(col, clamp(ring * side * al * (0.95 + 0.05 * Math.sin(t * 0.002 + s2)), 0, 1))); }
               ctx.strokeStyle = cg; ctx.beginPath(); ctx.arc(E.x, E.y, R + lw * 0.3, 0, 6.2832); ctx.stroke();
             } else {
               for (s2 = 0; s2 < N; s2++) {
@@ -4602,82 +4917,108 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
           var g3 = ctx.createRadialGradient(ex, ey, 0, ex, ey, f); g3.addColorStop(0, 'rgba(255,255,250,' + dia + ')'); g3.addColorStop(0.15, 'rgba(255,240,215,' + 0.5 * dia + ')'); g3.addColorStop(1, 'rgba(255,220,180,0)');
           ctx.fillStyle = g3; ctx.fillRect(ex - f, ey - f, f * 2, f * 2);
           ctx.strokeStyle = 'rgba(255,250,235,' + 0.5 * dia + ')'; ctx.lineWidth = 1.2;
-          for (var sp2 = 0; sp2 < 4; sp2++) { var aa = sp2 * Math.PI / 4 + 0.3; ctx.beginPath(); ctx.moveTo(ex - Math.cos(aa) * f * 1.4, ey - Math.sin(aa) * f * 1.4); ctx.lineTo(ex + Math.cos(aa) * f * 1.4, ey + Math.sin(aa) * f * 1.4); ctx.stroke(); }
+          for (var q = 0; q < 4; q++) { var aa = q * Math.PI / 4 + 0.3; ctx.beginPath(); ctx.moveTo(ex - Math.cos(aa) * f * 1.4, ey - Math.sin(aa) * f * 1.4); ctx.lineTo(ex + Math.cos(aa) * f * 1.4, ey + Math.sin(aa) * f * 1.4); ctx.stroke(); }
           ctx.globalCompositeOperation = 'source-over';
         }
-
-        // the ground: grey and blinding by day, copper in the shadow
-        var day = [176, 170, 160], red = [92, 30, 16], gc = mix(red, day, light), gl2 = 0.18 + 0.82 * light;
-        var far2 = mix([60, 18, 10], [120, 116, 108], light);
-        // a distant crater rim
-        ctx.fillStyle = rgb(mix(far2, [0, 0, 0], 0.25));
-        ctx.beginPath(); ctx.moveTo(0, HZ);
-        for (var x = 0; x <= W; x += W / 40) ctx.lineTo(x, HZ - H * (0.035 + 0.025 * Math.sin(x / W * 5.3 + 1) + 0.012 * Math.sin(x / W * 17)));
-        ctx.lineTo(W, HZ); ctx.closePath(); ctx.fill();
-        var gg = ctx.createLinearGradient(0, HZ, 0, H);
-        gg.addColorStop(0, rgb(gc, 1)); gg.addColorStop(1, rgb(mix(gc, [0, 0, 0], 0.55 + 0.2 * light), 1));
-        ctx.fillStyle = gg; ctx.beginPath(); ctx.moveTo(0, HZ + 6);
-        for (x = 0; x <= W; x += W / 60) ctx.lineTo(x, HZ + 4 * Math.sin(x / W * 9) + 3 * Math.sin(x / W * 23));
-        ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
-        // engraved contour lines across the regolith, as on the plates
-        ctx.strokeStyle = rgb(mix([255, 120, 70], [255, 255, 255], light), 0.06 + 0.05 * tot); ctx.lineWidth = 1;
-        for (var ln = 1; ln < 16; ln++) { var yy = HZ + Math.pow(ln / 16, 1.7) * (H - HZ); ctx.beginPath(); for (x = 0; x <= W; x += 24) ctx.lineTo(x, yy + Math.sin(x / (60 + ln * 9) + ln) * (2 + ln * 0.6)); ctx.stroke(); }
-        // rocks, with shadows that vanish in totality
-        for (i = 0; i < rocks.length; i++) {
-          var rk = rocks[i], rs = rk[2];
-          if (light > 0.05) { ctx.fillStyle = 'rgba(0,0,0,' + 0.5 * light + ')'; ctx.beginPath(); ctx.ellipse(rk[0] - rs * 2.2, rk[1] + rs * 0.25, rs * 2.4, rs * 0.35, 0, 0, 7); ctx.fill(); }
-          ctx.fillStyle = rgb(mix(gc, [0, 0, 0], 0.35)); ctx.beginPath(); ctx.ellipse(rk[0], rk[1], rs, rs * 0.55, 0, Math.PI, 0); ctx.fill();
-          ctx.fillStyle = rgb(mix([255, 120, 70], [255, 252, 240], light), 0.35 + 0.3 * light); ctx.beginPath(); ctx.ellipse(rk[0] + rs * 0.2, rk[1] - rs * 0.2, rs * 0.55, rs * 0.25, 0, Math.PI, 0); ctx.fill();
-        }
-
-        // the camp: the lander that brought you, a rover, two domes with the light on
-        var port = H > W;
-        dome(W * (port ? 0.62 : 0.66), HZ + (H - HZ) * 0.02, S * 0.035, light);
-        dome(W * (port ? 0.7 : 0.71), HZ + (H - HZ) * 0.03, S * 0.024, light);
-        lander(W * (port ? 0.32 : 0.36), HZ + (H - HZ) * 0.03, S * (port ? 0.12 : 0.15), light, tot);
-        rover(W * (port ? 0.55 : 0.6), HZ + (H - HZ) * 0.1, S * (port ? 0.06 : 0.07), light, tot, t);
-
-        // the other Seekers, standing with you
-        var people = W > H ? [[0.11, 1.25, 0, 0.42], [0.2, 0.95, 1, 0.22], [0.83, 1.05, 2, 0.3], [0.91, 0.75, 0, 0.12]] : [[0.13, 1.0, 1, 0.3], [0.88, 0.9, 2, 0.22], [0.76, 0.6, 0, 0.08]];
-        for (i = 0; i < people.length; i++) {
-          if (i === 1) oneSeeker(people[i][0] * W, HZ + (H - HZ) * people[i][3], S * 0.12 * people[i][1] * 1.2, light, tot, t); // the One Seeker, from 1·23·45
-          else seeker(people[i][0] * W, HZ + (H - HZ) * people[i][3], S * 0.12 * people[i][1], people[i][2], light, tot, sp, t);
-        }
-        // Universe 36-D bleeds through in totality: the visitors from the frieze, who stayed
-        var gl36 = glitch(p, t, tot);
-        if (gl36 > 0) {
-          var vs = W > H ? [[0.31, 0.16, 1.0], [0.5, 0.04, 0.55], [0.7, 0.2, 1.05]] : [[0.3, 0.12, 0.9], [0.66, 0.05, 0.6]];
-          for (i = 0; i < vs.length; i++) visitor(vs[i][0] * W + (Math.random() - .5) * 6 * gl36, HZ + (H - HZ) * vs[i][1], S * 0.2 * vs[i][2], gl36, t + i * 900);
-        }
-
-        // dust that floats a little, catching the light
-        ctx.fillStyle = rgb(mix([255, 140, 90], [255, 250, 235], light), 0.35);
-        for (i = 0; i < dust.length; i++) { var du = dust[i]; ctx.globalAlpha = 0.25 + 0.25 * Math.sin(t * 0.001 * du[3] + du[2]); ctx.fillRect(du[0], du[1] - (t * 0.004 * du[3]) % 30, 1.2, 1.2); }
-        ctx.globalAlpha = 1;
-
-        // keep the lunar day dim and moody: a veil over everything by daylight, then the Sun's disk again on top
-        if (light > 0.02) {
-          ctx.fillStyle = 'rgba(3,3,6,' + 0.55 * light + ')'; ctx.fillRect(0, 0, W, H);
-          if (vis > 0) {
-            ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.moveTo(E.x + R, E.y); ctx.arc(E.x, E.y, R, 0, 6.2832, true); ctx.closePath(); ctx.clip('evenodd');
-            ctx.fillStyle = '#fffdf4'; ctx.beginPath(); ctx.arc(sp.x, sp.y, r, 0, 6.2832); ctx.fill(); ctx.restore();
-          }
-        }
-        // the red light falls on everything in totality
-        if (tot > 0) { ctx.globalCompositeOperation = 'overlay'; ctx.fillStyle = 'rgba(190,50,20,' + 0.22 * tot + ')'; ctx.fillRect(0, HZ - H * 0.06, W, H); ctx.globalCompositeOperation = 'source-over'; }
-
-        // the visor: its curved edge and a faint reflection
-        var vg = ctx.createRadialGradient(W / 2, H * 0.48, S * 0.35, W / 2, H * 0.5, Math.max(W, H) * 0.78);
-        vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(0.75, 'rgba(0,0,0,0.25)'); vg.addColorStop(1, 'rgba(0,0,0,0.85)');
-        ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
-        ctx.strokeStyle = 'rgba(255,255,255,' + (0.04 + 0.03 * light) + ')'; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.arc(W * 0.5, H * 1.25, Math.max(W, H) * 1.05, Math.PI * 1.18, Math.PI * 1.36); ctx.stroke();
-        ctx.beginPath(); ctx.arc(W * 0.5, H * 1.25, Math.max(W, H) * 1.0, Math.PI * 1.2, Math.PI * 1.3); ctx.stroke();
-        if (tot > 0.2) { ctx.strokeStyle = 'rgba(255,120,60,' + 0.06 * tot + ')'; ctx.beginPath(); ctx.arc(W * 0.5, H * 1.25, Math.max(W, H) * 1.02, Math.PI * 1.62, Math.PI * 1.74); ctx.stroke(); }
-        if (gl36 > 0.5) tear(gl36);
-        return { vis: vis, tot: tot, gl: gl36 };
       }
 
+      // ---- the things that make each place itself ----
+      function shadow(x, y, w, h, light) { if (light > 0.05) { ctx.fillStyle = 'rgba(0,0,0,' + 0.45 * light + ')'; ctx.beginPath(); ctx.ellipse(x - w * 0.7, y + 2, w, h, 0, 0, 7); ctx.fill(); } }
+      function lit(light) { return mix([60, 20, 12], [205, 200, 190], light); }
+      function litD(light) { return mix([28, 8, 6], [110, 106, 100], light); }
+      // Apollo 11's descent stage: still standing where Eagle left it, gold foil gone dark
+      function apollo(x, y, h, light) {
+        var gold = mix([110, 60, 22], [205, 160, 80], light), dk = litD(light), w = h * 1.3; shadow(x, y, w * 0.8, h * 0.06, light);
+        ctx.strokeStyle = rgb(dk); ctx.lineWidth = Math.max(1, h * 0.035);
+        ctx.beginPath(); [[-0.5, -0.62], [0.5, 0.62]].forEach(function (l) { ctx.moveTo(x + w * l[0] * 0.55, y - h * 0.45); ctx.lineTo(x + w * l[1], y); }); ctx.moveTo(x - w * 0.18, y - h * 0.4); ctx.lineTo(x - w * 0.24, y); ctx.moveTo(x + w * 0.18, y - h * 0.4); ctx.lineTo(x + w * 0.24, y); ctx.stroke();
+        ctx.fillStyle = rgb(dk); [-0.62, -0.24, 0.24, 0.62].forEach(function (k) { ctx.beginPath(); ctx.ellipse(x + w * k, y, w * 0.07, h * 0.025, 0, 0, 7); ctx.fill(); });
+        ctx.fillStyle = rgb(gold); ctx.beginPath(); ctx.moveTo(x - w * 0.38, y - h * 0.42); ctx.lineTo(x - w * 0.3, y - h * 0.78); ctx.lineTo(x + w * 0.3, y - h * 0.78); ctx.lineTo(x + w * 0.38, y - h * 0.42); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = rgb(mix(gold, [0, 0, 0], 0.4)); ctx.lineWidth = 1; for (var k = 1; k < 4; k++) { ctx.beginPath(); ctx.moveTo(x - w * 0.38 + k * w * 0.19, y - h * 0.44); ctx.lineTo(x - w * 0.3 + k * w * 0.15, y - h * 0.76); ctx.stroke(); }
+        ctx.strokeStyle = rgb(lit(light)); ctx.lineWidth = Math.max(1, h * 0.02); // the ladder, and the plaque on its leg
+        ctx.beginPath(); ctx.moveTo(x - w * 0.06, y - h * 0.42); ctx.lineTo(x - w * 0.1, y - h * 0.08); ctx.moveTo(x + w * 0.06, y - h * 0.42); ctx.lineTo(x + w * 0.02, y - h * 0.08); for (k = 1; k < 5; k++) { ctx.moveTo(x - w * 0.06 - k * w * 0.008, y - h * (0.42 - k * 0.07)); ctx.lineTo(x + w * 0.06 - k * w * 0.008, y - h * (0.42 - k * 0.07)); } ctx.stroke();
+        ctx.fillStyle = rgb(mix([120, 80, 40], [230, 220, 200], light)); ctx.fillRect(x - w * 0.11, y - h * 0.34, w * 0.05, h * 0.04);
+      }
+      // the flag, blown over by the ascent stage's exhaust and bleached white by fifty years of sunlight
+      function flag(x, y, h, light) {
+        var c = lit(light); ctx.strokeStyle = rgb(c); ctx.lineWidth = Math.max(1, h * 0.03);
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + h * 0.9, y - h * 0.18); ctx.stroke();
+        ctx.fillStyle = rgb(mix([90, 60, 50], [236, 232, 224], light), 0.9); ctx.beginPath(); ctx.moveTo(x + h * 0.5, y - h * 0.1); ctx.lineTo(x + h * 0.88, y - h * 0.17); ctx.lineTo(x + h * 0.92, y - h * 0.02); ctx.lineTo(x + h * 0.55, y + h * 0.02); ctx.closePath(); ctx.fill();
+      }
+      // the laser reflector: still answering every pulse sent from Earth
+      function lrrr(x, y, h, light) {
+        shadow(x, y, h * 0.8, h * 0.08, light);
+        ctx.fillStyle = rgb(litD(light)); ctx.fillRect(x - h * 0.05, y - h * 0.3, h * 0.1, h * 0.3);
+        ctx.fillStyle = rgb(lit(light)); ctx.beginPath(); ctx.moveTo(x - h * 0.6, y - h * 0.3); ctx.lineTo(x + h * 0.6, y - h * 0.42); ctx.lineTo(x + h * 0.6, y - h * 0.62); ctx.lineTo(x - h * 0.6, y - h * 0.5); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = rgb(mix([60, 20, 12], [60, 70, 90], light)); for (var i = 0; i < 6; i++) for (var j = 0; j < 2; j++) ctx.fillRect(x - h * 0.55 + i * h * 0.19, y - h * (0.52 - j * 0.1) - i * h * 0.02, h * 0.15, h * 0.08);
+        ctx.fillStyle = 'rgba(80,227,255,' + (0.4 + 0.4 * Math.sin(performance.now() * 0.006)) + ')'; ctx.fillRect(x + h * 0.2, y - h * 0.5, h * 0.05, h * 0.04);
+      }
+      // the seismometer, its two wings of solar cells
+      function psep(x, y, h, light) {
+        shadow(x, y, h, h * 0.08, light); ctx.fillStyle = rgb(lit(light)); ctx.fillRect(x - h * 0.25, y - h * 0.5, h * 0.5, h * 0.5);
+        ctx.fillStyle = rgb(mix([40, 20, 30], [50, 60, 90], light)); ctx.fillRect(x - h * 1.1, y - h * 0.4, h * 0.8, h * 0.3); ctx.fillRect(x + h * 0.3, y - h * 0.4, h * 0.8, h * 0.3);
+      }
+      // the first footprints, and a few thousand more
+      function prints(x, y, light) {
+        ctx.fillStyle = rgb(mix([30, 8, 6], [70, 66, 60], light), 0.7);
+        for (var i = 0; i < 26; i++) { var u = i / 26, px = x - W * 0.08 + u * W * 0.22 + (i % 2) * 6, py = y - (H - HZ) * 0.25 + u * (H - HZ) * 0.5, s = 2 + u * 6; ctx.beginPath(); ctx.ellipse(px, py, s, s * 0.45, -0.3, 0, 7); ctx.fill(); }
+      }
+      // Surveyor 6, which landed here in 1967, then hopped
+      function surveyor(x, y, h, light) {
+        var c = lit(light), dk = litD(light); shadow(x, y, h * 0.8, h * 0.06, light);
+        ctx.strokeStyle = rgb(dk); ctx.lineWidth = Math.max(1, h * 0.03);
+        ctx.beginPath(); ctx.moveTo(x - h * 0.5, y); ctx.lineTo(x, y - h * 0.5); ctx.lineTo(x + h * 0.5, y); ctx.moveTo(x, y - h * 0.5); ctx.lineTo(x + h * 0.1, y); ctx.moveTo(x, y - h * 0.5); ctx.lineTo(x, y - h * 1.15); ctx.stroke();
+        ctx.fillStyle = rgb(c); ctx.fillRect(x - h * 0.16, y - h * 0.58, h * 0.32, h * 0.18);
+        ctx.fillStyle = rgb(mix([40, 20, 30], [50, 60, 90], light)); ctx.beginPath(); ctx.moveTo(x - h * 0.05, y - h * 1.15); ctx.lineTo(x + h * 0.45, y - h * 1.0); ctx.lineTo(x + h * 0.45, y - h * 0.8); ctx.lineTo(x - h * 0.05, y - h * 0.95); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = rgb(c); ctx.beginPath(); ctx.arc(x - h * 0.2, y - h * 1.0, h * 0.14, Math.PI * 0.6, Math.PI * 1.6); ctx.stroke();
+      }
+      // the pole's tall solar towers, catching the low Sun over the rim; a red light on each
+      function tower(x, y, h, light, t) {
+        var dk = litD(light); ctx.strokeStyle = rgb(dk); ctx.lineWidth = Math.max(1, h * 0.015);
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - h); ctx.moveTo(x - h * 0.06, y); ctx.lineTo(x, y - h * 0.2); ctx.lineTo(x + h * 0.06, y); ctx.stroke();
+        ctx.fillStyle = rgb(mix([40, 20, 30], [60, 74, 110], light)); ctx.fillRect(x - h * 0.08, y - h * 0.98, h * 0.16, h * 0.48);
+        ctx.fillStyle = rgb(mix([255, 120, 70], [255, 248, 230], light), 0.5); ctx.fillRect(x + h * 0.06, y - h * 0.98, h * 0.02, h * 0.48);
+        ctx.fillStyle = Math.sin(t * 0.003 + x) > 0.3 ? '#e2502a' : 'rgba(226,80,42,.25)'; ctx.beginPath(); ctx.arc(x, y - h * 1.01, Math.max(1.5, h * 0.012), 0, 7); ctx.fill();
+      }
+      // the polar habitat: modules half-buried in regolith, windows lit
+      function hab(x, y, h, light) {
+        var c = lit(light); shadow(x, y, h * 1.4, h * 0.08, light);
+        ctx.fillStyle = rgb(mix(c, [0, 0, 0], 0.2)); ctx.beginPath(); ctx.moveTo(x - h * 1.6, y); ctx.quadraticCurveTo(x - h * 1.5, y - h * 0.7, x - h * 0.5, y - h * 0.62); ctx.lineTo(x + h * 0.7, y - h * 0.62); ctx.quadraticCurveTo(x + h * 1.6, y - h * 0.6, x + h * 1.7, y); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = rgb(c); ctx.beginPath(); ctx.roundRect(x - h * 0.6, y - h * 0.95, h * 1.2, h * 0.5, h * 0.25); ctx.fill();
+        ctx.fillStyle = 'rgba(242,166,90,' + (0.6 + 0.4 * (1 - light)) + ')'; for (var i = 0; i < 4; i++) ctx.fillRect(x - h * 0.42 + i * h * 0.24, y - h * 0.8, h * 0.12, h * 0.1);
+      }
+      // an ice miner, its lamp pointed into the crater
+      function miner(x, y, h, light, t) {
+        rover(x, y, h, light, 0, t);
+        ctx.save(); ctx.globalCompositeOperation = 'lighter'; var bx = x - h * 0.9, by = y - h * 0.4, bg = ctx.createRadialGradient(bx, by, 0, bx, by, h * 6);
+        bg.addColorStop(0, 'rgba(200,240,255,.28)'); bg.addColorStop(1, 'rgba(200,240,255,0)'); ctx.fillStyle = bg; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx - h * 6, by + h * 1.4); ctx.lineTo(bx - h * 6, by + h * 3.4); ctx.closePath(); ctx.fill(); ctx.restore();
+        ctx.strokeStyle = rgb(litD(light)); ctx.lineWidth = Math.max(1, h * 0.05); ctx.beginPath(); ctx.moveTo(x + h * 0.6, y - h * 0.4); ctx.lineTo(x + h * 0.85, y + h * 0.05); ctx.stroke();
+      }
+      // the far side's radio telescope: a wire dish hung across a whole crater, listening where Earth cannot shout
+      // a tall cargo ship on its pad at the north pole, its windows lit
+      function starship(x, y, h, light, t) {
+        var c = lit(light), dk = litD(light), w = h * 0.2; shadow(x, y, w * 1.6, h * 0.025, light);
+        ctx.strokeStyle = rgb(dk); ctx.lineWidth = Math.max(1, h * 0.012); ctx.beginPath(); ctx.moveTo(x - w * 0.5, y - h * 0.12); ctx.lineTo(x - w * 0.95, y); ctx.moveTo(x + w * 0.5, y - h * 0.12); ctx.lineTo(x + w * 0.95, y); ctx.stroke();
+        ctx.fillStyle = rgb(c); ctx.beginPath(); ctx.moveTo(x - w / 2, y - h * 0.04); ctx.lineTo(x - w / 2, y - h * 0.78); ctx.quadraticCurveTo(x - w / 2, y - h, x, y - h); ctx.quadraticCurveTo(x + w / 2, y - h, x + w / 2, y - h * 0.78); ctx.lineTo(x + w / 2, y - h * 0.04); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = rgb(mix(c, [0, 0, 0], 0.35)); ctx.fillRect(x + w * 0.12, y - h * 0.78, w * 0.38, h * 0.74);
+        ctx.fillStyle = rgb(dk); ctx.beginPath(); ctx.moveTo(x - w / 2, y - h * 0.86); ctx.lineTo(x - w * 0.85, y - h * 0.76); ctx.lineTo(x - w / 2, y - h * 0.72); ctx.fill(); ctx.beginPath(); ctx.moveTo(x + w / 2, y - h * 0.86); ctx.lineTo(x + w * 0.85, y - h * 0.76); ctx.lineTo(x + w / 2, y - h * 0.72); ctx.fill();
+        ctx.fillStyle = 'rgba(242,166,90,' + (0.55 + 0.45 * (1 - light)) + ')'; for (var i = 0; i < 3; i++) ctx.fillRect(x - w * 0.3 + i * w * 0.22, y - h * 0.82, w * 0.12, h * 0.025);
+      }
+      // a beacon mast on the rim, blinking for whoever is landing
+      function beacon(x, y, h, light, t) {
+        ctx.strokeStyle = rgb(litD(light)); ctx.lineWidth = Math.max(1, h * 0.02);
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - h); ctx.moveTo(x - h * 0.12, y); ctx.lineTo(x, y - h * 0.35); ctx.lineTo(x + h * 0.12, y); ctx.stroke();
+        var on = Math.sin(t * 0.004 + x * 0.01) > 0.4; ctx.fillStyle = on ? '#50e3ff' : 'rgba(80,227,255,.2)'; ctx.beginPath(); ctx.arc(x, y - h, Math.max(2, h * 0.03), 0, 7); ctx.fill();
+        if (on) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; var g = ctx.createRadialGradient(x, y - h, 0, x, y - h, h * 0.4); g.addColorStop(0, 'rgba(80,227,255,.35)'); g.addColorStop(1, 'rgba(80,227,255,0)'); ctx.fillStyle = g; ctx.fillRect(x - h * 0.4, y - h * 1.4, h * 0.8, h * 0.8); ctx.restore(); }
+      }
+      function dish(x, y, h, t) {
+        ctx.save(); ctx.strokeStyle = 'rgba(170,190,230,.38)'; ctx.lineWidth = 1;
+        for (var i = 0; i <= 10; i++) { var k = i / 10; ctx.beginPath(); ctx.ellipse(x, y - h * 0.02, h * (0.2 + 1.6 * k), h * (0.04 + 0.22 * k), 0, 0, Math.PI); ctx.stroke(); }
+        for (i = -8; i <= 8; i++) { ctx.beginPath(); ctx.moveTo(x, y + h * 0.24); ctx.lineTo(x + i * h * 0.22, y - h * 0.02); ctx.stroke(); }
+        ctx.strokeStyle = 'rgba(200,210,235,.6)'; ctx.beginPath(); ctx.moveTo(x - h * 1.8, y - h * 0.02); ctx.lineTo(x, y - h * 0.55); ctx.lineTo(x + h * 1.8, y - h * 0.02); ctx.stroke();
+        ctx.fillStyle = 'rgba(200,210,235,.8)'; ctx.fillRect(x - h * 0.04, y - h * 0.6, h * 0.08, h * 0.08);
+        ctx.fillStyle = Math.sin(t * 0.002) > 0.5 ? 'rgba(80,227,255,.9)' : 'rgba(80,227,255,.2)'; ctx.beginPath(); ctx.arc(x, y - h * 0.62, 2, 0, 7); ctx.fill();
+        ctx.restore();
+      }
       // when the other universe shows: in bursts, through totality, strongest at both ends of the shadow
       function glitch(p, t, tot) {
         var env = tot * ss(0.42, 0.48, p) * (1 - ss(0.76, 0.8, p));
@@ -4716,7 +5057,9 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         ctx.restore();
       }
       // the One Seeker from 1·23·45, arms up, facing us: drawn to its own canvas, then lit like everyone else
+      var S123HIT = null; // where Seeker 123 stands on screen this frame, so a tap on him opens his card
       function oneSeeker(x, y, h, light, tot, t) {
+        S123HIT = { x0: x - h * 0.4, x1: x + h * 0.4, y0: y - h * 1.05, y1: y + 4 };
         var sc = h / 0.86, w = Math.ceil(h * 0.75), hh = Math.ceil(h * 1.02);
         if (osc.width !== Math.ceil(w * DPR) || osc.height !== Math.ceil(hh * DPR)) { osc.width = Math.ceil(w * DPR); osc.height = Math.ceil(hh * DPR); }
         osx.setTransform(1, 0, 0, 1, 0, 0); osx.globalCompositeOperation = 'source-over'; osx.clearRect(0, 0, osc.width, osc.height);
@@ -4820,12 +5163,107 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
         if (ph[2] === 'Partial eclipse') txt = 'Sun ' + Math.round(st.vis * 100) + '% · totality in ' + fmt((0.34 - p) / 0.20 * 72);
         if (ph[2] === 'Totality') txt = fmt((p - 0.34) / 0.46 * 95) + ' of 1:35:00';
         if (ph[2] === 'Third contact') txt = 'Sun ' + Math.round(st.vis * 100) + '%';
-        hudPh.textContent = ph[2]; hudT.textContent = txt; bar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
+        var name = ph[2];
+        if (SITE.far) { name = 'Lunar night'; txt = p > 0.34 && p < 0.8 ? 'Totality, over the other horizon' : 'Earth is below the horizon'; }
+        hudPh.textContent = name; hudT.textContent = txt; bar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
         sec.classList.toggle('red', st.tot > 0.5);
         if (st.gl > 0.5) { hudPh.textContent = 'Universe 36-D'; hudT.textContent = 'We kept the floor warm'; }
         sec.classList.toggle('gl', st.gl > 0.5);
         caps.forEach(function (c) { var a = +c.dataset.a, b = +c.dataset.b; c.classList.toggle('on', p >= a && p < b); });
       }
+
+      // ---- the map: where you are standing, and where else you could stand ----
+      var CAPS = {
+        tranq: { 0: '<b>You are standing at Tranquility Base.</b><span>The first footprints are still here. Earth hangs high in the western sky, where it has hung since 1969.</span>' },
+        medii: { 0: '<b>Earth is straight overhead.</b><span>From the middle of the near side it never rises and never sets. It only turns.</span>' },
+        npole: { 0: '<b>The other pole. Earth on the horizon again.</b><span>On the rim of Peary crater the Sun almost never sets, and every way you face is south.</span>', 3: '<b>And Earth catches fire, on the rim of the world.</b><span>A burning ring, resting on the hills.</span>' },
+        pole: { 0: '<b>Earth sits on the horizon.</b><span>At the south pole it never climbs any higher. Behind you, Shackleton crater has been dark for billions of years.</span>', 3: '<b>And Earth catches fire, on the rim of the world.</b><span>A burning ring, resting on the mountains.</span>' },
+        far: { 0: '<b>Earth never rises here.</b><span>This is the far side. The eclipse is happening over the other horizon, out of sight.</span>', 1: '<b>It is night on the far side.</b><span>The Sun set a week ago and won’t rise for another week.</span>', 2: '<b>No Earth. No Sun.</b>', 3: '<b>The quietest sky there is.</b><span>No radio from Earth reaches here. The telescope in the crater listens to the early universe.</span>', 4: '<b>The stars, by the thousand.</b><span>More than anywhere else you can stand.</span>', 5: '<b>Both ends of the shadow are out of sight.</b><span>Hop back to the near side to watch it.</span>', 6: '<b>The One Seeker likes it here anyway.</b>' }
+      };
+      var CAP0 = [].map.call(caps, function (c) { return c.innerHTML; });
+      var NS = 'http://www.w3.org/2000/svg', pin = sec.querySelector('.wx-pin'), hudL = sec.querySelector('.wx-l');
+      var mapEl = document.createElement('div'); mapEl.className = 'wx-map'; mapEl.setAttribute('role', 'group'); mapEl.setAttribute('aria-label', 'Where you are standing on the Moon');
+      var NC = { x: 66, y: 68, r: 58 }, FC = { x: 180, y: 44, r: 26 };
+      function proj(lat, lon) {
+        var la = lat * Math.PI / 180, lo = lon * Math.PI / 180;
+        if (Math.cos(lo) * Math.cos(la) < -0.2) { var l2 = lo - Math.PI; return { x: FC.x - FC.r * Math.cos(la) * Math.sin(l2), y: FC.y - FC.r * Math.sin(la), far: true }; }
+        return { x: NC.x + NC.r * Math.cos(la) * Math.sin(lo), y: NC.y - NC.r * Math.sin(la) };
+      }
+      var MARIA = [[33, -16, 12], [28, 17, 8.5], [8.5, 31, 10], [17, 59, 6], [-8, 51, 8], [-15, 35, 4.5], [-21, -17, 8], [18, -50, 14], [5, -45, 12], [-24, -39, 4.5], [13, 3, 4], [-10, -23, 5], [56, 1, 6], [56, -20, 5], [56, 22, 5]];
+      var svg = '<svg viewBox="0 0 220 134" aria-hidden="false"><defs><radialGradient id="wxm-g" cx=".42" cy=".4" r=".7"><stop offset="0" stop-color="#3a3731"/><stop offset="1" stop-color="#16151a"/></radialGradient></defs>';
+      svg += '<circle cx="' + NC.x + '" cy="' + NC.y + '" r="' + NC.r + '" fill="url(#wxm-g)" stroke="rgba(238,229,208,.5)"/>';
+      MARIA.forEach(function (m) { var p = proj(m[0], m[1]), k = Math.sqrt(Math.max(.15, Math.cos(m[0] * Math.PI / 180) * Math.cos(m[1] * Math.PI / 180))); svg += '<ellipse cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" rx="' + (m[2] / 57.3 * NC.r * k * (Math.abs(m[1]) > 40 ? .7 : 1)).toFixed(1) + '" ry="' + (m[2] / 57.3 * NC.r * k).toFixed(1) + '" fill="#0d0c10" opacity=".75"/>'; });
+      var ty = proj(-43, -11); svg += '<circle cx="' + ty.x.toFixed(1) + '" cy="' + ty.y.toFixed(1) + '" r="1.6" fill="#eee5d0"/>';
+      for (var tr = 0; tr < 9; tr++) { var ta = tr / 9 * TAU; svg += '<line x1="' + ty.x.toFixed(1) + '" y1="' + ty.y.toFixed(1) + '" x2="' + (ty.x + Math.cos(ta) * 14).toFixed(1) + '" y2="' + (ty.y + Math.sin(ta) * 14).toFixed(1) + '" stroke="rgba(238,229,208,.18)" stroke-width=".6"/>'; }
+      svg += '<circle cx="' + FC.x + '" cy="' + FC.y + '" r="' + FC.r + '" fill="#121116" stroke="rgba(238,229,208,.35)" stroke-dasharray="2 3"/>';
+      svg += '<text x="' + FC.x + '" y="' + (FC.y + FC.r + 12) + '" text-anchor="middle" font-size="8" letter-spacing="1.5" fill="rgba(238,229,208,.55)" font-family="Geist Mono, monospace">FAR SIDE</text>';
+      
+      svg += '<path class="wxm-cone" d="" fill="rgba(80,227,255,.22)"/>';
+      SITES.forEach(function (s, i) { var p = proj(s.lat, s.lon); if (s.pole) p.y = s.lat > 0 ? NC.y - NC.r + 1.5 : NC.y + NC.r - 1.5; s.mp = p; svg += '<g class="wxm-pt" data-i="' + i + '" tabindex="0" role="button" aria-label="Stand at ' + s.name + ': ' + s.place + '"><circle r="9" fill="transparent" cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '"/><circle class="d" r="3.2" cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '"/><title>' + s.name + '</title></g>'; });
+      svg += '<g class="wxm-bot"><circle r="5.2" fill="#eee5d0"/><circle r="2.6" fill="#0b0b0e"/><circle r="1.4" cx=".5" cy="-.3" fill="#50e3ff"/></g></svg>';
+      mapEl.innerHTML = '<button type="button" class="wx-mbtn" aria-expanded="false">Map <i>\u00b7 ' + SITES.length + ' places</i></button><div class="wx-mp"><p class="wx-mh">' + SITES.length + ' places to stand</p>' + svg + '<div class="wx-site"><button type="button" class="wx-pv" aria-label="Previous place">‹</button><div class="wx-sn"><b></b><span></span></div><button type="button" class="wx-nx" aria-label="Next place">›</button></div><p class="wx-tip">Drag to look around</p></div>';
+      pin.appendChild(mapEl);
+      // until someone has used the map, it calls for attention: the places pulse and the button glows
+      var seenMap = false; try { seenMap = localStorage.getItem('em-wxmap') === '1'; } catch (x) {}
+      if (!seenMap) mapEl.classList.add('fresh');
+      function usedMap() { mapEl.classList.remove('fresh'); try { localStorage.setItem('em-wxmap', '1'); } catch (x) {} }
+      var bot = mapEl.querySelector('.wxm-bot'), cone = mapEl.querySelector('.wxm-cone'), snB = mapEl.querySelector('.wx-sn b'), snS = mapEl.querySelector('.wx-sn span'), tip = mapEl.querySelector('.wx-tip'), mbtn = mapEl.querySelector('.wx-mbtn');
+      var botP = { x: SITES[0].mp.x, y: SITES[0].mp.y }, botA = null;
+      function placeBot(x, y) { bot.setAttribute('transform', 'translate(' + x.toFixed(1) + ' ' + (y - 8).toFixed(1) + ')'); }
+      function applySite() {
+        mapEl.querySelectorAll('.wxm-pt').forEach(function (g) { g.classList.toggle('on', SITES[+g.dataset.i] === SITE); });
+        snB.textContent = SITE.name; snS.textContent = SITE.place + ' · ' + earthNote(SITE);
+        if (hudL) hudL.innerHTML = "<b>Mission '36</b> · " + SITE.name + ' · 7 Aug 2036';
+        var o = CAPS[SITE.id] || {}; caps.forEach(function (c, i) { var html = o[i] != null ? o[i] : CAP0[i]; if (c.innerHTML !== html) c.innerHTML = html; });
+      }
+      var hopT = 0, lastHead = '';
+      function hop(i) {
+        var s = SITES[(i + SITES.length) % SITES.length]; if (s === SITE || nextSite) return;
+        usedMap(); nextSite = s; hopT = performance.now(); botA = { x0: botP.x, y0: botP.y, x1: s.mp.x, y1: s.mp.y };
+        if (!raf) raf = requestAnimationFrame(frame);
+      }
+      function stepHop(now) {
+        if (!hopT) return;
+        var k = (now - hopT) / 1300; trans = k < 0.5 ? ss(0, 0.5, k) : 1 - ss(0.5, 1, k);
+        if (botA) { var u = ss(0, 1, clamp(k / 0.85, 0, 1)), bx = lerp(botA.x0, botA.x1, u), by = lerp(botA.y0, botA.y1, u) - Math.sin(u * Math.PI) * 22; placeBot(bx, by); botP = { x: bx, y: lerp(botA.y0, botA.y1, u) }; }
+        if (k >= 0.5 && nextSite) { SITE = nextSite; nextSite = null; buildSite(); applySite(); }
+        if (k >= 1) { hopT = 0; trans = 0; botA = null; botP = { x: SITE.mp.x, y: SITE.mp.y }; placeBot(botP.x, botP.y); }
+      }
+      function updCone() {
+        var p = SITE.mp, a = yaw, half = W / K / 2, sg = SITE.mp.far ? -1 : 1, L = 16;
+        function pt(b) { return (p.x + sg * Math.sin(b) * L).toFixed(1) + ' ' + (p.y - Math.cos(b) * L).toFixed(1); }
+        cone.setAttribute('d', 'M ' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ' L ' + pt(a - half) + ' L ' + pt(a + half) + ' Z');
+        var hd = 'Facing ' + compass(yaw) + ' · drag to look around'; if (SITE.pole) hd = 'Every way is ' + (SITE.lat > 0 ? 'south' : 'north') + ' here · drag to look around';
+        if (hd !== lastHead) { lastHead = hd; tip.textContent = hd; }
+      }
+      function closeSmall() { if (innerWidth <= 900) { mapEl.classList.remove('open'); mbtn.setAttribute('aria-expanded', 'false'); } }
+      mapEl.addEventListener('click', function (e) { var g = e.target.closest('.wxm-pt'); if (g) { hop(+g.dataset.i); setTimeout(closeSmall, 700); } });
+      mapEl.addEventListener('keydown', function (e) { var g = e.target.closest('.wxm-pt'); if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); hop(+g.dataset.i); } });
+      mapEl.querySelector('.wx-pv').addEventListener('click', function () { hop(SITES.indexOf(SITE) - 1); });
+      mapEl.querySelector('.wx-nx').addEventListener('click', function () { hop(SITES.indexOf(SITE) + 1); });
+      mbtn.addEventListener('click', function () { usedMap(); var o = mapEl.classList.toggle('open'); mbtn.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+
+      // ---- looking around: drag the view (or use the arrow keys), and it drifts to a stop ----
+      var drag = null;
+      cv.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, h: null, t: performance.now() }; yawV = 0; });
+      addEventListener('pointermove', function (e) {
+        if (!drag) return; var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (drag.h === null) { if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return; drag.h = Math.abs(dx) > Math.abs(dy); if (drag.h) { sec.classList.add('looking'); try { cv.setPointerCapture(e.pointerId); } catch (x) {} } }
+        if (!drag.h) return;
+        var now = performance.now(), dt = Math.max(8, now - drag.t); yaw -= dx / K; yawV = -dx / K / dt * 16; drag.x = e.clientX; drag.y = e.clientY; drag.t = now;
+        if (!raf) raf = requestAnimationFrame(frame);
+      });
+      function onBot(e) { if (!S123HIT) return false; var r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; return x > S123HIT.x0 && x < S123HIT.x1 && y > S123HIT.y0 && y < S123HIT.y1; }
+      cv.addEventListener('click', function (e) { if (dragMoved) { dragMoved = false; return; } if (onBot(e) && window.openS123) window.openS123('moon'); });
+      cv.addEventListener('mousemove', function (e) { if (!drag) cv.style.cursor = onBot(e) ? 'pointer' : ''; });
+      function endDrag() { dragMoved = !!(drag && drag.h); if (drag && drag.h) sec.classList.remove('looking'); drag = null; }
+      var dragMoved = false;
+      addEventListener('pointerup', endDrag); addEventListener('pointercancel', endDrag);
+      addEventListener('keydown', function (e) {
+        if (!visible || /input|textarea|select/i.test((e.target.tagName || ''))) return;
+        if (e.key === 'ArrowLeft') { yawV = -0.035; } else if (e.key === 'ArrowRight') { yawV = 0.035; } else return;
+        if (!raf) raf = requestAnimationFrame(frame);
+      });
 
       function measure() {
         var rc = sec.getBoundingClientRect(), span = rc.height - window.innerHeight;
@@ -4835,11 +5273,13 @@ footer .motion { justify-self: start; font: inherit; font-family: var(--f-mono);
       function frame(now) {
         raf = 0;
         prog += (target - prog) * 0.12; if (Math.abs(target - prog) < 0.0005) prog = target;
-        var st = draw(prog, now - t0); hud(prog, st);
+        if (!drag || !drag.h) { yaw += yawV; yawV *= 0.92; if (Math.abs(yawV) < 0.0002) yawV = 0; }
+        stepHop(now); updCone();
+        S123HIT = null; var st = draw(prog, now - t0); hud(prog, st);
         if (visible) raf = requestAnimationFrame(frame);
       }
       function kick() { measure(); if (visible && !raf) raf = requestAnimationFrame(frame); sound(); }
-      layout(); measure(); draw(prog, 0);
+      layout(); applySite(); placeBot(botP.x, botP.y); measure(); draw(prog, 0);
       window.addEventListener('scroll', kick, { passive: true });
       window.addEventListener('resize', function () { layout(); kick(); });
       kick();
